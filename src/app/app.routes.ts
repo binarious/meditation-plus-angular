@@ -12,6 +12,7 @@ import { CommitmentFormComponent } from './admin/commitment/commitment-form.comp
 import { AppointmentAdminComponent } from './admin/appointment/appointment-admin.component';
 import { AppointmentFormComponent } from './admin/appointment/appointment-form.component';
 import { TestimonialComponent } from './testimonial/testimonial.component';
+import { TestimonialAdminComponent } from './admin/testimonial/testimonial-admin.component';
 import { AuthGuard } from './auth-guard';
 import { LoginGuard } from './login-guard';
 import { AdminGuard } from './admin-guard';
@@ -35,6 +36,7 @@ export const routes: RouterConfig = [
       { path: 'appointments', component: AppointmentAdminComponent },
       { path: 'appointments/new', component: AppointmentFormComponent },
       { path: 'appointments/:id', component: AppointmentFormComponent },
+      { path: 'testimonials', component: TestimonialAdminComponent }
     ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
