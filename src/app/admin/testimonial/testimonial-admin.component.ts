@@ -47,8 +47,6 @@ export class TestimonialAdminComponent {
       .map(res => res.json())
       .subscribe(data => {
         this.testimonials = data.testimonials;
-        console.log('Tests', this.testimonials);
-        console.log('Data', data);
       });
   }
 
