@@ -34,11 +34,6 @@ export class TestimonialAdminComponent {
     this.loadTestimonials();
   }
 
-  scroll() {
-    this.lastScrollHeight = this.testimonialsList.nativeElement.scrollHeight;
-    this.lastScrollTop = this.testimonialsList.nativeElement.scrollTop;
-  }
-
   /**
    * Loads all testimonials
    */
