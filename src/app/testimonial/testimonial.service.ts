@@ -44,7 +44,7 @@ export class TestimonialService {
 
   public toggleReviewed(testimonialId: string): Observable<any> {
     return this.authHttp.put(
-      ApiConfig.url + '/api/testimonial',
+      ApiConfig.url + '/api/testimonial/review',
       JSON.stringify({ id : testimonialId }), {
         headers: new Headers({
           'Content-Type': 'application/json'
