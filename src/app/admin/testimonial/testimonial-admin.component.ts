@@ -40,9 +40,7 @@ export class TestimonialAdminComponent {
   loadTestimonials() {
     this.testimonialService.getAllAdmin()
       .map(res => res.json())
-      .subscribe(data => {
-        this.testimonials = data.testimonials;
-      });
+      .subscribe(data => this.testimonials = data.testimonials);
   }
 
   delete(evt, testimonial) {
