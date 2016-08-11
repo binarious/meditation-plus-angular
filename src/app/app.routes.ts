@@ -42,6 +42,8 @@ export const routes: RouterConfig = [
       { path: 'users/new', component: UserAdminFormComponent },
       { path: 'users/:id', component: UserAdminFormComponent },
       { path: 'testimonials', component: TestimonialAdminComponent }
+      { path: 'testimonials/:id', component: TestimonialAdminComponent }
+      { path: 'testimonials/review', component: TestimonialAdminComponent }
     ]
   },
   { path: 'schedule', component: AppointmentComponent, canActivate: [AuthGuard] },
