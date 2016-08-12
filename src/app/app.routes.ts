@@ -43,6 +43,8 @@ export const routes: RouterConfig = [
       { path: 'users/:id', component: UserAdminFormComponent },
       { path: 'testimonials', component: TestimonialAdminComponent }
       { path: 'testimonials/:id', component: TestimonialAdminComponent }
+      { path: 'testimonials', component: TestimonialAdminComponent },
+      { path: 'testimonials/:id', component: TestimonialAdminComponent },
       { path: 'testimonials/review', component: TestimonialAdminComponent }
     ]
   },
