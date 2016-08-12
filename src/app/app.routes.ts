@@ -36,8 +36,8 @@ export const routes: RouterConfig = [
       { path: 'appointments', component: AppointmentAdminComponent },
       { path: 'appointments/new', component: AppointmentFormComponent },
       { path: 'appointments/:id', component: AppointmentFormComponent },
-      { path: 'testimonials', component: TestimonialAdminComponent }
-      { path: 'testimonials/:id', component: TestimonialAdminComponent }
+      { path: 'testimonials', component: TestimonialAdminComponent },
+      { path: 'testimonials/:id', component: TestimonialAdminComponent },
       { path: 'testimonials/review', component: TestimonialAdminComponent }
     ]
   },
