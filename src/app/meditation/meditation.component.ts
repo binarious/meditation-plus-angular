@@ -30,7 +30,7 @@ export class MeditationComponent {
 
   // user profile
   profile;
-  disableTimer: Boolean = false;
+  disableTimer: boolean = false;
 
   // alarm bell
   bell;
