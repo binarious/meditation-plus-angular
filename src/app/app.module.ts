@@ -1,6 +1,6 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
@@ -15,6 +15,24 @@ import { ROUTES } from './app.routes';
 import { App } from './app.component';
 import { AppState } from './app.service';
 import { Home } from './home';
+import { Login } from './login';
+import { NotFoundComponent } from './not-found';
+import { ProfileComponent, ProfileFormComponent } from './profile';
+import { AppointmentComponent } from './appointment';
+import { HelpComponent } from './help';
+import { LiveComponent } from './live';
+import { AdminComponent } from './admin';
+import { AdminIndexComponent } from './admin';
+import { OnlineComponent } from './online';
+import { UpdateComponent } from './update';
+import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.component';
+import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
+import { AppointmentAdminComponent } from './admin/appointment/appointment-admin.component';
+import { AppointmentFormComponent } from './admin/appointment/appointment-form.component';
+import { UserAdminFormComponent } from './admin/user/user-admin-form.component';
+import { UserAdminComponent } from './admin/user/user-admin.component';
+import { TestimonialComponent } from './testimonial/testimonial.component';
+import { TestimonialAdminComponent } from './admin/testimonial/testimonial-admin.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -29,11 +47,32 @@ const APP_PROVIDERS = [
   declarations: [
     App,
     Home,
+    Login,
+    NotFoundComponent,
+    ProfileComponent,
+    ProfileFormComponent,
+    AppointmentComponent,
+    HelpComponent,
+    LiveComponent,
+    AdminComponent,
+    AdminIndexComponent,
+    OnlineComponent,
+    UpdateComponent,
+    CommitmentAdminComponent,
+    CommitmentFormComponent,
+    AppointmentComponent,
+    AppointmentAdminComponent,
+    AppointmentFormComponent,
+    UserAdminComponent,
+    UserAdminFormComponent,
+    TestimonialComponent,
+    TestimonialAdminComponent
   ],
   imports: [ // import Angular's modules
-    MaterialModule,
     BrowserModule,
     FormsModule,
+    MaterialModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true })
   ],
