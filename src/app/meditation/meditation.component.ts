@@ -30,6 +30,7 @@ export class MeditationComponent {
 
   // user profile
   profile;
+  disableTimer: Boolean = false;
 
   // alarm bell
   bell;
@@ -89,6 +90,10 @@ export class MeditationComponent {
       .reduce((prev, val) => val, null);
   }
 
+  hasOwnSession(): boolean {
+    return this.ownSession !== null;
+  }
+
   /**
    * Start polling observable
    */
@@ -128,7 +133,7 @@ export class MeditationComponent {
 
       this.activeMeditations = res.filter(data => {
         // set title to own meditation session state
-        if (data.user._id === this.getUserId() && (data.walkingLeft + data.sittingLeft) > 0) {
+        if (!this.disableTimer && data.user._id === this.getUserId() && (data.walkingLeft + data.sittingLeft) > 0) {
           this.appState.set(
             'title',
             (this.userWalking ? 'Walking' : 'Sitting') +
@@ -193,18 +198,20 @@ export class MeditationComponent {
         this.sending = false;
       });
 
-    // Set user status
-    this.userWalking = walking > 0;
-    this.userSitting = sitting > 0;
+    if (!this.disableTimer) {
+      // Set user status
+      this.userWalking = walking > 0;
+      this.userSitting = sitting > 0;
 
-    // Activate bell for mobile users
-    if (this.bell){
-      this.bell.currentTime = 0;
-      this.bell.play();
-      this.bell.pause();
+      // Activate bell for mobile users
+      if (this.bell){
+        this.bell.currentTime = 0;
+        this.bell.play();
+        this.bell.pause();
+      }
+
+      this.setTimer(walking * 60000, sitting * 60000);
     }
-
-    this.setTimer(walking * 60000, sitting * 60000);
   }
 
   /**
@@ -305,6 +312,7 @@ export class MeditationComponent {
           if (this.profile.sound){
             this.bell = new Audio(this.profile.sound);
           }
+          this.disableTimer = this.profile.disableTimer;
         },
         err => console.error(err)
       );

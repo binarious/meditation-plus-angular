@@ -125,6 +125,12 @@
 </div>
 
 <div class="flex row">
+  <md-checkbox [(ngModel)]="model.disableTimer" name="disableTimer">
+    Disable timer for meditations
+  </md-checkbox>
+</div>
+
+<div class="flex row">
   <md-input
     class="fill"
     name="newPassword"

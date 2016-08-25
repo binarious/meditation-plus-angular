@@ -1,4 +1,4 @@
-<div class="flexbox-item-grow fill-area-content list" *ngIf="!ownSession">
+<div class="flexbox-item-grow fill-area-content list" *ngIf="!hasOwnSession() || (hasOwnSession() && disableTimer)">
   <meditation-chart></meditation-chart>
 
   <div *ngIf="activeMeditations?.length > 0">
@@ -38,7 +38,7 @@
 
 <md-card>
 
-  <div *ngIf="ownSession">
+  <div *ngIf="hasOwnSession() && !disableTimer">
     <div class="center">
       <p><img class="profile-img" avatar [hash]="ownSession.user.gravatarHash"></p>
       <span *ngFor="let meditation of activeMeditations">
@@ -94,7 +94,7 @@
       md-mini-fab type="submit"
       [disabled]="(!sitting && !walking) || sending"
     >
-      <md-icon *ngIf="!sending">alarm_on</md-icon>
+      <md-icon *ngIf="!sending">{{ disableTimer ? 'alarm_off' : 'alarm_on' }}</md-icon>
       <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
     </button>
   </form>
