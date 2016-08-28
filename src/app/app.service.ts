@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HmrState } from 'angular2-hmr';
 
 @Injectable()
 export class AppState {
