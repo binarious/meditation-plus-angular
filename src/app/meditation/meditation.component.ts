@@ -56,6 +56,8 @@ export class MeditationComponent {
   userWalking: boolean = false;
   userSitting: boolean = false;
 
+  loadingLike: boolean = false;
+
   constructor(
     public meditationService: MeditationService,
     public userService: UserService,
@@ -209,15 +211,14 @@ export class MeditationComponent {
 
   /**
    * Method for liking meditation sessions of other users.
-   * @param {object} meditation Meditation session to add like to
    */
-  like(meditation) {
-    this.meditationService.like(meditation)
-      .subscribe(() => {
-        this.loadMeditations();
-      }, (err) => {
-        console.error(err);
-      });
+  like() {
+    this.loadingLike = true;
+    this.meditationService.like()
+      .subscribe(
+        () => this.loadingLike = false,
+        () => this.loadingLike = false
+      );
   }
 
   /**
