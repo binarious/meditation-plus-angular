@@ -67,6 +67,18 @@ md-list p[md-line] {
   overflow-x: hidden;
 }
 
+.testimonial-text {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.testimonial-date {
+  opacity: .5;
+  font-size: 12px;
+}
+
 .testimonial-input {
   margin-right: 10px;
 }
