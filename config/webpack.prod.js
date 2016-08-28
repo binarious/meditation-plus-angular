@@ -159,7 +159,8 @@ module.exports = webpackMerge(commonConfig, {
       // comments: true, //debug
 
       beautify: false, //prod
-      mangle: false, // HACK: https://github.com/angular/angular/issues/10618
+      // HACK: https://github.com/angular/angular/issues/10618
+      mangle: { keep_fnames: true, screw_ie8 : true }, //prod
       compress: { screw_ie8: true }, //prod
       comments: false //prod
     }),
