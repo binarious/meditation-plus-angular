@@ -31,15 +31,13 @@
       md-icon-button
       [disabled]="loading || question.answered || question.alreadyLiked || question.user._id === userId"
       (click)="like()"
-      md-tooltip="Add a thumbs up"
     >
       <md-icon>thumb_up</md-icon> {{ question.numOfLikes }}
     </button>
     <button
-      *ngIf="!question.answered"
+      *ngIf="!question.answered && (isAdmin || userId === question.user._id)"
       md-raised-button
       md-icon-button
-      md-tooltip="Mark question as answered"
       color="primary"
       [disabled]="loading"
       (click)="answer()"
@@ -47,9 +45,9 @@
       <md-icon>check</md-icon>
     </button>
     <button
+      *ngIf="isAdmin || userId === question.user._id"
       md-raised-button
       md-icon-button
-      md-tooltip="Remove question"
       color="warn"
       [disabled]="loading"
       (click)="delete()"
