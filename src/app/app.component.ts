@@ -1,7 +1,7 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -9,6 +9,7 @@ import { AppState } from './app.service';
 import { UserService } from './user/user.service';
 import { tokenNotExpired } from 'angular2-jwt';
 import { OnlineComponent } from './online';
+import { Home } from './home';
 
 /*
  * App Component
@@ -17,7 +18,7 @@ import { OnlineComponent } from './online';
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
-  directives: [OnlineComponent],
+  directives: [ Home, OnlineComponent ],
   styles: [
     require('normalize.css'),
     require('emojione/assets/css/emojione-awesome.css'),
@@ -28,6 +29,9 @@ import { OnlineComponent } from './online';
   template: require('./app.html')
 })
 export class App {
+  @ViewChild('start') sidenav: ElementRef;
+  @ViewChild(Home) homeComponent: Home;
+
   name: string = 'Meditation+';
   title: string = '';
   hideOnlineBadge: boolean = false;
@@ -65,6 +69,22 @@ export class App {
   logout() {
     this.userService.logout();
     this.router.navigate(['/login']);
+  }
+
+  // methods for swipe gestures
+  swipeOpen() {
+    // skip if gesture conflicts with tab layout from home page
+    if (this.homeComponent.isCurrentTab('chat') || this.homeComponent.isCurrentTab('ask')){
+      return;
+    }
+    if (this.sidenav._isClosed){
+      this.sidenav.open();
+    }
+  }
+  swipeClose() {
+    if (this.sidenav._isOpened){
+      this.sidenav.close();
+    }
   }
 }
 
