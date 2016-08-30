@@ -1,7 +1,7 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -9,7 +9,6 @@ import { AppState } from './app.service';
 import { UserService } from './user/user.service';
 import { tokenNotExpired } from 'angular2-jwt';
 import { OnlineComponent } from './online';
-import { Home } from './home';
 
 /*
  * App Component
@@ -18,7 +17,7 @@ import { Home } from './home';
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
-  directives: [ Home, OnlineComponent ],
+  directives: [OnlineComponent],
   styles: [
     require('normalize.css'),
     require('emojione/assets/css/emojione-awesome.css'),
@@ -29,8 +28,7 @@ import { Home } from './home';
   template: require('./app.html')
 })
 export class App {
-  @ViewChild('start') sidenav: ElementRef;
-  @ViewChild(Home) homeComponent: Home;
+  @ViewChild('start') sidenav:any;
 
   name: string = 'Meditation+';
   title: string = '';
@@ -73,10 +71,11 @@ export class App {
 
   // methods for swipe gestures
   swipeOpen() {
-    // skip if gesture conflicts with tab layout from home page
-    if (this.homeComponent.isCurrentTab('chat') || this.homeComponent.isCurrentTab('ask')){
+    // skip if gesture conflicts with tab layout
+    if (this.router.url === '/home;tab=chat' || this.router.url === '/home;tab=ask'){
       return;
     }
+
     if (this.sidenav._isClosed){
       this.sidenav.open();
     }
