@@ -28,7 +28,7 @@ import { OnlineComponent } from './online';
   template: require('./app.html')
 })
 export class App {
-  @ViewChild('start') sidenav:any;
+  @ViewChild('start') sidenav: any;
 
   name: string = 'Meditation+';
   title: string = '';
