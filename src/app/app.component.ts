@@ -84,7 +84,9 @@ export class App {
   // methods for swipe gestures
   swipeOpen() {
     // skip if gesture conflicts with tab layout
-    if (this.router.url === '/home;tab=meditation' || this.router.url === '/home;tab=chat' || this.router.url === '/home;tab=ask'){
+    if (this.router.url === '/home;tab=meditation'
+      || this.router.url === '/home;tab=chat'
+      || this.router.url === '/home;tab=ask') {
       return;
     }
 
