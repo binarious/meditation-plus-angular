@@ -11,6 +11,11 @@ md-card-title {
   height: 34px;
   font-size: 13px;
   line-height: 13px;
+  margin-right: 10px;
+}
+
+md-card-title.padding {
+  margin-left: 10px;
 }
 
 .left-hand {

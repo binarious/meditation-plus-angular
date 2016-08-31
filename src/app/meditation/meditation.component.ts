@@ -46,6 +46,7 @@ export class MeditationComponent {
   loadedInitially: boolean = false;
   lastUpdated;
   sending: boolean = false;
+  lastMeditationSession;
 
   // form data
   walking: string = '';
@@ -138,6 +139,12 @@ export class MeditationComponent {
           );
         }
 
+        // updated latest meditation session date
+        if (!this.lastMeditationSession
+          || moment(data.createdAt) > this.lastMeditationSession) {
+          this.lastMeditationSession = moment(data.createdAt);
+        }
+
         // also checking here if walking or sitting finished for the current user
         // to play a sound. Doing it inside the filter to reduce iterations.
         if (data._id === this.currentMeditation && this.userWalking && !data.walkingLeft){
@@ -216,7 +223,10 @@ export class MeditationComponent {
     this.loadingLike = true;
     this.meditationService.like()
       .subscribe(
-        () => this.loadingLike = false,
+        () => {
+          this.loadingLike = false;
+          this.profile.lastLike = moment();
+        },
         () => this.loadingLike = false
       );
   }
@@ -303,6 +313,7 @@ export class MeditationComponent {
       .subscribe(
         data => {
           this.profile = data;
+          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
           if (this.profile.sound){
             this.bell = new Audio(this.profile.sound);
           }

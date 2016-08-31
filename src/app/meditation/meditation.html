@@ -13,7 +13,7 @@
         class="like-button"
         title="Give anumodana to all. Can be interpreted as a thumbs up."
         (click)="like()"
-        [disabled]="loadingLike"
+        [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
       >
         <md-spinner *ngIf="loadingLike" class="in-button-spinner"></md-spinner>
         <span *ngIf="!loadingLike">
@@ -37,7 +37,6 @@
     <md-card-title class="padding">
       <span>Finished meditating</span>
       <span class="fill"></span>
-
       <button
         *ngIf="activeMeditations?.length < 1"
         md-icon-button
@@ -46,7 +45,7 @@
         class="like-button"
         title="Give anumodana to all. Can be interpreted as a thumbs up."
         (click)="like()"
-        [disabled]="loadingLike"
+        [disabled]="loadingLike || profile?.lastLike > lastMeditationSession"
       >
         <md-spinner *ngIf="loadingLike" class="in-button-spinner"></md-spinner>
         <span *ngIf="!loadingLike">
