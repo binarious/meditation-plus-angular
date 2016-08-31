@@ -49,6 +49,18 @@ export class App {
         this.titleService.setTitle(this.title ? this.title : this.name);
       });
 
+    // listen for sidenav changes
+    appState
+      .stateChange
+      .filter(res => res.hasOwnProperty('openSidenav'))
+      .subscribe(res => {
+        if (res) {
+          if (this.sidenav._isClosed){
+            this.sidenav.open();
+          }
+        }
+      });
+
     userService.registerRefresh();
   }
 
@@ -72,7 +84,7 @@ export class App {
   // methods for swipe gestures
   swipeOpen() {
     // skip if gesture conflicts with tab layout
-    if (this.router.url === '/home;tab=chat' || this.router.url === '/home;tab=ask'){
+    if (this.router.url === '/home;tab=meditation' || this.router.url === '/home;tab=chat' || this.router.url === '/home;tab=ask'){
       return;
     }
 
