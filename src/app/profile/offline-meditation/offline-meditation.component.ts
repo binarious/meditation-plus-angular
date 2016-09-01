@@ -32,9 +32,6 @@ export class OfflineMeditation {
     let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
     let start = this.parseDate();
 
-    console.log(start);
-    console.log(start.toDate());
-
     if ((!walking && !sitting) || !start)
       return;
 
