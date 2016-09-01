@@ -23,6 +23,7 @@ export class OfflineMeditation {
   constructor(public meditationService: MeditationService) {}
 
   parseDate() {
+    return moment(this.date + ' ' + this.time).toDate() || null;
   }
   sendMeditation(evt) {
     evt.preventDefault();
@@ -32,6 +33,7 @@ export class OfflineMeditation {
     let start = this.parseDate();
 
     console.log(start);
+    console.log(start.toDate());
 
     if ((!walking && !sitting) || !start)
       return;
