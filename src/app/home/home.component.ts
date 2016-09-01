@@ -20,6 +20,7 @@ export class Home {
   currentTab: string = 'meditation';
   activated: string[] = ['meditation'];
   noTabs: boolean = false;
+  ownSession: boolean = false;
 
   constructor(
     public appState: AppState,
@@ -39,6 +40,14 @@ export class Home {
         data =>  this.noTabs = data.noTabs,
         err => console.error(err)
       );
+
+    // listen for meditation status
+    appState
+      .stateChange
+      .filter(res => res.hasOwnProperty('isMeditating'))
+      .subscribe(res => {
+        this.ownSession = res.isMeditating || false;
+      });
   }
 
   getButtonColor(tab: string) {
