@@ -10,6 +10,7 @@ import { Country } from './country';
 import { FlagComponent } from './flag/flag.component';
 import { DurationPipe } from 'angular2-moment';
 import { BadgeComponent } from './badge/badge.component';
+import { OfflineMeditation } from './offline-meditation/offline-meditation.component';
 
 @Component({
   selector: 'profile',
@@ -19,7 +20,8 @@ import { BadgeComponent } from './badge/badge.component';
     CHART_DIRECTIVES,
     forwardRef(() => AvatarDirective),
     BadgeComponent,
-    FlagComponent
+    FlagComponent,
+    OfflineMeditation
   ],
   styles: [
     require('./profile.css')

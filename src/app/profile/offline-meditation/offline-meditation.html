@@ -1,0 +1,45 @@
+<form (submit)="sendMeditation($event)" class="flex">
+    <md-input
+      [(ngModel)]="walking"
+      name="walking"
+      placeholder="Walking"
+      max="120"
+      type="number"
+      [disabled]="sending"
+      class="fill meditation-input">
+    </md-input>
+    <md-input
+      [(ngModel)]="sitting"
+      name="sitting"
+      placeholder="Sitting"
+      max="120"
+      type="number"
+      [disabled]="sending"
+      class="fill meditation-input">
+    </md-input>
+    <md-input
+      [(ngModel)]="date"
+      name="date"
+      placeholder="date (e.g. 2016-01-17)"
+      max="120"
+      type="text"
+      [disabled]="sending"
+      class="fill meditation-input">
+    </md-input>
+    <md-input
+      [(ngModel)]="time"
+      name="time"
+      placeholder="time (e.g. 22:10)"
+      max="120"
+      type="text"
+      [disabled]="sending"
+      class="fill meditation-input">
+    </md-input>
+    <button
+      md-mini-fab type="submit"
+      [disabled]="(!sitting && !walking) || sending"
+    >
+      <md-icon *ngIf="!sending">alarm_on</md-icon>
+      <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
+    </button>
+  </form>

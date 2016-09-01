@@ -9,6 +9,7 @@
     </badge>
   </div>
 
+
   <md-card *ngIf="profile">
     <button
       md-fab
@@ -39,6 +40,8 @@
         </td>
       </tr>
     </table>
+
+    <offline-meditation></offline-meditation>
 
     <div *ngIf="!profile.hideStats || profile._id === userId">
       <p><br></p>
