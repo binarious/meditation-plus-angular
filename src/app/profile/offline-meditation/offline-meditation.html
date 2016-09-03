@@ -20,7 +20,7 @@
     <md-input
       [(ngModel)]="date"
       name="date"
-      placeholder="date (e.g. 2016-01-17)"
+      placeholder="Day (e.g. 2016-01-17)"
       max="120"
       type="text"
       [disabled]="sending"
@@ -29,7 +29,8 @@
     <md-input
       [(ngModel)]="time"
       name="time"
-      placeholder="time (e.g. 22:10)"
+      placeholder="Time (e.g. 22:10)"
+      class="md-input-invalid"
       max="120"
       type="text"
       [disabled]="sending"
@@ -37,7 +38,7 @@
     </md-input>
     <button
       md-mini-fab type="submit"
-      [disabled]="(!sitting && !walking) || sending"
+      [disabled]="(!sitting && !walking) || !date || !time || sending"
     >
       <md-icon *ngIf="!sending">alarm_on</md-icon>
       <md-spinner *ngIf="sending" class="in-button-spinner"></md-spinner>
