@@ -66,6 +66,10 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
+    this.loadChart();
+  }
+
+  loadChart() {
     this.route.params.subscribe(res => this.load(res));
   }
 

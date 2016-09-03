@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MeditationService } from '../../meditation/meditation.service';
 import * as moment from 'moment';
 
@@ -13,6 +13,7 @@ import * as moment from 'moment';
   ]
 })
 export class OfflineMeditation {
+  @Output() reload = new EventEmitter();
 
   walking: string = '';
   sitting: string = '';
@@ -55,6 +56,7 @@ export class OfflineMeditation {
       .subscribe(res => {
         this.success = true;
         this.sending = false;
+        this.reload.emit('event');
         this.clearFormData();
       }, (err) => {
         this.error = err.json().errMsg;
