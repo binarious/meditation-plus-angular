@@ -16,12 +16,23 @@ export class OfflineMeditation {
 
   walking: string = '';
   sitting: string = '';
-  date: string = '';
+  date: string = moment().format("YYYY-MM-DD").toString();
   time: string = '';
+  success: boolean = false;
+  error: string = '';
   sending: boolean = false;
 
   constructor(public meditationService: MeditationService) {}
 
+  clearFormData() {
+    this.walking = '';
+    this.sitting = '';
+    this.date = '';
+    this.time = '';
+    setTimeout( () => {
+      this.success = false;
+    }, 3000);
+  }
   checkDateTime() {
     let reDate = /^20[0-9]{2}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])$/g;
     let reTime = /^([0-1][0-9]|2[0-4]):[0-5][0-9]$/g;
@@ -33,7 +44,7 @@ export class OfflineMeditation {
 
     let walking = this.walking ? parseInt(this.walking, 10) : 0;
     let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
-    let datetime = moment(this.date + 'T' + this.time).utc().toDate();
+    let datetime = moment(this.date + ' ' + this.time, 'YYYY-MM-DD HH:mm').utc().toDate();
 
     if ((!walking && !sitting) || isNaN(datetime.getTime()))
       return;
@@ -42,9 +53,11 @@ export class OfflineMeditation {
     this.meditationService.post(walking, sitting, datetime)
       .map(res => res.json())
       .subscribe(res => {
+        this.success = true;
         this.sending = false;
+        this.clearFormData();
       }, (err) => {
-        console.error(err);
+        this.error = err.json().errMsg;
         this.sending = false;
       });
   }
