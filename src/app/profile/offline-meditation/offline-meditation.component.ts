@@ -30,6 +30,7 @@ export class OfflineMeditation {
     this.sitting = '';
     this.date = '';
     this.time = '';
+    this.error = '';
     setTimeout( () => {
       this.success = false;
     }, 3000);
