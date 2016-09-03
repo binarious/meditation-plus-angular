@@ -99,6 +99,12 @@ md-list {
   text-align: center;
 }
 
+.meditations-container {
+  height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .meditation-input {
   margin-right: 10px;
 }
