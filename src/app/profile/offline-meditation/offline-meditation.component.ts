@@ -22,21 +22,18 @@ export class OfflineMeditation {
 
   constructor(public meditationService: MeditationService) {}
 
-  parseDate() {
-    return moment(this.date + ' ' + this.time).toDate() || null;
-  }
   sendMeditation(evt) {
     evt.preventDefault();
 
     let walking = this.walking ? parseInt(this.walking, 10) : 0;
     let sitting = this.sitting ? parseInt(this.sitting, 10) : 0;
-    let start = this.parseDate();
+    let datetime = moment(this.date + 'T' + this.time).utc().toDate();
 
-    if ((!walking && !sitting) || !start)
+    if ((!walking && !sitting) || isNaN(datetime.getTime()))
       return;
 
     this.sending = true;
-    this.meditationService.post(walking, sitting, start)
+    this.meditationService.post(walking, sitting, datetime)
       .map(res => res.json())
       .subscribe(res => {
         this.sending = false;
