@@ -17,7 +17,7 @@ export class OfflineMeditation {
 
   walking: string = '';
   sitting: string = '';
-  date: string = moment().format("YYYY-MM-DD").toString();
+  date: string = moment().format('YYYY-MM-DD').toString();
   time: string = '';
   success: boolean = false;
   error: string = '';
