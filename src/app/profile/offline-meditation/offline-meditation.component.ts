@@ -22,6 +22,12 @@ export class OfflineMeditation {
 
   constructor(public meditationService: MeditationService) {}
 
+  checkDateTime() {
+    let reDate = /^20[0-9]{2}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])$/g;
+    let reTime = /^([0-1][0-9]|2[0-4]):[0-5][0-9]$/g
+    return this.date.match(reDate) && this.time.match(reTime);
+  }
+
   sendMeditation(evt) {
     evt.preventDefault();
 

@@ -40,8 +40,8 @@
         </td>
       </tr>
     </table>
-
-    <offline-meditation></offline-meditation>
+    
+    <offline-meditation *ngIf="profile && profile._id === userId"></offline-meditation>
 
     <div *ngIf="!profile.hideStats || profile._id === userId">
       <p><br></p>
