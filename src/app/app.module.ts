@@ -21,19 +21,12 @@ import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
 import { HelpComponent } from './help';
 import { LiveComponent } from './live';
-import { AdminComponent } from './admin';
-import { AdminIndexComponent } from './admin';
+import { AdminModule } from './admin';
+import { UserModule } from './user';
+import { ProfileModule } from './profile';
 import { OnlineComponent } from './online';
 import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
-import { CommitmentAdminComponent } from './admin/commitment/commitment-admin.component';
-import { CommitmentFormComponent } from './admin/commitment/commitment-form.component';
-import { AppointmentAdminComponent } from './admin/appointment/appointment-admin.component';
-import { AppointmentFormComponent } from './admin/appointment/appointment-form.component';
-import { UserAdminFormComponent } from './admin/user/user-admin-form.component';
-import { UserAdminComponent } from './admin/user/user-admin.component';
-import { TestimonialComponent } from './testimonial/testimonial.component';
-import { TestimonialAdminComponent } from './admin/testimonial/testimonial-admin.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -50,34 +43,25 @@ const APP_PROVIDERS = [
     Home,
     Login,
     NotFoundComponent,
-    ProfileComponent,
-    ProfileFormComponent,
-    AppointmentComponent,
     HelpComponent,
     LiveComponent,
-    AdminComponent,
-    AdminIndexComponent,
     OnlineComponent,
     CommitmentComponent,
     UpdateComponent,
-    CommitmentAdminComponent,
-    CommitmentFormComponent,
     AppointmentComponent,
-    AppointmentAdminComponent,
-    AppointmentFormComponent,
-    UserAdminComponent,
-    UserAdminFormComponent,
-    TestimonialComponent,
-    TestimonialAdminComponent
   ],
-  imports: [ // import Angular's modules
+  imports: [
     BrowserModule,
     MomentModule,
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true })
+    RouterModule.forRoot(ROUTES, { useHash: true }),
+    // Application Modules
+    AdminModule,
+    UserModule,
+    ProfileModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

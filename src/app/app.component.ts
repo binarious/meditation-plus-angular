@@ -17,7 +17,6 @@ import { OnlineComponent } from './online';
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
-  directives: [OnlineComponent],
   styles: [
     require('normalize.css'),
     require('emojione/assets/css/emojione-awesome.css'),
