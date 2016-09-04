@@ -74,7 +74,7 @@ md-sidenav {
   width: 300px;
 }
 
-.md-sidenav-content {
+md-sidenav-layout > .md-sidenav-content {
   display: flex !important;
   flex-direction: column;
 }
