@@ -11,6 +11,7 @@ import { FlagComponent } from './flag/flag.component';
 import { DurationPipe } from 'angular2-moment';
 import { BadgeComponent } from './badge/badge.component';
 import { OfflineMeditation } from './offline-meditation/offline-meditation.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'profile',
@@ -133,5 +134,10 @@ export class ProfileComponent {
 
   get userId() {
     return window.localStorage.getItem('id');
+  }
+
+  formatNoDays(time: number) {
+    let duration = moment.duration(time, 'minutes');
+    return duration.asHours() >= 24 ? Math.floor(duration.asHours()) + ' hours' : duration.humanize();
   }
 }
