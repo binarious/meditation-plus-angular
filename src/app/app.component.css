@@ -27,6 +27,19 @@ md-spinner.in-button-spinner {
 }
 
 /**
+ * md-hint fix
+ */
+.md-hint {
+  position: absolute;
+  font-size: 75%;
+  bottom: -0.5em;
+}
+
+.md-hint[align="end"] {
+  right: 0;
+}
+
+/**
  * Fake tabs
  */
 
