@@ -8,9 +8,9 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'commitment',
-  template: require('./commitment.html'),
+  template: require('./commitment.component.html'),
   styles: [
-    require('./commitment.css')
+    require('./commitment.component.css')
   ]
 })
 export class CommitmentComponent {

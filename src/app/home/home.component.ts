@@ -5,9 +5,9 @@ import { AppState } from '../app.service';
 
 @Component({
   selector: 'home',
-  template: require('./home.html'),
+  template: require('./home.component.html'),
   styles: [
-    require('./home.css')
+    require('./home.component.css')
   ]
 })
 export class Home {

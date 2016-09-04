@@ -6,9 +6,9 @@ import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'message',
-  template: require('./message.html'),
+  template: require('./message.component.html'),
   styles: [
-    require('./message.css')
+    require('./message.component.css')
   ]
 })
 export class MessageComponent {

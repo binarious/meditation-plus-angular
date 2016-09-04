@@ -13,9 +13,9 @@ declare var gapi: any;
 
 @Component({
   selector: 'appointment',
-  template: require('./appointment.html'),
+  template: require('./appointment.component.html'),
   styles: [
-    require('./appointment.css')
+    require('./appointment.component.css')
   ]
 })
 export class AppointmentComponent {

@@ -7,9 +7,9 @@ import { Country } from './country';
 
 @Component({
   selector: 'profile',
-  template: require('./profile.html'),
+  template: require('./profile.component.html'),
   styles: [
-    require('./profile.css')
+    require('./profile.component.css')
   ]
 })
 export class ProfileComponent {

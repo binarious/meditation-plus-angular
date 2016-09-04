@@ -11,9 +11,9 @@ import { Response } from '@angular/http';
 
 @Component({
   selector: 'testimonials',
-  template: require('./testimonial.html'),
+  template: require('./testimonial.component.html'),
   styles: [
-    require('./testimonial.css')
+    require('./testimonial.component.css')
   ]
 })
 export class TestimonialComponent {
