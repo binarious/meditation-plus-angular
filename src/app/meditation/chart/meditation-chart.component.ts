@@ -120,7 +120,9 @@ export class MeditationChartComponent {
     if (!value) {
       return;
     }
-    return moment.duration(value, 'minutes').humanize();
+
+    let duration = moment.duration(value, 'minutes');
+    return duration.asHours() >= 24 ? Math.floor(duration.asHours()) + ' hours' : duration.humanize();
   }
 
   ngOnDestroy() {
