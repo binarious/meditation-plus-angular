@@ -2,6 +2,10 @@ md-card.nopadding {
   padding: 0;
 }
 
+.no-shrink {
+  flex-shrink: 0;
+}
+
 md-card-title {
   display: flex;
 }
