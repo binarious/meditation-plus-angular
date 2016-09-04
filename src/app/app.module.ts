@@ -22,6 +22,10 @@ import { AppointmentComponent } from './appointment';
 import { HelpComponent } from './help';
 import { LiveComponent } from './live';
 import { AdminModule } from './admin';
+import { MessageModule } from './message';
+import { MeditationModule } from './meditation';
+import { QuestionModule } from './question';
+import { TestimonialModule } from './testimonial';
 import { UserModule } from './user';
 import { ProfileModule } from './profile';
 import { OnlineComponent } from './online';
@@ -61,7 +65,11 @@ const APP_PROVIDERS = [
     // Application Modules
     AdminModule,
     UserModule,
-    ProfileModule
+    ProfileModule,
+    TestimonialModule,
+    MessageModule,
+    MeditationModule,
+    QuestionModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

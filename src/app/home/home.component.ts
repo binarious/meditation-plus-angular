@@ -1,7 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MessageComponent } from '../message';
 import { MeditationComponent } from '../meditation';
-import { QuestionComponent } from '../question';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 
@@ -10,8 +8,7 @@ import { AppState } from '../app.service';
   template: require('./home.html'),
   styles: [
     require('./home.css')
-  ],
-  directives: [ MessageComponent, MeditationComponent, QuestionComponent ]
+  ]
 })
 export class Home {
   @ViewChild(MeditationComponent) medComponent: MeditationComponent;

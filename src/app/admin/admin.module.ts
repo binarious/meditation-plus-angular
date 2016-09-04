@@ -1,6 +1,7 @@
 import { NgModule }      from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AdminComponent }  from './admin.component';
 import { AdminIndexComponent }  from './admin-index.component';
@@ -13,14 +14,17 @@ import { UserAdminComponent }  from './user/user-admin.component';
 import { UserAdminFormComponent }  from './user/user-admin-form.component';
 import { UserModule } from '../user';
 import { ProfileModule } from '../profile';
+import { EmojiModule } from '../emoji';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     UserModule,
-    ProfileModule
+    ProfileModule,
+    EmojiModule
   ],
   declarations: [
     AdminComponent,

@@ -11,12 +11,12 @@ import { ProfileComponent } from './profile.component';
 import { UserModule } from '../user';
 import { SharedModule } from '../shared';
 import { MomentModule } from 'angular2-moment';
-import { ChartModule } from '../chart';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
     SharedModule,
-    ChartModule,
+    ChartsModule,
     RouterModule,
     FormsModule,
     UserModule,

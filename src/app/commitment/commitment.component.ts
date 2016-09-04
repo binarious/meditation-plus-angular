@@ -3,14 +3,12 @@ import { CommitmentService } from './commitment.service';
 import { UserService } from '../user/user.service';
 import { Response } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
-import { AvatarDirective } from '../profile';
 import { AppState } from '../app.service';
 import * as moment from 'moment';
 
 @Component({
   selector: 'commitment',
   template: require('./commitment.html'),
-  directives: [AvatarDirective],
   styles: [
     require('./commitment.css')
   ]
