@@ -138,6 +138,7 @@ export class ProfileComponent {
 
   formatNoDays(time: number) {
     let duration = moment.duration(time, 'minutes');
-    return duration.asHours() >= 24 ? Math.floor(duration.asHours()) + ' hours' : duration.humanize();
+    let hours = duration.asHours();
+    return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
   }
 }
