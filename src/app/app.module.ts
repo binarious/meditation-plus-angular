@@ -12,7 +12,7 @@ import { MomentModule } from 'angular2-moment';
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
-import { App } from './app.component';
+import { AppComponent } from './app.component';
 import { AppState } from './app.service';
 import { Home } from './home';
 import { Login } from './login';
@@ -41,9 +41,9 @@ const APP_PROVIDERS = [
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
 @NgModule({
-  bootstrap: [ App ],
+  bootstrap: [ AppComponent ],
   declarations: [
-    App,
+    AppComponent,
     Home,
     Login,
     NotFoundComponent,

@@ -20,13 +20,13 @@ import { OnlineComponent } from './online';
   styles: [
     require('normalize.css'),
     require('emojione/assets/css/emojione-awesome.css'),
-    require('./app.css'),
+    require('./app.component.css'),
     require('../../node_modules/@angular2-material/core/style/core.css'),
     require('../../node_modules/@angular2-material/core/overlay/overlay.css')
   ],
-  template: require('./app.html')
+  template: require('./app.component.html')
 })
-export class App {
+export class AppComponent {
   @ViewChild('start') sidenav: any;
 
   name: string = 'Meditation+';
