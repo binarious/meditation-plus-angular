@@ -6,7 +6,7 @@ import { MaterialModule } from '../../platform/angular2-material2';
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule.forRoot()
   ],
   declarations: [
     LinkyPipe

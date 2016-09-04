@@ -6,7 +6,7 @@ import { ProfileComponent, ProfileFormComponent } from './profile';
 import { AppointmentComponent } from './appointment';
 import { HelpComponent } from './help';
 import { LiveComponent } from './live';
-import { AdminComponent } from './admin/admin.module';
+import { AdminComponent } from './admin';
 import { AdminIndexComponent } from './admin';
 import { OnlineComponent } from './online';
 import { CommitmentComponent } from './commitment';
