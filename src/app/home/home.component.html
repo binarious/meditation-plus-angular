@@ -26,6 +26,7 @@
   class="flexbox-parent"
   [class.hidden]="!isCurrentTab('meditation')"
   *ngIf="activated.indexOf('meditation') > -1"
+  (swipeRight)="openSidenav()"
   (swipeLeft)="router.navigate(['/home', { tab: 'chat' }])"
 ></meditation>
 

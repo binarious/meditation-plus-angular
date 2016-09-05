@@ -48,6 +48,18 @@ export class AppComponent {
         this.titleService.setTitle(this.title ? this.title : this.name);
       });
 
+    // listen for title changes
+    appState
+      .stateChange
+      .filter(res => res.hasOwnProperty('openSidenav'))
+      .subscribe(res => {
+        if (res.openSidenav === true) {
+          this.sidenavOpen();
+        }
+      });
+
+    appState.set('openSidenav', false);
+
     userService.registerRefresh();
   }
 
@@ -68,23 +80,25 @@ export class AppComponent {
     this.router.navigate(['/login']);
   }
 
-  // methods for swipe gestures
-  swipeOpen() {
-    // skip if gesture conflicts with tab layout
-    if (this.router.url === '/home;tab=chat'
-     || this.router.url === '/home;tab=ask') {
-      return;
-    }
-
+  sidenavOpen() {
     if (this.sidenav._isClosed){
       this.sidenav.open();
     }
+    this.appState.set('openSidenav', false);
   }
 
-  swipeClose() {
+  sidenavClose() {
     if (this.sidenav._isOpened){
       this.sidenav.close();
     }
+  }
+
+  swipeOpen() {
+    // skip if gesture conflicts with tab layout
+    if (this.router.url === '/' || this.router.url.indexOf('home') > -1) {
+      return;
+    }
+    this.sidenavOpen();
   }
 }
 

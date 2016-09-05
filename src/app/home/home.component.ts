@@ -55,4 +55,8 @@ export class Home {
       this.activated.push(tab);
     }
   }
+
+  openSidenav() {
+    this.appState.set('openSidenav', true);
+  }
 }
