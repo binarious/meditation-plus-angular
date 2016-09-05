@@ -48,7 +48,7 @@ export class AppComponent {
         this.titleService.setTitle(this.title ? this.title : this.name);
       });
 
-    // listen for title changes
+    // listen for sidenav changes
     appState
       .stateChange
       .filter(res => res.hasOwnProperty('openSidenav'))
