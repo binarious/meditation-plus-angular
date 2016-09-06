@@ -237,8 +237,6 @@ export class MeditationComponent {
    * @param {number} time for sitting in milliseconds
    */
   setTimer(walking: number, sitting: number) {
-    console.log(this.bell);
-
     // Does a redundant task every minute
     // Tries to keep tab alive in background for long sessions on mobile devices
     // EXPERIMENTAL
