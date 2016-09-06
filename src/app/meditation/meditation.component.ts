@@ -210,7 +210,6 @@ export class MeditationComponent {
     this.bell.play();
     setTimeout(function() {
       this.bell.src = this.profile.sound ? this.profile.sound : '';
-      console.log(this.bell);
     }.bind(this), 1000);
 
     this.setTimer(walking * 60000, sitting * 60000);
