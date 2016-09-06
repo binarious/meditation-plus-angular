@@ -248,7 +248,6 @@ export class MeditationComponent {
     if (walking > 0) {
       this.timerWalking = stableTimer.setTimeout(() => {
         this.playSound();
-        console.log(this.bell);
       }, walking);
     }
     if (sitting > 0) {
@@ -317,7 +316,6 @@ export class MeditationComponent {
         data => {
           this.profile = data;
           this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
-          console.log(this.profile);
         },
         err => console.error(err)
       );
