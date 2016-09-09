@@ -108,10 +108,6 @@ export class MeditationChartComponent {
       });
   }
 
-  formatNoDays(time: number) {
-
-  }
-
   formatTooltipTitle(tooltipItem) {
     const value: string = tooltipItem[0].xLabel;
     return value.length === 2 ? `${value}00h` : `0${value}00h`;
