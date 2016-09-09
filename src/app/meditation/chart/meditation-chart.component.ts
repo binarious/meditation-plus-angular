@@ -109,9 +109,7 @@ export class MeditationChartComponent {
   }
 
   formatNoDays(time: number) {
-    let duration = moment.duration(time, 'minutes');
-    let hours = duration.asHours();
-    return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
+
   }
 
   formatTooltipTitle(tooltipItem) {
@@ -124,7 +122,11 @@ export class MeditationChartComponent {
     if (!value) {
       return;
     }
-    return this.formatNoDays(value);
+
+    let duration = moment.duration(value, 'minutes');
+    let hours = duration.asHours();
+
+    return hours >= 24 ? Math.floor(hours) + ' hours' : duration.humanize();
   }
 
 
