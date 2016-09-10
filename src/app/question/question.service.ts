@@ -3,13 +3,15 @@ import { AuthHttp } from 'angular2-jwt/angular2-jwt';
 import { ApiConfig } from '../../api.config.ts';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-
-let io = require('socket.io-client');
+import { WebsocketService } from '../shared';
 
 @Injectable()
 export class QuestionService {
 
-  public constructor(public authHttp: AuthHttp) {
+  public constructor(
+    public authHttp: AuthHttp,
+    public wsService: WebsocketService
+  ) {
   }
 
   public getQuestions(): Observable<any> {
@@ -61,17 +63,10 @@ export class QuestionService {
    * Initializes Socket.io client with Jwt and listens to 'question'.
    */
   public getSocket(): Observable<any> {
-    let websocket = io(ApiConfig.url, {
-      transports: ['websocket'],
-      query: 'token=' + window.localStorage.getItem('id_token')
-    });
+    let websocket = this.wsService.getSocket();
 
     return Observable.create(obs => {
       websocket.on('question', res => obs.next(res));
-
-      return () => {
-        websocket.close();
-      };
     });
   }
 }
