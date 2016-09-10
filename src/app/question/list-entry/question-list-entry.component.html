@@ -25,6 +25,11 @@
   <p md-line>
     <span class="question-text" [innerHTML]="question.text|emoji|linky:{twitter:false}"></span>
   </p>
+  <p md-line *ngIf="question.answeredAt">
+    <span class="question-text answered-at">
+      -- Answered at {{ question.answeredAt | amDateFormat:'D.M.Y H:m:s'}}
+    </span>
+  </p>
 
   <p md-line class="button-area">
     <button
@@ -57,6 +62,8 @@
     >
       <md-icon>remove_circle</md-icon>
     </button>
+
+
   </p>
 
 </md-list-item>
