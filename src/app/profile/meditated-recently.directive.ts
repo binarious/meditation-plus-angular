@@ -20,6 +20,6 @@ export class MeditatedRecentlyDirective {
 
     const diff = moment().diff(moment(this.user.lastMeditation));
     const duration = moment.duration(diff).asHours();
-    this._meditatedRecently = duration < 2;
+    this._meditatedRecently = duration < 3;
   }
 }
