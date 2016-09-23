@@ -111,7 +111,7 @@
     "@types/moment": "^2.11.28",
     "@types/node": "^6.0.39",
     "@types/protractor": "^1.5.20",
-    "@types/selenium-webdriver": "^2.44.29",
+    "@types/selenium-webdriver": "2.44.28",
     "@types/socket.io-client": "^1.4.27",
     "@types/source-map": "^0.1.27",
     "@types/uglify-js": "^2.6.28",
