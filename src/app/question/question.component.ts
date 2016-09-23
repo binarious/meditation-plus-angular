@@ -28,6 +28,8 @@ export class QuestionComponent {
   tabIndex: number = 0;
   showForm: boolean = false;
 
+  suggestions: Object[];
+
   constructor(
     public questionService: QuestionService,
     public userService: UserService,
@@ -61,6 +63,15 @@ export class QuestionComponent {
       .subscribe(data => {
         this.questions = data;
         this.loadedInitially = true;
+      });
+  }
+
+  loadSuggestions() {
+    this.questionService.findSuggestions(this.currentQuestion)
+      .subscribe((data) => {
+        this.suggestions = data.json();
+      }, (err) => {
+        console.error(err);
       });
   }
 
