@@ -1,0 +1,22 @@
+md-divider {
+  margin-bottom: 20px;
+}
+
+.video-info {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.video-title {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.video-description {
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.question-row {
+  flex: 1;
+}

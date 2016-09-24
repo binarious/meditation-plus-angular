@@ -1,0 +1,34 @@
+<md-divider></md-divider>
+<md-checkbox [(ngModel)]="activated">Show suggestions</md-checkbox>
+<div *ngIf="activated && suggestions && suggestions.questions && suggestions.questions.length > 0">
+  <h3>Questions</h3>
+  <md-list>
+    <div *ngFor="let question of suggestions.questions" class="question-row">
+      <question-list-entry
+        [question]="question"
+        mode="3"
+      ></question-list-entry>
+    </div>
+  </md-list>
+</div>
+<div *ngIf="activated && suggestions && suggestions.youtube && suggestions.youtube.length > 0">
+  <h3>Youtube</h3>
+  <div *ngFor="let video of suggestions.youtube">
+    <div>
+      <img
+        class="thumbnail"
+        [src]="video.snippet.thumbnails.default.url"
+        [width]="video.snippet.thumbnails.default.width"
+        [height]="video.snippet.thumbnails.default.height">
+      <div class="video-info">
+        <a class="video-title"
+          [href]="'https://www.youtube.com/watch?v=' + video.id.videoId"
+          target="_BLANK">
+          {{ video.snippet.title }}
+        </a>
+        <p class="video-description">{{ video.snippet.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<h3 *ngIf="suggestions && suggestions.questions.length > 0">Answered Questions</h3>
