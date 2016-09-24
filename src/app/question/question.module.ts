@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { QuestionComponent } from './question.component';
 import { QuestionListEntryComponent } from './list-entry/question-list-entry.component';
+import { QuestionSuggestionsComponent } from './suggestions/suggestions.component';
 import { EmojiModule } from '../emoji';
 import { ProfileModule } from '../profile';
 import { MomentModule } from 'angular2-moment';
@@ -19,11 +20,13 @@ import { MomentModule } from 'angular2-moment';
   ],
   declarations: [
     QuestionComponent,
-    QuestionListEntryComponent
+    QuestionListEntryComponent,
+    QuestionSuggestionsComponent
   ],
   exports: [
     QuestionComponent,
-    QuestionListEntryComponent
+    QuestionListEntryComponent,
+    QuestionSuggestionsComponent
   ]
 })
 export class QuestionModule { }
