@@ -13,22 +13,25 @@
 </div>
 <div *ngIf="activated && suggestions && suggestions.youtube && suggestions.youtube.length > 0">
   <h3>Youtube</h3>
-  <div *ngFor="let video of suggestions.youtube">
-    <div>
-      <img
-        class="thumbnail"
-        [src]="video.snippet.thumbnails.default.url"
-        [width]="video.snippet.thumbnails.default.width"
-        [height]="video.snippet.thumbnails.default.height">
-      <div class="video-info">
-        <a class="video-title"
+  <table class="youtube-search">
+    <tr *ngFor="let video of suggestions.youtube">
+      <td *ngIf="video.snippet && video.snippet.thumbnails && video.snippet.thumbnails.default">
+        <div class="thumbnail">
+          <img
+            [src]="video.snippet.thumbnails.default.url"
+            [width]="video.snippet.thumbnails.default.width"
+            [height]="video.snippet.thumbnails.default.height">
+        </div>
+      </td>
+      <td *ngIf="video.snippet && video.id.videoId">
+        <a
           [href]="'https://www.youtube.com/watch?v=' + video.id.videoId"
           target="_BLANK">
           {{ video.snippet.title }}
         </a>
-        <p class="video-description">{{ video.snippet.description }}</p>
-      </div>
-    </div>
-  </div>
+        <p>{{ video.snippet.description }}</p>
+      </td>
+    </tr>
+    <md-divider></md-divider>
+  </table>
 </div>
-<h3 *ngIf="suggestions && suggestions.questions.length > 0">Answered Questions</h3>

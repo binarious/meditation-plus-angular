@@ -1,22 +1,28 @@
 md-divider {
   margin-bottom: 20px;
 }
+.question-row {
+  flex: 1;
+}
 
-.video-info {
-  display: inline-block;
+td {
   vertical-align: top;
 }
 
-.video-title {
+td a {
   font-weight: bold;
   text-decoration: none;
 }
 
-.video-description {
-  margin-top: 5px;
+td p {
   font-style: italic;
+  margin-top: 8px;
 }
 
-.question-row {
-  flex: 1;
+.thumbnail {
+  overflow: hidden;
+}
+
+.thumbnail img {
+  margin: -15px 0;
 }
