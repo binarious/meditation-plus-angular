@@ -1,9 +1,4 @@
-import {
-  Component,
-  Output,
-  Input,
-  EventEmitter
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { QuestionService } from '../question.service';
 
 
