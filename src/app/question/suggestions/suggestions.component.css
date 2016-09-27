@@ -5,8 +5,13 @@ md-divider {
   flex: 1;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 td {
   vertical-align: top;
+  padding-top: 10px;
 }
 
 td a {

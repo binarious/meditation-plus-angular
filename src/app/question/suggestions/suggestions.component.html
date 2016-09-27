@@ -1,6 +1,7 @@
 <md-divider></md-divider>
 <md-checkbox [(ngModel)]="activated">Show suggestions</md-checkbox>
-<div *ngIf="activated && suggestions && suggestions.questions && suggestions.questions.length > 0">
+<md-spinner *ngIf="loading" class="load-more-spinner"></md-spinner>
+<div *ngIf="!loading && activated && suggestions && suggestions.questions && suggestions.questions.length > 0">
   <h3>Questions</h3>
   <md-list>
     <div *ngFor="let question of suggestions.questions" class="question-row">
@@ -11,27 +12,26 @@
     </div>
   </md-list>
 </div>
-<div *ngIf="activated && suggestions && suggestions.youtube && suggestions.youtube.length > 0">
+<div *ngIf="!loading && activated && suggestions && suggestions.youtube && suggestions.youtube.length > 0">
   <h3>Youtube</h3>
   <table class="youtube-search">
     <tr *ngFor="let video of suggestions.youtube">
-      <td *ngIf="video.snippet && video.snippet.thumbnails && video.snippet.thumbnails.default">
+      <td>
         <div class="thumbnail">
           <img
-            [src]="video.snippet.thumbnails.default.url"
-            [width]="video.snippet.thumbnails.default.width"
-            [height]="video.snippet.thumbnails.default.height">
+            [src]="video.thumbnail.url"
+            [width]="video.thumbnail.width"
+            [height]="video.thumbnail.height">
         </div>
       </td>
-      <td *ngIf="video.snippet && video.id.videoId">
+      <td *ngIf="video.videoId">
         <a
-          [href]="'https://www.youtube.com/watch?v=' + video.id.videoId"
+          [href]="'https://www.youtube.com/watch?v=' + video.videoId"
           target="_BLANK">
-          {{ video.snippet.title }}
+          {{ video.title }}
         </a>
-        <p>{{ video.snippet.description }}</p>
+        <p>{{ video.description }}</p>
       </td>
     </tr>
-    <md-divider></md-divider>
   </table>
 </div>

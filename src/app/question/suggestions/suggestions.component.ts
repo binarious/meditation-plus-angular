@@ -19,9 +19,10 @@ export class QuestionSuggestionsComponent {
   @Input() currentQuestion: string;
 
   suggestions: Object[];
+  activated: boolean = true;
   loading: boolean = false;
   timeout: boolean = false;
-  activated: boolean = true;
+  missedChange: boolean = false;
 
   constructor(
     public questionService: QuestionService,
@@ -30,6 +31,10 @@ export class QuestionSuggestionsComponent {
 
   ngOnChanges() {
     this.loadSuggestions();
+
+    if (this.timeout) {
+      this.missedChange = true;
+    }
   }
 
   loadSuggestions() {
@@ -37,7 +42,6 @@ export class QuestionSuggestionsComponent {
       return;
     }
 
-    console.log('Passed');
     this.loading = true;
     this.timeout = true;
     this.questionService.findSuggestions(this.currentQuestion)
@@ -47,6 +51,10 @@ export class QuestionSuggestionsComponent {
         console.log(this.suggestions);
         setTimeout(() => {
           this.timeout = false;
+          if (this.missedChange) {
+            this.missedChange = false;
+            this.loadSuggestions();
+          }
         }, 2000);
       }, (err) => {
         console.error(err);
