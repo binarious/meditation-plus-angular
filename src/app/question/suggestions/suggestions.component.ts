@@ -5,7 +5,6 @@ import {
   EventEmitter
 } from '@angular/core';
 import { QuestionService } from '../question.service';
-import * as moment from 'moment';
 
 
 @Component({
@@ -30,11 +29,21 @@ export class QuestionSuggestionsComponent {
   }
 
   ngOnChanges() {
-    this.loadSuggestions();
-
-    if (this.timeout) {
+    if (!this.timeout) {
+      this.loadSuggestions();
+    } else {
       this.missedChange = true;
     }
+  }
+
+  doTimeout() {
+    setTimeout(() => {
+      this.timeout = false;
+      if (this.missedChange) {
+        this.missedChange = false;
+        this.loadSuggestions();
+      }
+    }, 2000);
   }
 
   loadSuggestions() {
@@ -48,14 +57,7 @@ export class QuestionSuggestionsComponent {
       .subscribe((data) => {
         this.loading = false;
         this.suggestions = data.json();
-        console.log(this.suggestions);
-        setTimeout(() => {
-          this.timeout = false;
-          if (this.missedChange) {
-            this.missedChange = false;
-            this.loadSuggestions();
-          }
-        }, 2000);
+        this.doTimeout();
       }, (err) => {
         console.error(err);
       });

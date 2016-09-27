@@ -13,7 +13,7 @@
   </md-list>
 </div>
 <div *ngIf="!loading && activated && suggestions && suggestions.youtube && suggestions.youtube.length > 0">
-  <h3>Youtube</h3>
+  <h3>Youtube <a *ngIf="suggestions.youtubeSearchAll" [href]="suggestions.youtubeSearchAll" target="_BLANK">(see all)</a></h3>
   <table class="youtube-search">
     <tr *ngFor="let video of suggestions.youtube">
       <td>
@@ -24,7 +24,7 @@
             [height]="video.thumbnail.height">
         </div>
       </td>
-      <td *ngIf="video.videoId">
+      <td *ngIf="video.videoId" class="video-info">
         <a
           [href]="'https://www.youtube.com/watch?v=' + video.videoId"
           target="_BLANK">
