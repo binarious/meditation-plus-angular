@@ -31,3 +31,8 @@ td p {
 .thumbnail img {
   margin: -15px 0;
 }
+
+.load-more-spinner {
+  display: block;
+  margin: auto;
+}
