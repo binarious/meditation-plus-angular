@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { AppState } from '../app.service';
-import * as stableTimer from 'stable-timer';
+import * as StableInterval from 'stable-interval';
 
 /**
  * Component for the meditation tab inside home.
@@ -25,9 +25,8 @@ export class MeditationComponent {
 
   // alarm bell
   bell = new Audio();
-  timerWalking;
-  timerSitting;
-  timerHeartbeat;
+  timer;
+  staticBell = null;
 
   // meditation data
   activeMeditations: Object[];
@@ -161,6 +160,12 @@ export class MeditationComponent {
       });
 
       this.checkOwnSession();
+
+      // set timer again if page was refreshed
+      if (typeof(this.timer) === 'undefined' && !this.staticBell && this.ownSession) {
+        console.log(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
+        this.setTimer(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
+      }
     },
     err => {
       if (err.status === 401) {
@@ -174,6 +179,7 @@ export class MeditationComponent {
    * Method for querying recent meditations
    */
   loadMeditations(): void {
+    console.log(this.timer);
     this.subscribe(
       this.meditationService.getRecent()
       .map(res => res.json())
@@ -218,7 +224,7 @@ export class MeditationComponent {
       this.bell.src = this.profile.sound ? this.profile.sound : '';
     }.bind(this), 1000);
 
-    this.setTimer(walking * 60000, sitting * 60000);
+    this.setTimer(walking, sitting);
     this.appState.set('isMeditating', true);
   }
 
@@ -243,23 +249,48 @@ export class MeditationComponent {
    * @param {number} time for sitting in milliseconds
    */
   setTimer(walking: number, sitting: number) {
-    // Does a redundant task every minute
-    // Tries to keep tab alive in background for long sessions on mobile devices
-    // EXPERIMENTAL
-    this.timerHeartbeat = stableTimer.setInterval(() => {
-      console.log('Namo Tassa Bhagavato Arahato Sammāsambuddhassa');
-    }, 60000);
 
-    // Set timer for walking and sitting meditation
-    if (walking > 0) {
-      this.timerWalking = stableTimer.setTimeout(() => {
-        this.playSound();
-      }, walking);
+    if (this.profile && this.profile.staticTimer) {
+      this.staticBell = new Audio();
+      this.staticBell.onerror = () => { this.staticBell = null; };
+
+      const bellName = this.profile.sound ? this.profile.sound.replace('.mp3', '') : 'bell1';
+      if (!walking || !sitting) {
+        this.staticBell.src = 'http://home/sebastian/Dokumente/Code/static-bells/out/' + bellName + '/' + (!walking ? sitting : walking) + '.ogg';
+      } else {
+        this.staticBell.src = '/home/sebastian/Dokumente/Code/static-bells/out/' + bellName + '/' + walking + '_' + sitting + '.ogg';
+      }
     }
-    if (sitting > 0) {
-      this.timerSitting = stableTimer.setTimeout(() => {
-        this.playSound();
-      }, walking + sitting);
+
+
+    if (this.staticBell) {
+      this.staticBell.play();
+    } else {
+      // fallback to default timer
+      console.log('Fallback');
+      const timerStart = moment();
+
+      let walkingDone = walking > 0 ? false : true;
+      let sittingDone = sitting > 0 ? false : true;
+
+      this.timer = new StableInterval().set(() => {
+        let diff = moment().diff(timerStart, 'minutes');
+        console.log(diff, timerStart)
+        if (!walkingDone && diff >= walking) {
+          walkingDone = true;
+          this.playSound();
+        }
+
+        if (!sittingDone && diff >= sitting) {
+          sittingDone = true;
+          this.playSound();
+        }
+
+        if (walkingDone && sittingDone) {
+          this.timer.clear();
+        }
+      }, 5000);
+
     }
   }
 
@@ -283,11 +314,6 @@ export class MeditationComponent {
       return;
     }
 
-    // Disable alarm bell
-    stableTimer.clearInterval(this.timerHeartbeat);
-    stableTimer.clearTimeout(this.timerWalking);
-    stableTimer.clearTimeout(this.timerSitting);
-
     this.meditationService.stop()
       .subscribe(() => {
         this.userWalking = false;
@@ -296,6 +322,10 @@ export class MeditationComponent {
       }, err => {
         console.error(err);
       });
+
+    if (typeof(this.timer) !== 'undefined') {
+      this.timer.clear();
+    }
 
     this.appState.set('isMeditating', false);
   }
