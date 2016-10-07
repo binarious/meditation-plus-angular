@@ -68,6 +68,9 @@ md-card-title.padding {
 md-progress-circle {
   margin: auto;
 }
+md-progress-circle.inactive {
+  opacity: 0.3;
+}
 
 .progress {
   flex: 1;
