@@ -268,9 +268,11 @@ export class MeditationComponent {
 
     // try to load static bell file from server
     if (!walking || !sitting) {
-      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/' + bellName + '/' + (walking ? walking : sitting) + '.ogg';
+      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/'
+                                    + bellName + '/' + (walking ? walking : sitting) + '.ogg';
     } else {
-      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/' + bellName + '/' + walking + '_' + sitting + '.ogg';
+      this.timerStableBell.src = 'https://share.sirimangalo.org/alarms/'
+                                    + bellName + '/' + walking + '_' + sitting + '.ogg';
     }
 
     this.timerStableBell.currentTime = 0;
