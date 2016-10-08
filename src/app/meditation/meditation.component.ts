@@ -170,7 +170,8 @@ export class MeditationComponent {
 
       // resume timer after page refresh
       // won't work on mobile devices
-      if (this.ownSession && (this.ownSession.walkingLeft || this.ownSession.sittingLeft)
+      if (this.profile
+        && this.ownSession && (this.ownSession.walkingLeft || this.ownSession.sittingLeft)
         && !this.timerStableBell && !this.timerScript) {
         this.setTimerStable(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
       }
@@ -295,13 +296,13 @@ export class MeditationComponent {
     }
 
     if (!this.timerScriptBell) {
-      this.timerScriptBell = new Audio();
+      this.timerScriptBell = new Audio(this.profile.sound);
     }
 
     const timerStart = moment();
 
-    let walkingDone = walking > 0 ? false : true;
-    let sittingDone = sitting > 0 ? false : true;
+    let walkingDone = walking ? false : true;
+    let sittingDone = sitting ? false : true;
 
     this.timerScript = new StableInterval();
     this.timerScriptBell.src = this.profile.sound;
