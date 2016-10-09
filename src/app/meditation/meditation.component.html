@@ -1,7 +1,7 @@
 <div class="flexbox-item-grow fill-area fill-area-content list meditations-container" *ngIf="!ownSession">
   <meditation-chart class="no-shrink"></meditation-chart>
   <md-divider></md-divider>
-  <div *ngIf="commitment && commitmentProgress" class="commitment">
+  <div *ngIf="commitment && commitmentProgress >= 0" class="commitment">
     <md-progress-bar
       md-mode="determinate"
       [value]="commitmentProgress">
