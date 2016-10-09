@@ -21,6 +21,12 @@ export class CommitmentService {
     );
   }
 
+  public getUser() {
+    return this.authHttp.get(
+      ApiConfig.url + '/api/commitment/user'
+    );
+  }
+
   public save(commitment) {
     const method = commitment._id ? 'put' : 'post';
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MeditationService } from './meditation.service';
+import { CommitmentService } from '../commitment/commitment.service';
 import { UserService } from '../user/user.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
@@ -43,6 +44,10 @@ export class MeditationComponent {
   walking: string = '';
   sitting: string = '';
 
+  // commit
+  commitment;
+  commitmentProgress;
+
   // current User data
   currentMeditation: string = '';
   userWalking: boolean = false;
@@ -53,9 +58,21 @@ export class MeditationComponent {
   constructor(
     public meditationService: MeditationService,
     public userService: UserService,
+    public commitmentService: CommitmentService,
     public router: Router,
     public appState: AppState
   ) {
+    // Get user profile data (for preferred sound and last meditation time)
+    this.userService.getProfile(this.getUserId())
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.profile = data;
+          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
+        },
+        err => console.error(err)
+      );
+
     this.polluteWithLastSession();
   }
 
@@ -359,6 +376,41 @@ export class MeditationComponent {
     this.appState.set('isMeditating', false);
   }
 
+  /**
+   * Determines the percentage of the reached goal.
+   */
+  reached(commitment) {
+    if (commitment.type === 'daily') {
+      let sum = 0;
+
+      // Sum minutes per day for the last week
+      for (let key of Object.keys(this.profile.meditations.lastDays)) {
+        const meditated = this.profile.meditations.lastDays[key];
+        // Cut meditated minutes to the max of the commitment to preserve
+        // a correct average value.
+        sum += meditated > commitment.minutes ? commitment.minutes : meditated;
+      }
+
+      // build the average and compare it to goal
+      let avg = sum / Object.keys(this.profile.meditations.lastDays).length;
+      let result = Math.round(100 * avg / commitment.minutes);
+
+      return result;
+    }
+
+    if (commitment.type === 'weekly') {
+      const keys = Object.keys(this.profile.meditations.lastWeeks);
+
+      // Get last entry of lastWeeks
+      const lastWeekSum = this.profile.meditations.lastWeeks[keys[keys.length - 1]];
+
+      // compare it to goal
+      let result = Math.round(100 * lastWeekSum / commitment.minutes);
+
+      return result;
+    }
+  }
+
   ngOnInit() {
     // getting chat data instantly
     this.loadMeditations();
@@ -374,16 +426,14 @@ export class MeditationComponent {
         this.loadMeditations();
       });
 
-    // Get user profile data (for preferred sound and last meditation time)
-    this.userService.getProfile()
+    this.commitmentService.getUser()
       .map(res => res.json())
-      .subscribe(
-        data => {
-          this.profile = data;
-          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
-        },
-        err => console.error(err)
-      );
+      .subscribe(data => {
+        this.commitment = data;
+        this.commitmentProgress = this.reached(data);
+        console.log(this.commitment);
+        console.log(this.commitmentProgress);
+      });
   }
 
   /**
