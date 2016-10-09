@@ -130,6 +130,10 @@ md-list .meditation-row:last-child md-divider {
   padding: 20px 10px 10px 10px;
 }
 
+.commitment table {
+  margin-top: 4px;
+}
+
 .commitment td:first-child {
   text-transform: uppercase;
   font-weight: bold;
