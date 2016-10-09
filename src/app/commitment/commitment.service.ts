@@ -21,7 +21,7 @@ export class CommitmentService {
     );
   }
 
-  public getUser() {
+  public getCurrentUser() {
     return this.authHttp.get(
       ApiConfig.url + '/api/commitment/user'
     );

@@ -380,6 +380,10 @@ export class MeditationComponent {
    * Determines the percentage of the reached goal.
    */
   reached(commitment) {
+    if (!this.profile) {
+      return;
+    }
+
     if (commitment.type === 'daily') {
       let sum = 0;
 
@@ -426,14 +430,15 @@ export class MeditationComponent {
         this.loadMeditations();
       });
 
-    this.commitmentService.getUser()
+    this.commitmentService.getCurrentUser()
       .map(res => res.json())
-      .subscribe(data => {
-        this.commitment = data;
-        this.commitmentProgress = this.reached(data);
-        console.log(this.commitment);
-        console.log(this.commitmentProgress);
-      });
+      .subscribe(
+        data => {
+          this.commitment = data;
+          this.commitmentProgress = this.reached(data);
+        },
+        err => console.error(err)
+      );
   }
 
   /**
