@@ -375,7 +375,8 @@ export class MeditationComponent {
     }
 
     const keysDaily = Object.keys(this.profile.meditations.lastDays);
-    this.commitmentProgressDaily = this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]];
+    this.commitmentProgressDaily =
+                        this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]];
 
     if (commitment.type === 'daily') {
       let sum = 0;
