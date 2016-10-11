@@ -12,7 +12,11 @@
         <td>{{ commitment.minutes }} minutes {{ commitment.type }}</td>
       </tr>
       <tr>
-        <td>status:</td>
+        <td>today:</td>
+        <td>{{ commitmentProgressDaily }} minutes</td>
+      </tr>
+      <tr>
+        <td>total:</td>
         <td>{{ commitmentProgress }}%</td>
       </tr>
     </table>

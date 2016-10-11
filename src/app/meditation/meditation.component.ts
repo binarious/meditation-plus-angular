@@ -47,6 +47,7 @@ export class MeditationComponent {
   // commit
   commitment;
   commitmentProgress;
+  commitmentProgressDaily;
 
   // current User data
   currentMeditation: string = '';
@@ -62,17 +63,6 @@ export class MeditationComponent {
     public router: Router,
     public appState: AppState
   ) {
-    // Get user profile data (for preferred sound and last meditation time)
-    this.userService.getProfile(this.getUserId())
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          this.profile = data;
-          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
-        },
-        err => console.error(err)
-      );
-
     this.polluteWithLastSession();
   }
 
@@ -377,18 +367,20 @@ export class MeditationComponent {
   }
 
   /**
-   * Determines the percentage of the reached goal.
+   * Determines the percentage of the reached goal of commitment.
    */
   reached(commitment) {
-    if (!this.profile) {
+    if (!this.profile || !commitment) {
       return;
     }
 
+    const keysDaily = Object.keys(this.profile.meditations.lastDays);
+    this.commitmentProgressDaily = this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]];
+
     if (commitment.type === 'daily') {
       let sum = 0;
-
       // Sum minutes per day for the last week
-      for (let key of Object.keys(this.profile.meditations.lastDays)) {
+      for (let key of keysDaily) {
         const meditated = this.profile.meditations.lastDays[key];
         // Cut meditated minutes to the max of the commitment to preserve
         // a correct average value.
@@ -430,6 +422,18 @@ export class MeditationComponent {
         this.loadMeditations();
       });
 
+    // get user profile data (for preferred sound and last meditation time)
+    this.userService.getProfile(this.getUserId())
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.profile = data;
+          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
+        },
+        err => console.error(err)
+      );
+
+    // get commitment status for user
     this.commitmentService.getCurrentUser()
       .map(res => res.json())
       .subscribe(
