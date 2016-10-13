@@ -424,26 +424,21 @@ export class MeditationComponent {
       });
 
     // get user profile data (for preferred sound and last meditation time)
-    this.userService.getProfile(this.getUserId())
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          this.profile = data;
-          this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
-        },
-        err => console.error(err)
-      );
+    let profile$ = this.userService.getProfile(this.getUserId())
+      .map(res => res.json());
 
     // get commitment status for user
-    this.commitmentService.getCurrentUser()
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          this.commitment = data;
-          this.commitmentProgress = this.reached(data);
-        },
-        err => console.error(err)
-      );
+    let commitment$ =  this.commitmentService.getCurrentUser()
+      .map(res => res.json());
+
+    // forkJoin them since commitment calculation depends on the profile
+    Observable.forkJoin([profile$, commitment$]).subscribe(res => {
+      this.profile = res[0];
+      this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
+
+      this.commitment = res[1];
+      this.commitmentProgress = this.reached(res[1]);
+    }, err => console.log(err));
   }
 
   /**
