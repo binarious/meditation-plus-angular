@@ -366,48 +366,6 @@ export class MeditationComponent {
     this.appState.set('isMeditating', false);
   }
 
-  /**
-   * Determines the percentage of the reached goal of commitment.
-   */
-  reached(commitment) {
-    if (!this.profile || !commitment) {
-      return;
-    }
-
-    const keysDaily = Object.keys(this.profile.meditations.lastDays);
-    this.commitmentProgressDaily =
-                        this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]];
-
-    if (commitment.type === 'daily') {
-      let sum = 0;
-      // Sum minutes per day for the last week
-      for (let key of keysDaily) {
-        const meditated = this.profile.meditations.lastDays[key];
-        // Cut meditated minutes to the max of the commitment to preserve
-        // a correct average value.
-        sum += meditated > commitment.minutes ? commitment.minutes : meditated;
-      }
-
-      // build the average and compare it to goal
-      let avg = sum / Object.keys(this.profile.meditations.lastDays).length;
-      let result = Math.round(100 * avg / commitment.minutes);
-
-      return result;
-    }
-
-    if (commitment.type === 'weekly') {
-      const keys = Object.keys(this.profile.meditations.lastWeeks);
-
-      // Get last entry of lastWeeks
-      const lastWeekSum = this.profile.meditations.lastWeeks[keys[keys.length - 1]];
-
-      // compare it to goal
-      let result = Math.round(100 * lastWeekSum / commitment.minutes);
-
-      return result;
-    }
-  }
-
   ngOnInit() {
     // getting chat data instantly
     this.loadMeditations();
@@ -437,7 +395,11 @@ export class MeditationComponent {
       this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
 
       this.commitment = res[1];
-      this.commitmentProgress = this.reached(res[1]);
+      this.commitmentProgress = this.commitmentService.reached(this.profile.meditations, this.commitment);
+
+      const keysDaily = Object.keys(this.profile.meditations.lastDays);
+      this.commitmentProgressDaily =
+                          this.profile.meditations.lastDays[keysDaily[keysDaily.length - 1]];
     }, err => console.log(err));
   }
 
