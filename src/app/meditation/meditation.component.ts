@@ -273,7 +273,7 @@ export class MeditationComponent {
       this.timerActive = true;
 
       const bellName = this.profile.sound.replace(/\/assets\/audio\/|.mp3/g, '');
-      let url = 'https://share.sirimangalo.org/volunteers/MeditationBells/' + bellName + '/';
+      let url = 'https://share.sirimangalo.org/static/sounds/' + bellName + '/';
 
       if (!walking || !sitting) {
         url += (walking ? walking : sitting) + '.ogg';
