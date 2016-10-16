@@ -268,7 +268,8 @@ export class MeditationComponent {
     }
 
     // play a static file as bell if supported
-    if (this.profile.staticBell !== false && this.checkStaticBell(walking, sitting) && this.checkOGG()) {
+    if (this.profile.staticBell !== false
+      && this.checkStaticBell(walking, sitting) && this.checkOGG()) {
       this.timerActive = true;
 
       const bellName = this.profile.sound.replace(/\/assets\/audio\/|.mp3/g, '');
@@ -336,11 +337,11 @@ export class MeditationComponent {
    * source: http://diveintohtml5.info/everything.html
    */
   checkOGG() {
-    var a = document.createElement('audio');
+    let a = document.createElement('audio');
     return !!(a.canPlayType && a.canPlayType('audio/ogg; codecs="vorbis"').replace(/no/, ''));
   }
   checkMP3() {
-    var a = document.createElement('audio');
+    let a = document.createElement('audio');
     return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
   }
 
