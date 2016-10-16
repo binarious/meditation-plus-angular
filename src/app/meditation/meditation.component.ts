@@ -349,7 +349,7 @@ export class MeditationComponent {
    * Checking if static file for bell probably exists.
    */
   checkStaticBell(walking, sitting) {
-    if (this.modulo(walking + sitting, 5) !== 0) {
+    if ((walking + sitting) % 5 !== 0) {
       return false;
     }
 
@@ -450,13 +450,6 @@ export class MeditationComponent {
    */
   round(val: number): number {
     return Math.round(val);
-  }
-
-  /**
-   * Substitute for default '%' operator. '%' is not working properly in JS.
-   */
-  modulo(x, n) {
-    return ((x % n) + n) % n;
   }
 
   ngOnDestroy() {
