@@ -395,7 +395,8 @@ export class MeditationComponent {
       this.profile.lastLike = this.profile.lastLike ? moment(this.profile.lastLike) : null;
 
       this.commitment = res[1];
-      this.commitmentProgress = this.commitmentService.reached(this.profile.meditations, this.commitment);
+      this.commitmentProgress = this.commitmentService
+                                    .reached(this.profile.meditations, this.commitment);
 
       const keysDaily = Object.keys(this.profile.meditations.lastDays);
       this.commitmentProgressDaily =
