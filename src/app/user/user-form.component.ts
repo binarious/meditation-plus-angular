@@ -33,6 +33,7 @@ export class UserFormComponent {
   currentSound;
 
   playSound() {
+    console.log(timezones);
     if (this.model.sound){
       this.currentSound = new Audio(this.model.sound);
       this.currentSound.play();
