@@ -28,6 +28,7 @@ export class AppointmentComponent {
   loadedInitially: boolean = false;
   userHasAppointment: boolean = false;
   currentTab: string = 'table';
+  zoneName: string = moment.tz('America/Toronto').zoneName();
 
   profile;
 
@@ -77,9 +78,8 @@ export class AppointmentComponent {
 
           this.userHasAppointment = true;
 
-          //const currentDay = moment.utc().weekday();
-          const currentDay = moment().tz("America/Toronto").weekday();
-          const currentHour = parseInt(moment().tz("America/Toronto").format("HHMM"));
+          const currentDay = moment.tz('America/Toronto').weekday();
+          const currentHour = parseInt(moment.tz('America/Toronto').format('HHMM'), 10);
 
           if (Math.abs(currentHour - appointment.hour) <= 5
             && appointment.weekDay === currentDay
@@ -158,20 +158,34 @@ export class AppointmentComponent {
 
   }
 
+  /**
+   *  Tries to identify the user's timezone
+   */
+  getLocalTimezone() {
+    if (this.profile && this.profile.timezone) {
+      // lookup correct timezone name from profile model
+      for (let k of timezones) {
+        if (k.value === this.profile.timezone && moment().tz(k.utc[1])) {
+          return k.utc[1];
+        }
+      }
+    }
+
+    return moment.tz.guess();
+  }
 
   /**
    * Converts UTC hour to local hour.
-   * @param  {number} hour UTC hour
+   * @param  {number} time EST/EDT hour
    * @return {string}      Local hour
    */
-  getLocalHour(hours: number): string {
-    let timezone = moment.tz.guess(); // replace with timezone from profile
-    let utc = moment.utc('' + hours, hours < 1000 ? 'Hmm' : 'HHmm');
+  getLocalHour(time: number): string {
+    let timezone = this.getLocalTimezone();
 
-    const hour = parseInt(hours.toString().slice(0, -2));
-    const minute = parseInt(hours.toString().slice(-2));
+    const hour = parseInt(time.toString().slice(0, -2), 10);
+    const minute = parseInt(time.toString().slice(-2), 10);
 
-    let eastern = utc.tz('America/Toronto').hour(hour).minute(minute);
+    let eastern = moment.tz('America/Toronto').hour(hour).minute(minute);
 
     return eastern.tz(timezone).format('HH:mm');
   }
