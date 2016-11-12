@@ -161,6 +161,18 @@ export class AppointmentComponent {
   }
 
   /**
+   * Converts hour from number to string.
+   * @param  {number} hour EST/EDT hour from DB
+   * @return {string}      Local hour in format 'HH:mm'
+   */
+  printHour(hour: number): string {
+    // automatically fills empty space with '0' (i.e. 40 => '0040')
+    let hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
+
+    return moment(hourFormat, 'HHmm').format('HH:mm');
+  }
+
+  /**
    *  Tries to identify the user's timezone
    */
   getLocalTimezone() {
@@ -180,17 +192,14 @@ export class AppointmentComponent {
 
   /**
    * Converts UTC hour to local hour.
-   * @param  {number} time EST/EDT hour
+   * @param  {number} hour EST/EDT hour
    * @return {string}      Local hour
    */
-  getLocalHour(time: number): string {
+  getLocalHour(hour: number): string {
     let timezone = this.getLocalTimezone();
 
-    const hour = parseInt(time.toString().slice(0, -2), 10);
-    const minute = parseInt(time.toString().slice(-2), 10);
-
     // create moment in EST/EDT timezone
-    let eastern = moment.tz('America/Toronto').hour(hour).minute(minute);
+    let eastern = moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto');
 
     // convert it it to users timezone and return
     return eastern.tz(timezone).format('HH:mm');

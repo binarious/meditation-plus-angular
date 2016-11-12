@@ -37,11 +37,19 @@ export class AppointmentAdminComponent {
     return moment('' + weekDay, 'e').format('ddd');
   }
 
+  /**
+   * Converts hour from number to string.
+   * @param  {number} hour EST/EDT hour from DB
+   * @return {string}      Local hour in format 'HH:mm'
+   */
   printHour(hour: number): string {
+    // add increment
     let hourNew = this.calcHour(hour, this.addHours);
 
-    return moment('' + (hourNew === 0 ? '000' : hourNew),
-                  hourNew < 1000 ? 'Hmm' : 'HHmm').format('HH:mm');
+    // automatically fills empty space with '0' (i.e. 40 => '0040')
+    let hourFormat = Array(5 - hourNew.toString().length).join('0') + hourNew.toString();
+
+    return moment(hourFormat, 'HHmm').format('HH:mm');
   }
 
   calcHour(hour: number, increment: number): number {
