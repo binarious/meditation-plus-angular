@@ -167,12 +167,14 @@ export class AppointmentComponent {
     if (this.profile && this.profile.timezone) {
       // lookup correct timezone name from profile model
       for (let k of timezones) {
+        // check if timezone is compatible with moment-timezone
         if (k.value === this.profile.timezone && moment().tz(k.utc[1])) {
           return k.utc[1];
         }
       }
     }
 
+    // guess timezone otherwise
     return moment.tz.guess();
   }
 
@@ -187,8 +189,10 @@ export class AppointmentComponent {
     const hour = parseInt(time.toString().slice(0, -2), 10);
     const minute = parseInt(time.toString().slice(-2), 10);
 
+    // create moment in EST/EDT timezone
     let eastern = moment.tz('America/Toronto').hour(hour).minute(minute);
 
+    // convert it it to users timezone and return
     return eastern.tz(timezone).format('HH:mm');
   }
 
