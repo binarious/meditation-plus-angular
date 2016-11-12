@@ -14,6 +14,9 @@ export class AppointmentAdminComponent {
   // appointment data
   appointments: Object[] = [];
   addHours: number = 0;
+  toUpdate: number = 0;
+  updated: number = 0;
+  updating: boolean = false;
 
   // EDT or EST
   zoneName: string = moment.tz('America/Toronto').zoneName();
@@ -73,18 +76,23 @@ export class AppointmentAdminComponent {
   // Adds 'addHours' to all appointments
   updateAll() {
     let increment = this.addHours;
+    this.updating = true;
+    this.updated = 0;
+    this.toUpdate = 0;
+
 
     // prevent that appointments hours are double increased after updated
     this.addHours = 0;
 
     for (let appointment of this.appointments) {
       if ('hour' in appointment) {
+        this.toUpdate++;
         appointment['hour'] = this.calcHour(appointment['hour'], increment);
 
         this.appointmentService
           .save(appointment)
           .subscribe(
-            res => {},
+            () => this.updated++,
             err => console.log(err)
           );
       }

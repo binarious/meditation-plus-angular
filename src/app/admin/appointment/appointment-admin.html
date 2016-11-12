@@ -24,6 +24,10 @@
   >
     Submit
   </button>
+
+  <span *ngIf="updating && toUpdate !== updated">
+    Updated {{ updated }} of {{ toUpdate }}.
+  </span>
 </div>
 
 <div class="appointment-list">
