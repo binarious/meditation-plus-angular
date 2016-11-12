@@ -75,7 +75,7 @@
           <b><a [routerLink]="['/profile', app.user._id]">{{ app.user.name }}</a></b>
         </h3>
         <p md-line>
-          {{ getLocalHour(app.hour) }} ({{ app.hour }} EST)
+          {{ getLocalHour(app.hour) }} ({{ app.hour }} {{ zoneName }})
         </p>
       </md-list-item>
     </div>
