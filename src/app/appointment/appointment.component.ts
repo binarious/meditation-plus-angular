@@ -82,8 +82,10 @@ export class AppointmentComponent {
 
           const currentDay = moment.tz('America/Toronto').weekday();
           const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
+          const currentMoment = moment(this.printHour(currentHour), 'HH:mm');
+          const appointMoment = moment(this.printHour(appointment.hour), 'HH:mm');
 
-          if (Math.abs(currentHour - appointment.hour) <= 5
+          if (Math.abs(moment.duration(appointMoment.diff(currentMoment)).asMinutes()) <= 5
             && appointment.weekDay === currentDay
           ) {
             this.activateHangoutsButton();
