@@ -28,6 +28,8 @@ export class AppointmentComponent {
   loadedInitially: boolean = false;
   userHasAppointment: boolean = false;
   currentTab: string = 'table';
+
+  // EDT or EST
   zoneName: string = moment.tz('America/Toronto').zoneName();
 
   profile;

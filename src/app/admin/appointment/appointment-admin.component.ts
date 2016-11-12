@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppointmentService } from '../../appointment';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'appointment-admin',
@@ -13,6 +13,10 @@ export class AppointmentAdminComponent {
 
   // appointment data
   appointments: Object[] = [];
+  addHours: number = 0;
+
+  // EDT or EST
+  zoneName: string = moment.tz('America/Toronto').zoneName();
 
   constructor(public appointmentService: AppointmentService) {
     this.loadAppointments();
@@ -34,7 +38,15 @@ export class AppointmentAdminComponent {
   }
 
   printHour(hour: number): string {
-    return moment('' + hour, hour < 1000 ? 'Hmm' : 'HHmm').format('HH:mm');
+    let hourNew = this.calcHour(hour, this.addHours);
+
+    return moment('' + (hourNew === 0 ? '0000' : hourNew), hourNew < 1000 ? 'Hmm' : 'HHmm').format('HH:mm');
+  }
+
+  calcHour(hour: number, increment: number): number {
+    let calculated = (hour + increment * 100);
+
+    return calculated < 0 || calculated > 2359 ? 0 : calculated;
   }
 
   delete(evt, appointment) {
@@ -47,5 +59,27 @@ export class AppointmentAdminComponent {
     this.appointmentService
       .delete(appointment)
       .subscribe(() => this.loadAppointments());
+  }
+
+  // Adds 'addHours' to all appointments
+  updateAll() {
+    let increment = this.addHours;
+
+    // prevent that appointments hours are double increased after updated
+    this.addHours = 0;
+
+    for (let appointment of this.appointments) {
+      if ('hour' in appointment) {
+        appointment['hour'] = this.calcHour(appointment['hour'], increment);
+
+        this.appointmentService
+          .save(appointment)
+          .subscribe(
+            res => {},
+            err => console.log(err)
+          );
+      }
+    }
+
   }
 }
