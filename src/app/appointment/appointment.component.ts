@@ -81,7 +81,7 @@ export class AppointmentComponent {
           this.userHasAppointment = true;
 
           const currentDay = moment.tz('America/Toronto').weekday();
-          const currentHour = parseInt(moment.tz('America/Toronto').format('HHMM'), 10);
+          const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
 
           if (Math.abs(currentHour - appointment.hour) <= 5
             && appointment.weekDay === currentDay
