@@ -40,7 +40,8 @@ export class AppointmentAdminComponent {
   printHour(hour: number): string {
     let hourNew = this.calcHour(hour, this.addHours);
 
-    return moment('' + (hourNew === 0 ? '000' : hourNew), hourNew < 1000 ? 'Hmm' : 'HHmm').format('HH:mm');
+    return moment('' + (hourNew === 0 ? '000' : hourNew),
+                  hourNew < 1000 ? 'Hmm' : 'HHmm').format('HH:mm');
   }
 
   calcHour(hour: number, increment: number): number {
