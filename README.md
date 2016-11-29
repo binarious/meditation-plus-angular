@@ -20,12 +20,11 @@ export let ApiConfig = {
 ```
 ### Add required global libraries
 ```
-npm install typings webpack-dev-server rimraf webpack -g
+yarn install webpack-dev-server rimraf webpack -g
 ```
 
 ### Install dependencies and run
 ```
-npm install
-typings install
-npm run start:hmr
+yarn install
+yarn run start:hmr
 ```
