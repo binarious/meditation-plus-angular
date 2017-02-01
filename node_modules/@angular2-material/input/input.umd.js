@@ -1,0 +1,482 @@
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/forms'), require('@angular/common'), require('@angular2-material/core'), require('rxjs/Observable')) :
+    typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/forms', '@angular/common', '@angular2-material/core', 'rxjs/Observable'], factory) :
+    (factory((global.md = global.md || {}, global.md.input = global.md.input || {}),global.ng.core,global.ng.forms,global.ng.common,global.md.core,global.Rx));
+}(this, (function (exports,_angular_core,_angular_forms,_angular_common,_angular2Material_core,rxjs_Observable) { 'use strict';
+
+var __extends = (window && window.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (window && window.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (window && window.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var noop = function () { };
+var MD_INPUT_CONTROL_VALUE_ACCESSOR = {
+    provide: _angular_forms.NG_VALUE_ACCESSOR,
+    useExisting: _angular_core.forwardRef(function () { return MdInput; }),
+    multi: true
+};
+// Invalid input type. Using one of these will throw an MdInputUnsupportedTypeError.
+var MD_INPUT_INVALID_INPUT_TYPE = [
+    'file',
+    'radio',
+    'checkbox',
+];
+var nextUniqueId = 0;
+var MdInputPlaceholderConflictError = (function (_super) {
+    __extends(MdInputPlaceholderConflictError, _super);
+    function MdInputPlaceholderConflictError() {
+        _super.call(this, 'Placeholder attribute and child element were both specified.');
+    }
+    return MdInputPlaceholderConflictError;
+}(_angular2Material_core.MdError));
+var MdInputUnsupportedTypeError = (function (_super) {
+    __extends(MdInputUnsupportedTypeError, _super);
+    function MdInputUnsupportedTypeError(type) {
+        _super.call(this, "Input type \"" + type + "\" isn't supported by md-input.");
+    }
+    return MdInputUnsupportedTypeError;
+}(_angular2Material_core.MdError));
+var MdInputDuplicatedHintError = (function (_super) {
+    __extends(MdInputDuplicatedHintError, _super);
+    function MdInputDuplicatedHintError(align) {
+        _super.call(this, "A hint was already declared for 'align=\"" + align + "\"'.");
+    }
+    return MdInputDuplicatedHintError;
+}(_angular2Material_core.MdError));
+/**
+ * The placeholder directive. The content can declare this to implement more
+ * complex placeholders.
+ */
+var MdPlaceholder = (function () {
+    function MdPlaceholder() {
+    }
+    MdPlaceholder = __decorate([
+        _angular_core.Directive({
+            selector: 'md-placeholder'
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MdPlaceholder);
+    return MdPlaceholder;
+}());
+/** The hint directive, used to tag content as hint labels (going under the input). */
+var MdHint = (function () {
+    function MdHint() {
+        // Whether to align the hint label at the start or end of the line.
+        this.align = 'start';
+    }
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Object)
+    ], MdHint.prototype, "align", void 0);
+    MdHint = __decorate([
+        _angular_core.Directive({
+            selector: 'md-hint',
+            host: {
+                '[class.md-right]': 'align == "end"',
+                '[class.md-hint]': 'true'
+            }
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MdHint);
+    return MdHint;
+}());
+/**
+ * Component that represents a text input. It encapsulates the <input> HTMLElement and
+ * improve on its behaviour, along with styling it according to the Material Design.
+ */
+var MdInput = (function () {
+    function MdInput() {
+        this._focused = false;
+        this._value = '';
+        /** Callback registered via registerOnTouched (ControlValueAccessor) */
+        this._onTouchedCallback = noop;
+        /** Callback registered via registerOnChange (ControlValueAccessor) */
+        this._onChangeCallback = noop;
+        /**
+         * Bindings.
+         */
+        this.align = 'start';
+        this.dividerColor = 'primary';
+        this.floatingPlaceholder = true;
+        this.hintLabel = '';
+        this.autofocus = false;
+        this.disabled = false;
+        this.id = "md-input-" + nextUniqueId++;
+        this.list = null;
+        this.max = null;
+        this.maxlength = null;
+        this.min = null;
+        this.minlength = null;
+        this.placeholder = null;
+        this.readonly = false;
+        this.required = false;
+        this.spellcheck = false;
+        this.step = null;
+        this.tabindex = null;
+        this.type = 'text';
+        this.name = null;
+        this._blurEmitter = new _angular_core.EventEmitter();
+        this._focusEmitter = new _angular_core.EventEmitter();
+    }
+    Object.defineProperty(MdInput.prototype, "focused", {
+        /** Readonly properties. */
+        get: function () { return this._focused; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "empty", {
+        get: function () { return this._value == null || this._value === ''; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "characterCount", {
+        get: function () {
+            return this.empty ? 0 : ('' + this._value).length;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "inputId", {
+        get: function () { return this.id + "-input"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "onBlur", {
+        get: function () {
+            return this._blurEmitter.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "onFocus", {
+        get: function () {
+            return this._focusEmitter.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "value", {
+        get: function () { return this._value; },
+        set: function (v) {
+            v = this._convertValueForInputType(v);
+            if (v !== this._value) {
+                this._value = v;
+                this._onChangeCallback(v);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(MdInput.prototype, "_align", {
+        // This is to remove the `align` property of the `md-input` itself. Otherwise HTML5
+        // might place it as RTL when we don't want to. We still want to use `align` as an
+        // Input though, so we use HostBinding.
+        get: function () { return null; },
+        enumerable: true,
+        configurable: true
+    });
+    /** Set focus on input */
+    MdInput.prototype.focus = function () {
+        this._inputElement.nativeElement.focus();
+    };
+    MdInput.prototype._handleFocus = function (event) {
+        this._focused = true;
+        this._focusEmitter.emit(event);
+    };
+    MdInput.prototype._handleBlur = function (event) {
+        this._focused = false;
+        this._onTouchedCallback();
+        this._blurEmitter.emit(event);
+    };
+    MdInput.prototype._handleChange = function (event) {
+        this.value = event.target.value;
+        this._onTouchedCallback();
+    };
+    MdInput.prototype._hasPlaceholder = function () {
+        return !!this.placeholder || this._placeholderChild != null;
+    };
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
+    MdInput.prototype.writeValue = function (value) {
+        this._value = value;
+    };
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
+    MdInput.prototype.registerOnChange = function (fn) {
+        this._onChangeCallback = fn;
+    };
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
+    MdInput.prototype.registerOnTouched = function (fn) {
+        this._onTouchedCallback = fn;
+    };
+    /** TODO: internal */
+    MdInput.prototype.ngAfterContentInit = function () {
+        var _this = this;
+        this._validateConstraints();
+        // Trigger validation when the hint children change.
+        this._hintChildren.changes.subscribe(function () {
+            _this._validateConstraints();
+        });
+    };
+    /** TODO: internal */
+    MdInput.prototype.ngOnChanges = function (changes) {
+        this._validateConstraints();
+    };
+    /**
+     * Convert the value passed in to a value that is expected from the type of the md-input.
+     * This is normally performed by the *_VALUE_ACCESSOR in forms, but since the type is bound
+     * on our internal input it won't work locally.
+     * @private
+     */
+    MdInput.prototype._convertValueForInputType = function (v) {
+        switch (this.type) {
+            case 'number': return parseFloat(v);
+            default: return v;
+        }
+    };
+    /**
+     * Ensure that all constraints defined by the API are validated, or throw errors otherwise.
+     * Constraints for now:
+     *   - placeholder attribute and <md-placeholder> are mutually exclusive.
+     *   - type attribute is not one of the forbidden types (see constant at the top).
+     *   - Maximum one of each `<md-hint>` alignment specified, with the attribute being
+     *     considered as align="start".
+     * @private
+     */
+    MdInput.prototype._validateConstraints = function () {
+        var _this = this;
+        if (this.placeholder != '' && this.placeholder != null && this._placeholderChild != null) {
+            throw new MdInputPlaceholderConflictError();
+        }
+        if (MD_INPUT_INVALID_INPUT_TYPE.indexOf(this.type) != -1) {
+            throw new MdInputUnsupportedTypeError(this.type);
+        }
+        if (this._hintChildren) {
+            // Validate the hint labels.
+            var startHint_1 = null;
+            var endHint_1 = null;
+            this._hintChildren.forEach(function (hint) {
+                if (hint.align == 'start') {
+                    if (startHint_1 || _this.hintLabel) {
+                        throw new MdInputDuplicatedHintError('start');
+                    }
+                    startHint_1 = hint;
+                }
+                else if (hint.align == 'end') {
+                    if (endHint_1) {
+                        throw new MdInputDuplicatedHintError('end');
+                    }
+                    endHint_1 = hint;
+                }
+            });
+        }
+    };
+    __decorate([
+        _angular_core.Input('aria-label'), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "ariaLabel", void 0);
+    __decorate([
+        _angular_core.Input('aria-labelledby'), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "ariaLabelledBy", void 0);
+    __decorate([
+        _angular_core.Input('aria-disabled'),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "ariaDisabled", void 0);
+    __decorate([
+        _angular_core.Input('aria-required'),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "ariaRequired", void 0);
+    __decorate([
+        _angular_core.Input('aria-invalid'),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "ariaInvalid", void 0);
+    __decorate([
+        _angular_core.ContentChild(MdPlaceholder), 
+        __metadata('design:type', MdPlaceholder)
+    ], MdInput.prototype, "_placeholderChild", void 0);
+    __decorate([
+        _angular_core.ContentChildren(MdHint), 
+        __metadata('design:type', _angular_core.QueryList)
+    ], MdInput.prototype, "_hintChildren", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Object)
+    ], MdInput.prototype, "align", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Object)
+    ], MdInput.prototype, "dividerColor", void 0);
+    __decorate([
+        _angular_core.Input(),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "floatingPlaceholder", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "hintLabel", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "autocomplete", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "autocorrect", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "autocapitalize", void 0);
+    __decorate([
+        _angular_core.Input(),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "autofocus", void 0);
+    __decorate([
+        _angular_core.Input(),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "disabled", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "id", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "list", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Object)
+    ], MdInput.prototype, "max", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Number)
+    ], MdInput.prototype, "maxlength", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Object)
+    ], MdInput.prototype, "min", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Number)
+    ], MdInput.prototype, "minlength", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "placeholder", void 0);
+    __decorate([
+        _angular_core.Input(),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "readonly", void 0);
+    __decorate([
+        _angular_core.Input(),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "required", void 0);
+    __decorate([
+        _angular_core.Input(),
+        _angular2Material_core.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "spellcheck", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Number)
+    ], MdInput.prototype, "step", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Number)
+    ], MdInput.prototype, "tabindex", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "type", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "name", void 0);
+    __decorate([
+        _angular_core.Output('blur'), 
+        __metadata('design:type', rxjs_Observable.Observable)
+    ], MdInput.prototype, "onBlur", null);
+    __decorate([
+        _angular_core.Output('focus'), 
+        __metadata('design:type', rxjs_Observable.Observable)
+    ], MdInput.prototype, "onFocus", null);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Object)
+    ], MdInput.prototype, "value", null);
+    __decorate([
+        _angular_core.HostBinding('attr.align'), 
+        __metadata('design:type', Object)
+    ], MdInput.prototype, "_align", null);
+    __decorate([
+        _angular_core.ViewChild('input'), 
+        __metadata('design:type', _angular_core.ElementRef)
+    ], MdInput.prototype, "_inputElement", void 0);
+    MdInput = __decorate([
+        _angular_core.Component({selector: 'md-input',
+            template: "<div class=\"md-input-wrapper\"> <div class=\"md-input-table\"> <div class=\"md-input-prefix\"><ng-content select=\"[md-prefix]\"></ng-content></div> <div class=\"md-input-infix\"> <input #input aria-target class=\"md-input-element\" [class.md-end]=\"align == 'end'\" [attr.aria-label]=\"ariaLabel\" [attr.aria-labelledby]=\"ariaLabelledBy\" [attr.aria-disabled]=\"ariaDisabled\" [attr.aria-required]=\"ariaRequired\" [attr.aria-invalid]=\"ariaInvalid\" [attr.autocomplete]=\"autocomplete\" [attr.autocorrect]=\"autocorrect\" [attr.autocapitalize]=\"autocapitalize\" [autofocus]=\"autofocus\" [disabled]=\"disabled\" [id]=\"inputId\" [attr.list]=\"list\" [attr.max]=\"max\" [attr.maxlength]=\"maxlength\" [attr.min]=\"min\" [attr.minlength]=\"minlength\" [readonly]=\"readonly\" [required]=\"required\" [spellcheck]=\"spellcheck\" [attr.step]=\"step\" [attr.tabindex]=\"tabindex\" [type]=\"type\" [attr.name]=\"name\" (focus)=\"_handleFocus($event)\" (blur)=\"_handleBlur($event)\" [(ngModel)]=\"value\" (change)=\"_handleChange($event)\"> <label class=\"md-input-placeholder\" [attr.for]=\"inputId\" [class.md-empty]=\"empty\" [class.md-focused]=\"focused\" [class.md-float]=\"floatingPlaceholder\" [class.md-accent]=\"dividerColor == 'accent'\" [class.md-warn]=\"dividerColor == 'warn'\" *ngIf=\"_hasPlaceholder()\"> <ng-content select=\"md-placeholder\"></ng-content> {{placeholder}} <span class=\"md-placeholder-required\" *ngIf=\"required\">*</span> </label> </div> <div class=\"md-input-suffix\"><ng-content select=\"[md-suffix]\"></ng-content></div> </div> <div class=\"md-input-underline\" [class.md-disabled]=\"disabled\"> <span class=\"md-input-ripple\" [class.md-focused]=\"focused\" [class.md-accent]=\"dividerColor == 'accent'\" [class.md-warn]=\"dividerColor == 'warn'\"></span> </div> <div *ngIf=\"hintLabel != ''\" class=\"md-hint\">{{hintLabel}}</div> <ng-content select=\"md-hint\"></ng-content> </div> ",
+            styles: ["/** * Mixin that creates a new stacking context. * see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context */ /** * This mixin hides an element visually. * That means it's still accessible for screen-readers but not visible in view. */ /** * Forces an element to grow to fit floated contents; used as as an alternative to * `overflow: hidden;` because it doesn't cut off contents. */ /** * A mixin, which generates temporary ink ripple on a given component. * When $bindToParent is set to true, it will check for the focused class on the same selector as you included * that mixin. * It is also possible to specify the color palette of the temporary ripple. By default it uses the * accent palette for its background. */ /** * Undo the red box-shadow glow added by Firefox on invalid inputs. * See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-ui-invalid */ :-moz-ui-invalid { box-shadow: none; } /** * Applies a floating placeholder above the input itself. */ :host { display: inline-block; position: relative; font-family: Roboto, \"Helvetica Neue\", sans-serif; text-align: left; } :host .md-input-wrapper { margin: 16px 0; } :host .md-input-table { display: inline-table; flex-flow: column; vertical-align: bottom; width: 100%; } :host .md-input-table > * { display: table-cell; } :host .md-input-element { font: inherit; background: transparent; border: none; outline: none; padding: 0; width: 100%; } :host .md-input-element.md-end { text-align: right; } :host .md-input-infix { position: relative; } :host .md-input-placeholder { position: absolute; left: 0; top: 0; font-size: 100%; pointer-events: none; color: rgba(0, 0, 0, 0.38); z-index: 1; width: 100%; display: none; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; transform: translateY(0); transform-origin: bottom left; transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1), scale 400ms cubic-bezier(0.25, 0.8, 0.25, 1), color 400ms cubic-bezier(0.25, 0.8, 0.25, 1), width 400ms cubic-bezier(0.25, 0.8, 0.25, 1); } :host .md-input-placeholder.md-empty { display: block; cursor: text; } :host .md-input-placeholder.md-float:not(.md-empty), :host .md-input-placeholder.md-float.md-focused { display: block; padding-bottom: 5px; transform: translateY(-100%) scale(0.75); width: 133.33333%; } :host .md-input-placeholder.md-float:not(.md-empty) .md-placeholder-required, :host .md-input-placeholder.md-float.md-focused .md-placeholder-required { color: #9c27b0; } :host .md-input-placeholder.md-focused { color: #009688; } :host .md-input-placeholder.md-focused.md-accent { color: #9c27b0; } :host .md-input-placeholder.md-focused.md-warn { color: #f44336; } :host input:-webkit-autofill + .md-input-placeholder { display: block; padding-bottom: 5px; transform: translateY(-100%) scale(0.75); width: 133.33333%; } :host input:-webkit-autofill + .md-input-placeholder .md-placeholder-required { color: #9c27b0; } :host .md-input-underline { position: absolute; height: 1px; width: 100%; margin-top: 4px; border-top: 1px solid rgba(0, 0, 0, 0.38); } :host .md-input-underline.md-disabled { border-top: 0; background-image: linear-gradient(to right, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.26) 33%, transparent 0%); background-position: 0; background-size: 4px 1px; background-repeat: repeat-x; } :host .md-input-underline .md-input-ripple { position: absolute; height: 2px; z-index: 1; background-color: #009688; top: -1px; width: 100%; transform-origin: top; opacity: 0; transform: scaleY(0); transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1); } :host .md-input-underline .md-input-ripple.md-accent { background-color: #9c27b0; } :host .md-input-underline .md-input-ripple.md-warn { background-color: #f44336; } :host .md-input-underline .md-input-ripple.md-focused { opacity: 1; transform: scaleY(1); } :host .md-hint { position: absolute; font-size: 75%; bottom: -0.5em; } :host .md-hint.md-right { right: 0; } :host-context([dir='rtl']) { text-align: right; } :host-context([dir='rtl']) .md-input-placeholder { transform-origin: bottom right; } :host-context([dir='rtl']) .md-input-element.md-end { text-align: left; } :host-context([dir='rtl']) .md-hint { right: 0; left: auto; } :host-context([dir='rtl']) .md-hint.md-right { right: auto; left: 0; } /*# sourceMappingURL=input.css.map */ "],
+            providers: [MD_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: { '(click)': 'focus()' }
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MdInput);
+    return MdInput;
+}());
+var MdInputModule = (function () {
+    function MdInputModule() {
+    }
+    MdInputModule.forRoot = function () {
+        return {
+            ngModule: MdInputModule,
+            providers: []
+        };
+    };
+    MdInputModule = __decorate([
+        _angular_core.NgModule({
+            declarations: [MdPlaceholder, MdInput, MdHint],
+            imports: [_angular_common.CommonModule, _angular_forms.FormsModule],
+            exports: [MdPlaceholder, MdInput, MdHint],
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MdInputModule);
+    return MdInputModule;
+}());
+
+exports.MD_INPUT_CONTROL_VALUE_ACCESSOR = MD_INPUT_CONTROL_VALUE_ACCESSOR;
+exports.MdInputPlaceholderConflictError = MdInputPlaceholderConflictError;
+exports.MdInputUnsupportedTypeError = MdInputUnsupportedTypeError;
+exports.MdInputDuplicatedHintError = MdInputDuplicatedHintError;
+exports.MdPlaceholder = MdPlaceholder;
+exports.MdHint = MdHint;
+exports.MdInput = MdInput;
+exports.MdInputModule = MdInputModule;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

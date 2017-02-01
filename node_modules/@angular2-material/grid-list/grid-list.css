@@ -1,0 +1,96 @@
+/**
+ * This mixin will ensure that lines that overflow the container will
+ * hide the overflow and truncate neatly with an ellipsis.
+ */
+/**
+ * This mixin provides all md-line styles, changing secondary font size
+ * based on whether the list is in dense mode.
+ */
+/**
+ * This mixin provides base styles for the wrapper around md-line
+ * elements in a list.
+ */
+/**
+ * This mixin normalizes default element styles, e.g. font weight for heading text.
+ */
+/* height of tile header or footer if it has one line */
+/* height of tile header or footer if it has two lines */
+/* side padding for text in tile headers and footers */
+/* font styles for text in tile headers and footers */
+md-grid-list {
+  display: block;
+  position: relative; }
+
+md-grid-tile {
+  display: block;
+  position: absolute; }
+  md-grid-tile figure {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0;
+    margin: 0; }
+  md-grid-tile md-grid-tile-header,
+  md-grid-tile md-grid-tile-footer {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    padding: 0 16px;
+    font-size: 16px;
+    position: absolute;
+    left: 0;
+    right: 0; }
+    md-grid-tile md-grid-tile-header [md-line],
+    md-grid-tile md-grid-tile-footer [md-line] {
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      box-sizing: border-box; }
+      md-grid-tile md-grid-tile-header [md-line]:nth-child(n+2),
+      md-grid-tile md-grid-tile-footer [md-line]:nth-child(n+2) {
+        font-size: 12px; }
+    md-grid-tile md-grid-tile-header > *,
+    md-grid-tile md-grid-tile-footer > * {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      font-size: inherit; }
+    md-grid-tile md-grid-tile-header.md-2-line,
+    md-grid-tile md-grid-tile-footer.md-2-line {
+      height: 68px; }
+  md-grid-tile .md-grid-list-text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; }
+    md-grid-tile .md-grid-list-text > * {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      font-size: inherit; }
+    md-grid-tile .md-grid-list-text:empty {
+      display: none; }
+  md-grid-tile md-grid-tile-header {
+    top: 0; }
+  md-grid-tile md-grid-tile-footer {
+    bottom: 0; }
+  md-grid-tile [md-grid-avatar] {
+    padding-right: 16px; }
+    [dir='rtl'] md-grid-tile [md-grid-avatar] {
+      padding-right: 0;
+      padding-left: 16px; }
+    md-grid-tile [md-grid-avatar]:empty {
+      display: none; }
+
+/*# sourceMappingURL=grid-list.css.map */

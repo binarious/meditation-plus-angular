@@ -1,0 +1,190 @@
+/**
+ * A collection of mixins and CSS classes that can be used to apply elevation to a material
+ * element.
+ * See: https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+ * Examples:
+ *
+ *
+ * .md-foo {
+ *   @include $md-elevation(2);
+ *
+ *   &:active {
+ *     @include $md-elevation(8);
+ *   }
+ * }
+ *
+ * <div id="external-card" class="md-elevation-z2"><p>Some content</p></div>
+ *
+ * For an explanation of the design behind how elevation is implemented, see the design doc at
+ * https://goo.gl/Kq0k9Z.
+ */
+/**
+ * The css property used for elevation. In most cases this should not be changed. It is exposed
+ * as a variable for abstraction / easy use when needing to reference the property directly, for
+ * example in a will-change rule.
+ */
+/** The default duration value for elevation transitions. */
+/** The default easing value for elevation transitions. */
+/**
+ * Applies the correct css rules to an element to give it the elevation specified by $zValue.
+ * The $zValue must be between 0 and 24.
+ */
+/**
+ * Returns a string that can be used as the value for a transition property for elevation.
+ * Calling this function directly is useful in situations where a component needs to transition
+ * more than one property.
+ *
+ * .foo {
+ *   transition: md-elevation-transition-property-value(), opacity 100ms ease;
+ *   will-change: $md-elevation-property, opacity;
+ * }
+ */
+/**
+ * Applies the correct css rules needed to have an element transition between elevations.
+ * This mixin should be applied to elements whose elevation values will change depending on their
+ * context (e.g. when active or disabled).
+ */
+md-card {
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: box-shadow;
+  display: block;
+  position: relative;
+  padding: 24px;
+  border-radius: 2px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: white;
+  color: black; }
+
+md-card:hover {
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12); }
+
+.md-card-flat {
+  box-shadow: none; }
+
+md-card-title, md-card-subtitle, md-card-content, md-card-actions {
+  display: block;
+  margin-bottom: 16px; }
+
+md-card-title {
+  font-size: 24px;
+  font-weight: 400; }
+
+md-card-subtitle {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54); }
+
+md-card-content {
+  font-size: 14px; }
+
+md-card-actions {
+  margin-left: -16px;
+  margin-right: -16px;
+  padding: 8px 0; }
+  md-card-actions[align='end'] {
+    display: flex;
+    justify-content: flex-end; }
+
+[md-card-image] {
+  width: calc(100% + 48px);
+  margin: 0 -24px 16px -24px; }
+
+[md-card-xl-image] {
+  width: 240px;
+  height: 240px;
+  margin: -8px; }
+
+md-card-footer {
+  position: absolute;
+  bottom: 0; }
+
+md-card-actions [md-button], md-card-actions [md-raised-button] {
+  margin: 0 4px; }
+
+/* HEADER STYLES */
+md-card-header {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  margin: -8px 0 16px 0; }
+
+.md-card-header-text {
+  height: 40px;
+  margin: 0 8px; }
+
+[md-card-avatar] {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%; }
+
+md-card-header md-card-title {
+  font-size: 14px; }
+
+/* TITLE-GROUP STYLES */
+[md-card-sm-image], [md-card-md-image], [md-card-lg-image] {
+  margin: -8px 0; }
+
+md-card-title-group {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 -8px; }
+
+[md-card-sm-image] {
+  width: 80px;
+  height: 80px; }
+
+[md-card-md-image] {
+  width: 112px;
+  height: 112px; }
+
+[md-card-lg-image] {
+  width: 152px;
+  height: 152px; }
+
+/* MEDIA QUERIES */
+@media (max-width: 600px) {
+  md-card {
+    padding: 24px 16px; }
+  [md-card-image] {
+    width: calc(100% + 32px);
+    margin: 16px -16px; }
+  md-card-title-group {
+    margin: 0; }
+  [md-card-xl-image] {
+    margin-left: 0;
+    margin-right: 0; }
+  md-card-header {
+    margin: -8px 0 0 0; } }
+
+/* FIRST/LAST CHILD ADJUSTMENTS */
+md-card > :first-child, md-card-content > :first-child {
+  margin-top: 0; }
+
+md-card > :last-child, md-card-content > :last-child {
+  margin-bottom: 0; }
+
+[md-card-image]:first-child {
+  margin-top: -24px; }
+
+md-card > md-card-actions:last-child {
+  margin-bottom: -16px;
+  padding-bottom: 0; }
+
+md-card-actions [md-button]:first-child,
+md-card-actions [md-raised-button]:first-child {
+  margin-left: 0;
+  margin-right: 0; }
+
+md-card-title:not(:first-child), md-card-subtitle:not(:first-child) {
+  margin-top: -4px; }
+
+md-card-header md-card-subtitle:not(:first-child) {
+  margin-top: -8px; }
+
+md-card > [md-card-xl-image]:first-child {
+  margin-top: -8px; }
+
+md-card > [md-card-xl-image]:last-child {
+  margin-bottom: -8px; }
+
+/*# sourceMappingURL=card.css.map */

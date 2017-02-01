@@ -15,8 +15,8 @@ declare module 'my-module' {
 
  * If you are using a CommonJS module that is using module.exports then you will have to write your
  * types using export = yourObjectOrFunction with a namespace above it
- * notice how we have to create a namespace that is equal to
- * the function we're assigning the export to
+ * notice how we have to create a namespace that is equal to the function we're
+ * assigning the export to
 
 declare module 'jwt-decode' {
   function jwtDecode(token: string): any;
@@ -46,6 +46,16 @@ import * as _ from 'lodash'
 // support NodeJS modules without type definitions
 declare module '*';
 
+/*
+// for legacy tslint etc to understand rename 'modern-lru' with your package
+// then comment out `declare module '*';`. For each new module copy/paste
+// this method of creating an `any` module type definition
+declare module 'modern-lru' {
+  let x: any;
+  export = x;
+}
+*/
+
 // Extra variables that live on Global that will be replaced by webpack DefinePlugin
 declare var ENV: string;
 declare var HMR: boolean;
@@ -56,8 +66,8 @@ interface SystemJS {
 }
 
 interface GlobalEnvironment {
-  ENV;
-  HMR;
+  ENV: string;
+  HMR: boolean;
   SystemJS: SystemJS;
   System: SystemJS;
 }
@@ -75,7 +85,6 @@ type AsyncRoutes = {
                 FactoryEs6PromiseLoader |
                          FactoryPromise
 };
-
 
 type IdleCallbacks = Es6PromiseLoader |
                              Function |
@@ -98,7 +107,6 @@ interface WebpackModule {
   };
 }
 
-
 interface WebpackRequire {
     (id: string): any;
     (paths: string[], callback: (...modules: any[]) => void): void;
@@ -113,7 +121,6 @@ interface WebpackContext extends WebpackRequire {
 interface ErrorStackTraceLimit {
   stackTraceLimit: number;
 }
-
 
 // Extend typings
 interface NodeRequire extends WebpackRequire {}

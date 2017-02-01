@@ -1,0 +1,186 @@
+/**
+ * Mixin that creates a new stacking context.
+ * see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context
+ */
+/**
+ * This mixin hides an element visually.
+ * That means it's still accessible for screen-readers but not visible in view.
+ */
+/**
+ * Forces an element to grow to fit floated contents; used as as an alternative to
+ * `overflow: hidden;` because it doesn't cut off contents.
+ */
+/**
+ * A mixin, which generates temporary ink ripple on a given component.
+ * When $bindToParent is set to true, it will check for the focused class on the same selector as you included
+ * that mixin.
+ * It is also possible to specify the color palette of the temporary ripple. By default it uses the
+ * accent palette for its background.
+ */
+/**
+ * A collection of mixins and CSS classes that can be used to apply elevation to a material
+ * element.
+ * See: https://www.google.com/design/spec/what-is-material/elevation-shadows.html
+ * Examples:
+ *
+ *
+ * .md-foo {
+ *   @include $md-elevation(2);
+ *
+ *   &:active {
+ *     @include $md-elevation(8);
+ *   }
+ * }
+ *
+ * <div id="external-card" class="md-elevation-z2"><p>Some content</p></div>
+ *
+ * For an explanation of the design behind how elevation is implemented, see the design doc at
+ * https://goo.gl/Kq0k9Z.
+ */
+/**
+ * The css property used for elevation. In most cases this should not be changed. It is exposed
+ * as a variable for abstraction / easy use when needing to reference the property directly, for
+ * example in a will-change rule.
+ */
+/** The default duration value for elevation transitions. */
+/** The default easing value for elevation transitions. */
+/**
+ * Applies the correct css rules to an element to give it the elevation specified by $zValue.
+ * The $zValue must be between 0 and 24.
+ */
+/**
+ * Returns a string that can be used as the value for a transition property for elevation.
+ * Calling this function directly is useful in situations where a component needs to transition
+ * more than one property.
+ *
+ * .foo {
+ *   transition: md-elevation-transition-property-value(), opacity 100ms ease;
+ *   will-change: $md-elevation-property, opacity;
+ * }
+ */
+/**
+ * Applies the correct css rules needed to have an element transition between elevations.
+ * This mixin should be applied to elements whose elevation values will change depending on their
+ * context (e.g. when active or disabled).
+ */
+/* This mixin ensures an element spans the whole viewport.*/
+/**
+ * Mixin to help with defining LTR/RTL 'transform: translate3d()' values.
+ * @param $open The translation value when the sidenav is opened.
+ * @param $close The translation value when the sidenav is closed.
+ */
+md-sidenav-layout {
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  display: block;
+  overflow: hidden; }
+  md-sidenav-layout[fullscreen] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
+    md-sidenav-layout[fullscreen].md-sidenav-opened {
+      overflow: hidden; }
+
+.md-sidenav-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  z-index: 2;
+  visibility: hidden; }
+  .md-sidenav-backdrop.md-sidenav-shown {
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.6); }
+
+.md-sidenav-content {
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  display: block;
+  height: 100%;
+  overflow: auto; }
+
+md-sidenav {
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  min-width: 5%;
+  overflow-y: auto;
+  background-color: white;
+  transform: translate3d(-100%, 0, 0); }
+  md-sidenav.md-sidenav-closed {
+    visibility: hidden; }
+  md-sidenav.md-sidenav-closing {
+    transform: translate3d(-100%, 0, 0);
+    will-change: transform; }
+  md-sidenav.md-sidenav-opening {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+    will-change: transform; }
+  md-sidenav.md-sidenav-opened {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    transform: translate3d(0, 0, 0); }
+  md-sidenav.md-sidenav-push {
+    background-color: white; }
+  md-sidenav.md-sidenav-side {
+    z-index: 1; }
+  md-sidenav.md-sidenav-end {
+    right: 0;
+    transform: translate3d(100%, 0, 0); }
+    md-sidenav.md-sidenav-end.md-sidenav-closed {
+      visibility: hidden; }
+    md-sidenav.md-sidenav-end.md-sidenav-closing {
+      transform: translate3d(100%, 0, 0);
+      will-change: transform; }
+    md-sidenav.md-sidenav-end.md-sidenav-opening {
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      will-change: transform; }
+    md-sidenav.md-sidenav-end.md-sidenav-opened {
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      transform: translate3d(0, 0, 0); }
+  [dir='rtl'] md-sidenav {
+    transform: translate3d(100%, 0, 0); }
+    [dir='rtl'] md-sidenav.md-sidenav-closed {
+      visibility: hidden; }
+    [dir='rtl'] md-sidenav.md-sidenav-closing {
+      transform: translate3d(100%, 0, 0);
+      will-change: transform; }
+    [dir='rtl'] md-sidenav.md-sidenav-opening {
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      will-change: transform; }
+    [dir='rtl'] md-sidenav.md-sidenav-opened {
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      transform: translate3d(0, 0, 0); }
+    [dir='rtl'] md-sidenav.md-sidenav-end {
+      left: 0;
+      right: auto;
+      transform: translate3d(-100%, 0, 0); }
+      [dir='rtl'] md-sidenav.md-sidenav-end.md-sidenav-closed {
+        visibility: hidden; }
+      [dir='rtl'] md-sidenav.md-sidenav-end.md-sidenav-closing {
+        transform: translate3d(-100%, 0, 0);
+        will-change: transform; }
+      [dir='rtl'] md-sidenav.md-sidenav-end.md-sidenav-opening {
+        box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+        will-change: transform; }
+      [dir='rtl'] md-sidenav.md-sidenav-end.md-sidenav-opened {
+        box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+        transform: translate3d(0, 0, 0); }
+
+/*# sourceMappingURL=sidenav.css.map */

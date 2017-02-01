@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 export type InternalStateType = {
   [key: string]: any
@@ -6,43 +6,33 @@ export type InternalStateType = {
 
 @Injectable()
 export class AppState {
-  _state: InternalStateType = { };
 
-  public stateChange: EventEmitter<any> = new EventEmitter<any>();
+  public _state: InternalStateType = { };
 
-  constructor() {
-
-  }
+  // +++? public stateChange: EventEmitter<any> = new EventEmitter<any>();
 
   // already return a clone of the current state
-  get state() {
+  public get state() {
     return this._state = this._clone(this._state);
   }
   // never allow mutation
-  set state(value) {
+  public set state(value) {
     throw new Error('do not mutate the `.state` directly');
   }
 
-
-  get(prop?: any) {
+  public get(prop?: any) {
     // use our state getter for the clone
     const state = this.state;
-    return state.hashOwnProperty(prop) ? state[prop] : state;
+    return state.hasOwnProperty(prop) ? state[prop] : state;
   }
 
-  set(prop: string, value: any) {
+  public set(prop: string, value: any) {
     // internally mutate our state
-    this._state[prop] = value;
-    this.stateChange.emit(this._state);
-    return this._state;
+    return this._state[prop] = value;
   }
 
-
-  _clone(object) {
+  private _clone(object: InternalStateType) {
     // simple object clone
     return JSON.parse(JSON.stringify( object ));
   }
 }
-
-
-
