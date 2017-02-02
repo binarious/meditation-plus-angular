@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 export type InternalStateType = {
   [key: string]: any
@@ -9,7 +9,9 @@ export class AppState {
 
   public _state: InternalStateType = { };
 
-  // +++? public stateChange: EventEmitter<any> = new EventEmitter<any>();
+  /*+++*/
+  public stateChange: EventEmitter<any> = new EventEmitter<any>();
+  /*+++*/
 
   // already return a clone of the current state
   public get state() {

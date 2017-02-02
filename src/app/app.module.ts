@@ -16,6 +16,7 @@ import {
 } from '@angular/router';
 /*+++*/
 import { MaterialModule } from '../platform/angular2-material2';
+import { MomentModule } from 'angular2-moment';
 /*+++*/
 
 /*
