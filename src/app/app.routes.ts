@@ -1,4 +1,7 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
+
+import { DataResolver } from './app.resolver';
+
 import { Home } from './home';
 import { Login } from './login';
 import { NotFoundComponent } from './not-found';
