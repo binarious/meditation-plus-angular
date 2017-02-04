@@ -45,7 +45,6 @@
     "scriptjs": "^2.5.8",
     "socket.io-client": "^1.7.2",
     "stable-interval": "^0.0.4",
-    "stable-timer": "^0.0.4",
     "timezones.json": "^1.1.0",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
@@ -59,7 +58,7 @@
     "@types/jstimezonedetect": "^1.0.0",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.2.34",
-    "@types/node": "^6.0.42",
+    "@types/node": "^7.0.5",
     "@types/scriptjs": "^0.0.2",
     "@types/socket.io-client": "^1.4.29",
     "codelyzer": "~2.0.0-beta.1",

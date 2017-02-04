@@ -8,7 +8,8 @@ import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { AppState } from '../app.service';
 
-declare var StableInterval;
+// tslint:disable-next-line
+const StableInterval = require('stable-interval');
 
 /**
  * Component for the meditation tab inside home.

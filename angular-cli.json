@@ -24,8 +24,8 @@
         "../node_modules/emojione/assets/css/emojione-awesome.css"
       ],
       "scripts": [
+        "../node_modules/moment/min/moment.min.js",
         "../node_modules/moment-timezone/moment-timezone.js",
-        "../node_modules/stable-interval/index.js",
         "../node_modules/socket.io-client/dist/socket.io.min.js"
       ],
       "environments": {
