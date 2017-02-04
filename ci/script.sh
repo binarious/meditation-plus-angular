@@ -18,5 +18,5 @@ echo "exports.version = \"$version\";" > ./version.js
 # set api config
 touch ./src/api.config.ts
 echo "export class ApiConfig {
-  public static url: string = 'https://$server';
+  public static url = 'https://$server';
 };" > ./src/api.config.ts
