@@ -51,7 +51,7 @@ export class ProfileFormComponent implements OnInit {
       );
   }
 
-  OnInit() {
+  ngOnInit() {
     this.userService.getProfile()
       .map(res => res.json())
       .subscribe(
