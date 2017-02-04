@@ -2,10 +2,10 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
   selector: 'badge',
-  template: require('./badge.component.html'),
+  templateUrl: './badge.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    require('./badge.component.css')
+  styleUrls: [
+    './badge.component.styl'
   ]
 })
 export class BadgeComponent {

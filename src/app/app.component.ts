@@ -15,12 +15,10 @@ import { OnlineComponent } from './online';
  * Top Level Component
  */
 @Component({
-  selector: 'app',
+  selector: 'app-root',
   encapsulation: ViewEncapsulation.None,
-  stylesUrls: [
-    'normalize.css',
-    'emojione/assets/css/emojione-awesome.css',
-    './app.component.css',
+  styleUrls: [
+    './app.component.scss',
   ],
   templateUrl: './app.component.html'
 })

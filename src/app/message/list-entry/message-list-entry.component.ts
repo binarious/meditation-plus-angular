@@ -15,21 +15,21 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'message-list-entry',
-  template: require('./message-list-entry.component.html'),
+  templateUrl: './message-list-entry.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    require('./message-list-entry.component.css')
+  styleUrls: [
+    './message-list-entry.component.styl'
   ]
 })
 export class MessageListEntryComponent implements OnInit {
 
   @Input() public message: Message;
-  @Input() public admin: boolean = false;
-  @Input() public menuOpen: boolean = false;
+  @Input() public admin = false;
+  @Input() public menuOpen = false;
   @ViewChild(MdMenuTrigger) public trigger: MdMenuTrigger;
   @Output() public menuOpened: EventEmitter<any> = new EventEmitter<any>();
   @Output() public menuClosed: EventEmitter<any> = new EventEmitter<any>();
-  public localMenuOpen: boolean = false;
+  public localMenuOpen = false;
 
   constructor(public messageService: MessageService) {}
 

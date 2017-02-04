@@ -16,7 +16,8 @@ import { MaterialModule } from '@angular/material';
     UserFormComponent
   ],
   exports: [
-    UserFormComponent
+    UserFormComponent,
+    MaterialModule
   ]
 })
 export class UserModule { }
