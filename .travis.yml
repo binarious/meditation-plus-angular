@@ -18,9 +18,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 script:
   - sh ci/script.sh
-  - ng lint
-  - ng test
-  - ng build --aot --prod
+  - ng lint && ng test && ng build --aot --prod
 after_success:
   - sh ci/deploy.sh
 cache:
