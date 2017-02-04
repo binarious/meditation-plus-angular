@@ -7,9 +7,9 @@ import * as moment from 'moment';
  */
 @Component({
   selector: 'offline-meditation',
-  template: require('./offline-meditation.html'),
-  styles: [
-    require('./offline-meditation.css')
+  templateUrl: './offline-meditation.html',
+  styleUrls: [
+    './offline-meditation.styl'
   ]
 })
 export class OfflineMeditationComponent {

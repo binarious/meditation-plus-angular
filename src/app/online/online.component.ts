@@ -5,9 +5,9 @@ import { UserService } from '../user';
 @Injectable()
 @Component({
   selector: 'online',
-  template: require('./online.component.html'),
-  styles: [
-    require('./online.component.css')
+  templateUrl: './online.component.html',
+  styleUrls: [
+    './online.component.styl'
   ]
 })
 export class OnlineComponent {

@@ -18,16 +18,16 @@ import { OnlineComponent } from './online';
   selector: 'app-root',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    './app.component.scss',
+    './app.component.styl',
   ],
   templateUrl: './app.component.html'
 })
 export class AppComponent {
   @ViewChild('start') public sidenav: any;
 
-  public name: string = 'Meditation+';
-  public title: string = '';
-  public hideOnlineBadge: boolean = false;
+  public name = 'Meditation+';
+  public title = '';
+  public hideOnlineBadge = false;
 
   constructor(
     public appState: AppState,

@@ -20,6 +20,7 @@
       "styles": [
         "../node_modules/normalize.css/normalize.css",
         "styles.css",
+        "material-design.scss",
         "../node_modules/emojione/assets/css/emojione-awesome.css"
       ],
       "scripts": [

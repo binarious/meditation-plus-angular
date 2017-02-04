@@ -44,3 +44,4 @@ Thumbs.db
 
 src/api.config.ts
 version.js
+yarn-error.log

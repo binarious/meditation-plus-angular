@@ -1,7 +1,19 @@
-.control-panel
-  margin-left: 70px
+.testimonial-form > div
+  margin-top: 20px
 
-/** Copied from testimonials.css **/
+.testimonial-form textarea
+  width: 100%
+  box-sizing: border-box
+  -moz-box-sizing: border-box
+  -webkit-box-sizing: border-box
+
+.info-msg
+  margin-top: 20px
+
+md-card
+  flex-shrink: 0
+
+/** Copied from message.css **/
 md-list md-list-item [md-line]
   display: flex
   padding-top: 0
@@ -38,8 +50,8 @@ md-list p[md-line]
   flex: 1
 
 .testimonials
-  /** height: 300px **/
-  overflow-y: hidden
+  height: 300px
+  overflow-y: scroll
   overflow-x: hidden
 
 .testimonial-text
@@ -52,11 +64,17 @@ md-list p[md-line]
   opacity: .5
   font-size: 12px
 
+.testimonial-input
+  margin-right: 10px
+
+.emoji-btn
+  margin-right: 10px
+  margin-top: 15px
+  cursor: pointer
+
 .testimonial-divider
   margin-right: -5px
   margin-left: -5px
-  margin-top: 10px
-  margin-bottom: 10px
 
 .testimonials>div:last-child .testimonial-divider
   display: none

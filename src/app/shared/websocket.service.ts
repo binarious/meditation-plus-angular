@@ -22,7 +22,7 @@ export class WebsocketService {
   }
 
   public onConnected(): Observable<any> {
-    let websocket = this.getSocket();
+    const websocket = this.getSocket();
     return Observable.create(obs => {
       websocket.on('connection', res => obs.next(res));
     });
