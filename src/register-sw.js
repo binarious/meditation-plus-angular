@@ -31,13 +31,31 @@ if ('serviceWorker' in navigator) {
 
       installingWorker.onstatechange = function() {
         switch (installingWorker.state) {
+          case 'installing':
+            console.log('SW Event:', 'installing');
+            var toolbar = document.querySelectorAll('md-toolbar-row>span.fill');
+            if (toolbar.length > 0) {
+              toolbar[1].innerText = 'Downloading App Update...';
+            }
+            break;
           case 'installed':
             if (navigator.serviceWorker.controller) {
               // At this point, the old content will have been purged and the fresh content will
               // have been added to the cache.
               // It's the perfect time to display a "New content is available; please refresh."
               // message in the page's interface.
-              location.reload();
+              console.log('SW Event:', 'installed');
+              var toolbar = document.querySelectorAll('md-toolbar-row>span.fill');
+              if (toolbar.length > 0) {
+                toolbar[1].innerText = 'Downloaded App Update';
+              }
+              // Reload the webpage to load into the new version
+              if (window.confirm(
+                'Meditation+ has been updated to the new version. ' +
+                'Would you like to refresh the page to apply the update now?'
+              )) {
+                window.location.href = '/updated';
+              }
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a "Content is cached for offline use." message.
