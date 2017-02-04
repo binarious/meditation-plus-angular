@@ -35,14 +35,19 @@ let PROVIDERS: any[] = [
   { provide: LocationStrategy, useClass: PathLocationStrategy }
 ];
 
-let _decorateModuleRef = function identity<T>(value: T): T { return value; };
+let _decorateModuleRef = <T>(value: T): T => { return value; };
 
 if ('production' === ENV) {
-  // Production
-  disableDebugTools();
   enableProdMode();
 
-PROVIDERS = [
+  // Production
+  _decorateModuleRef = (modRef: any) => {
+    disableDebugTools();
+
+    return modRef;
+  };
+
+  PROVIDERS = [
     ...PROVIDERS,
     // custom providers in production
   ];
@@ -52,10 +57,10 @@ PROVIDERS = [
   _decorateModuleRef = (modRef: any) => {
     let appRef = modRef.injector.get(ApplicationRef);
     let cmpRef = appRef.components[0];
-    let _ng = (<any>window).ng;
+    let _ng = (<any> window).ng;
     enableDebugTools(modRef);
-    (<any>window).ng.probe = _ng.probe;
-    (<any>window).ng.coreTokens = _ng.coreTokens;
+    (<any> window).ng.probe = _ng.probe;
+    (<any> window).ng.coreTokens = _ng.coreTokens;
     return modRef;
   };
 
