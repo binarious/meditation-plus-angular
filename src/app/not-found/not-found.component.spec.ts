@@ -22,9 +22,9 @@ describe('not-found component', () => {
   }));
 
   it('should init', async(() => {
-    let fixture = TestBed.createComponent(NotFoundComponent);
+    const fixture = TestBed.createComponent(NotFoundComponent);
     fixture.detectChanges();
-    let compiled = fixture.debugElement.nativeElement;
+    const compiled = fixture.debugElement.nativeElement;
 
     expect(
       compiled.querySelector('md-card-title').innerHTML

@@ -9,7 +9,7 @@ import { BroadcastService } from './broadcast.service';
 export class BroadcastFormComponent {
 
   broadcast: Object;
-  loading: boolean = false;
+  loading: boolean;
 
   constructor(
     public broadcastService: BroadcastService,

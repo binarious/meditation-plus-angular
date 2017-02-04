@@ -1,4 +1,4 @@
-import { Component, Input, Injectable, forwardRef } from '@angular/core';
+import { Component, Input, Injectable, forwardRef, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { UserService } from '../user';
 
@@ -10,9 +10,9 @@ import { UserService } from '../user';
     './online.component.styl'
   ]
 })
-export class OnlineComponent {
+export class OnlineComponent implements OnDestroy {
 
-  @Input() detailed: boolean = true;
+  @Input() detailed = true;
   socketSubscription: Subscription;
   pollingSubscription: Subscription;
   onlineUsers: Array<any> = [];

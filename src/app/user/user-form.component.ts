@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { Country } from '../profile/country';
 import * as jstz from 'jstimezonedetect';
+// tslint:disable-next-line
 const timezones = require('timezones.json');
 
 @Component({

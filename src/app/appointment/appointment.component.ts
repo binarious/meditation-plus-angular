@@ -7,7 +7,7 @@ import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
 import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
-
+// tslint:disable-next-line
 const timezones = require('timezones.json');
 
 // HACK: for Google APIs
@@ -114,14 +114,14 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       this.appRef.tick();
 
       gapi.hangout.render('hangout-button', {
-        'render': 'createhangout',
-        'invites': [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
-        'initial_apps': [{
-          'app_id': '211383333638',
-          'start_data': 'dQw4w9WgXcQ',
-          'app_type': 'ROOM_APP'
+        render: 'createhangout',
+        invites: [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
+        initial_apps: [{
+          app_id: '211383333638',
+          start_data: 'dQw4w9WgXcQ',
+          app_type: 'ROOM_APP'
         }],
-        'widget_size': 175
+        widget_size: 175
       });
     });
   }

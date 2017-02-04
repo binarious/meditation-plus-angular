@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
@@ -8,12 +8,12 @@ import { Country } from './country';
   selector: 'profile-form',
   templateUrl: './profile-form.component.html'
 })
-export class ProfileFormComponent {
+export class ProfileFormComponent implements OnInit {
 
   profile;
-  loading: boolean = false;
-  updated: boolean = false;
-  error: boolean = false;
+  loading: boolean;
+  updated: boolean;
+  error: boolean;
 
   constructor(
     public userService: UserService,
@@ -51,7 +51,7 @@ export class ProfileFormComponent {
       );
   }
 
-  ngOnInit() {
+  OnInit() {
     this.userService.getProfile()
       .map(res => res.json())
       .subscribe(
