@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
+// tslint:disable-next-line
 export type InternalStateType = {
   [key: string]: any
 };
