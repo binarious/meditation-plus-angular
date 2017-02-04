@@ -8,12 +8,14 @@ import {
 } from '@angular/core/testing';
 import { NotFoundComponent } from './not-found.component';
 import { AppState } from '../app.service';
+import { APP_BASE_HREF } from '@angular/common';
 import { AppModule } from '../';
 
 describe('not-found component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AppModule]
+      imports: [AppModule],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     });
   });
 
