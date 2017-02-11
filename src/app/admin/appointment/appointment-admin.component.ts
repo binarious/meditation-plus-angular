@@ -33,7 +33,16 @@ export class AppointmentAdminComponent {
       .getAll()
       .map(res => res.json())
       .map(res => res.appointments)
-      .subscribe(res => this.appointments = res);
+      .subscribe(res => {
+        this.appointments = res;
+
+        for (let app of res) {
+          if (app['adjustment']) {
+            this.addHours = app['adjustment'];
+            // break;
+          }
+        }
+      });
   }
 
   printWeekDay(weekDay: number): string {
@@ -87,7 +96,7 @@ export class AppointmentAdminComponent {
     for (const appointment of this.appointments) {
       if ('hour' in appointment) {
         this.toUpdate++;
-        appointment['hour'] = this.calcHour(appointment['hour'], increment);
+        appointment['adjustment'] = this.addHours;
 
         this.appointmentService
           .save(appointment)
