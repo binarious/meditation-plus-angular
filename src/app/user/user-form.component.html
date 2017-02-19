@@ -1,7 +1,7 @@
 <div class="flex row">
   <md-input-container>
     <input
-      md-input
+      mdInput
       class="fill"
       [(ngModel)]="model.name"
       name="name"
@@ -30,33 +30,39 @@
   </div>
 
   <div class="flex row">
-    <md-input
-      class="fill"
-      [(ngModel)]="model.suspendedUntil"
-      name="suspendedUntil"
-      type="text"
-      placeholder="Suspended Until (e. g. 2016-09-13)"
-      maxlength="10"
-    ></md-input>
+    <md-input-container>
+      <input
+        mdInput
+        class="fill"
+        [(ngModel)]="model.suspendedUntil"
+        name="suspendedUntil"
+        type="text"
+        placeholder="Suspended Until (e. g. 2016-09-13)"
+        maxlength="10"
+      >
+    </md-input-container>
   </div>
-</div>
-
-<div class="flex row">
-  <md-input
-    class="fill"
-    [(ngModel)]="model.local.email"
-    name="Email"
-    type="email"
-    placeholder="Email"
-    maxlength="70"
-    required
-  ></md-input>
 </div>
 
 <div class="flex row">
   <md-input-container>
     <input
-      md-input
+      mdInput
+      class="fill"
+      [(ngModel)]="model.local.email"
+      name="Email"
+      type="email"
+      placeholder="Email"
+      maxlength="70"
+      required
+    >
+  </md-input-container>
+</div>
+
+<div class="flex row">
+  <md-input-container>
+    <input
+      mdInput
       [(ngModel)]="model.website"
       name="website"
       placeholder="Website"
@@ -140,10 +146,9 @@
 </div>
 
 <div class="flex row">
-  <md-input-container>
+  <md-input-container class="fill">
     <input
-      md-input
-      class="fill"
+      mdInput
       [(ngModel)]="model.description"
       name="description"
       maxlength="300"
@@ -167,27 +172,33 @@
 </div>
 
 <div class="flex row">
-  <md-input
-    class="fill"
-    name="newPassword"
-    minLength="8"
-    #pass="ngModel"
-    [(ngModel)]="model.newPassword"
-    type="password"
-    placeholder="New Password (min 8)"
-    [dividerColor]="(pass.valid || pass.pristine) ? 'primary' : 'warn'"
-  ></md-input>
+  <md-input-container class="fill">
+    <input
+      type="text"
+      mdInput
+      name="newPassword"
+      minLength="8"
+      #pass="ngModel"
+      [(ngModel)]="model.newPassword"
+      type="password"
+      placeholder="New Password (min 8)"
+      dividerColor="(pass.valid || pass.pristine) ? 'primary' : 'warn'"
+    >
+  </md-input-container>
 </div>
 
 <div class="flex row">
-  <md-input
-    class="fill"
-    [(ngModel)]="model.newPasswordRepeat"
-    name="newPasswordRepeat"
-    minLength="8"
-    #passRpt="ngModel"
-    type="password"
-    placeholder="New Password (repeat)"
-    [dividerColor]="(passRpt.valid || passRpt.pristine) ? 'primary' : 'warn'"
-  ></md-input>
+  <md-input-container class="fill">
+    <input
+      type="text"
+      mdInput
+      [(ngModel)]="model.newPasswordRepeat"
+      name="newPasswordRepeat"
+      minLength="8"
+      #passRpt="ngModel"
+      type="password"
+      placeholder="New Password (repeat)"
+      dividerColor="(passRpt.valid || passRpt.pristine) ? 'primary' : 'warn'"
+    >
+  </md-input-container>
 </div>

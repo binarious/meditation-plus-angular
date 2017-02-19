@@ -2,23 +2,27 @@
 
   <form (submit)="submit()">
     <div class="flex row">
-      <md-input
-        [(ngModel)]="commitment.minutes"
-        name="minutes"
-        placeholder="Minutes to meditate"
-        required
-        type="number"
-        class="fill"
-      ></md-input>
+      <md-input-container class="fill">
+        <input
+          mdInput
+          [(ngModel)]="commitment.minutes"
+          name="minutes"
+          placeholder="Minutes to meditate"
+          required
+          type="number"
+        >
+      </md-input-container>
     </div>
     <div class="flex row">
-      <md-input
-        [(ngModel)]="commitment.type"
-        name="type"
-        required
-        placeholder="Type (daily, weekly, monthly)"
-        class="fill"
-      ></md-input>
+      <md-input-container class="fill">
+        <input
+          mdInput
+          [(ngModel)]="commitment.type"
+          name="type"
+          required
+          placeholder="Type (daily, weekly, monthly)"
+        >
+      </md-input-container>
     </div>
 
     <p>
