@@ -34,8 +34,9 @@
       <md-icon>tag_faces</md-icon>
     </a>
     <md-input-container>
-      <input
+      <textarea
         mdInput
+        mdTextareaAutosize
         name="message"
         [(ngModel)]="currentMessage"
         placeholder="Type message..."
@@ -44,7 +45,7 @@
         maxlength="1000"
         autocomplete="off"
         [disabled]="sending"
-      >
+      ></textarea>
       <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxlength }}</md-hint>
     </md-input-container>
     <button md-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">

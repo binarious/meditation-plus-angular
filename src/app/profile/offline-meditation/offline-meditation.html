@@ -3,7 +3,7 @@
     <h4>Log offline meditation</h4>
     <form (submit)="sendMeditation($event)" class="flex">
     <div>
-      <md-input-container>
+      <md-input-container class="fill meditation-input">
         <input
           mdInput
           [(ngModel)]="walking"
@@ -11,8 +11,9 @@
           placeholder="Walking"
           max="120"
           type="number"
-          [disabled]="sending"
-          class="fill meditation-input">
+          [disabled]="sending">
+      </md-input-container>
+      <md-input-container class="fill meditation-input">
         <input
           mdInput
           [(ngModel)]="sitting"
@@ -20,12 +21,11 @@
           placeholder="Sitting"
           max="120"
           type="number"
-          [disabled]="sending"
-          class="fill meditation-input">
+          [disabled]="sending">
       </md-input-container>
       </div>
       <div>
-        <md-input-container>
+        <md-input-container class="fill meditation-input">
           <input
             mdInput
             [(ngModel)]="date"
@@ -33,8 +33,9 @@
             placeholder="Day (e.g. 2016-01-17)"
             max="120"
             type="text"
-            [disabled]="sending"
-            class="fill meditation-input">
+            [disabled]="sending">
+        </md-input-container>
+        <md-input-container class="fill meditation-input">
           <input
             mdInput
             [(ngModel)]="time"
@@ -42,8 +43,7 @@
             placeholder="Time (e.g. 22:10)"
             max="120"
             type="text"
-            [disabled]="sending"
-            class="fill meditation-input">
+            [disabled]="sending">
         </md-input-container>
       </div>
       <div>
