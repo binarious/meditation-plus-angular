@@ -67,9 +67,6 @@
   </md-input-container>
 </div>
 <div class="flex row">
-  <small>Country</small>
-</div>
-<div class="flex row">
   <md-select
     [(ngModel)]="model.country"
     name="country"
@@ -81,9 +78,6 @@
       {{ country.name }}
     </md-option>
   </md-select>
-</div>
-<div class="flex row">
-  <small>Timezone</small>
 </div>
 <div class="flex row">
   <md-select
@@ -107,13 +101,10 @@
   </button>
 </div>
 <div class="flex row">
-  <small>Bell</small>
-</div>
-<div class="flex row">
   <md-select
     [(ngModel)]="model.sound"
     name="sounds"
-    placeholder="Sounds"
+    placeholder="Meditation bell"
     class="fill"
     (change)="stopSound()"
   >
