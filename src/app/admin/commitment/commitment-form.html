@@ -1,5 +1,5 @@
 <md-card>
-
+  <md-card-title>Add a new commitment</md-card-title>
   <form (submit)="submit()">
     <div class="flex row">
       <md-input-container class="fill">
@@ -10,19 +10,20 @@
           placeholder="Minutes to meditate"
           required
           type="number"
+          min="1"
         >
       </md-input-container>
     </div>
     <div class="flex row">
-      <md-input-container class="fill">
-        <input
-          mdInput
-          [(ngModel)]="commitment.type"
-          name="type"
-          required
-          placeholder="Type (daily, weekly, monthly)"
-        >
-      </md-input-container>
+      <md-select
+        [(ngModel)]="commitment.type"
+        name="type"
+        class="fill"
+        placeholder="Type of commitment">
+        <md-option value="daily">daily</md-option>
+        <md-option value="weekly">weekly</md-option>
+        <md-option value="monthly">monthly</md-option>
+      </md-select>
     </div>
 
     <p>
