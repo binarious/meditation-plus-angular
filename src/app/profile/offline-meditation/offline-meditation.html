@@ -9,7 +9,8 @@
           [(ngModel)]="walking"
           name="walking"
           placeholder="Walking"
-          max="120"
+          min="0"
+          max="240"
           type="number"
           [disabled]="sending">
       </md-input-container>
@@ -19,7 +20,8 @@
           [(ngModel)]="sitting"
           name="sitting"
           placeholder="Sitting"
-          max="120"
+          min="0"
+          max="240"
           type="number"
           [disabled]="sending">
       </md-input-container>
