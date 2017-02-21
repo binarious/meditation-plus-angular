@@ -46,7 +46,7 @@
         autocomplete="off"
         [disabled]="sending"
       ></textarea>
-      <md-hint align="end" *ngIf="message.characterCount > 0">{{ message.characterCount }} / {{ message.maxlength }}</md-hint>
+      <md-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</md-hint>
     </md-input-container>
     <button md-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
       <md-icon *ngIf="!sending">send</md-icon>
