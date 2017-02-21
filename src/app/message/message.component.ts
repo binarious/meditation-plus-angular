@@ -120,7 +120,7 @@ export class MessageComponent implements OnInit, OnDestroy {
       });
   }
 
-  sendMessage(evt) {
+  sendMessage(evt, messageAutoSize) {
     evt.preventDefault();
 
     if (!this.currentMessage) {
@@ -132,6 +132,11 @@ export class MessageComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.sending = false;
         this.currentMessage = '';
+        // Waiting for DOM to update model 'this.currentMessage'
+        // to correctly resize the textarea
+        setTimeout(() => {
+          messageAutoSize.resizeToFitContent();
+        }, 300);
       }, (err) => {
         this.sending = false;
         console.error(err);
