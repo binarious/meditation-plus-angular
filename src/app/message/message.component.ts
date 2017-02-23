@@ -32,6 +32,59 @@ export class MessageComponent implements OnInit, OnDestroy {
   loadingPage = false;
   menuOpen = false;
 
+  items: string[] = ['Alpha', 'Amy', 'Adam', 'Amma', 'Ammy','Patrick', 'Joe', 'Susi', 'Tiffany',   'Abbott',
+  'Acevedo',
+  'Acosta',
+  'Adams',
+  'Adkins',
+  'Aguilar',
+  'Aguirre',
+  'Albert',
+  'Alexander',
+  'Alford',
+  'Allen',
+  'Allison',
+  'Alston',
+  'Alvarado',
+  'Alvarez',
+  'Anderson',
+  'Andrews',
+  'Anthony',
+  'Armstrong',
+  'Arnold',
+  'Ashley',
+  'Atkins',
+  'Atkinson',
+  'Austin',
+  'Avery',
+  'Avila',
+  'Ayala',
+  'Ayers',
+  'Bailey',
+  'Baird',
+  'Baker',
+  'Baldwin',
+  'Ball',
+  'Ballard',
+  'Banks',
+  'Barber',
+  'Barker',
+  'Barlow',
+  'Barnes',
+  'Barnett',
+  'Barr',
+  'Barrera',
+  'Barrett',
+  'Barron',
+  'Barry',
+  'Bartlett',
+  'Barton',
+  'Bass',
+  'Bates',
+  'Battle',
+  'Bauer',
+  'Baxter'];
+
   constructor(
     public messageService: MessageService,
     public userService: UserService,
@@ -120,7 +173,7 @@ export class MessageComponent implements OnInit, OnDestroy {
       });
   }
 
-  sendMessage(evt) {
+  sendMessage(evt, messageAutoSize) {
     evt.preventDefault();
 
     if (!this.currentMessage) {
@@ -132,6 +185,11 @@ export class MessageComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.sending = false;
         this.currentMessage = '';
+        // Waiting for DOM to update model 'this.currentMessage'
+        // to correctly resize the textarea
+        setTimeout(() => {
+          messageAutoSize.resizeToFitContent();
+        }, 300);
       }, (err) => {
         this.sending = false;
         console.error(err);

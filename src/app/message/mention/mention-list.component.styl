@@ -1,0 +1,57 @@
+:host
+  background: #fff
+  z-index: 2
+
+.scrollable-menu
+  display: block
+  height: auto
+  max-height: 300px
+  overflow: auto
+
+[hidden]
+  display: none
+
+ul.mentions
+  height: auto
+  max-height: 300px
+  min-width: 160px
+  overflow: auto
+  position: absolute
+  left: 16px
+  bottom: 100%
+  bottom: calc(100% + 20px)
+  z-index: 1000
+  float: left
+  padding: 5px 0
+  margin: 2px 0 0
+  font-size: 14px
+  text-align: left
+  list-style: none
+  background-color: #fff
+  -webkit-background-clip: padding-box
+  background-clip: padding-box
+  border: 1px solid #ccc
+  border: 1px solid rgba(0,0,0,.15)
+  border-radius: 4px
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175)
+  box-shadow: 0 6px 12px rgba(0,0,0,.175)
+
+ul.mentions li
+  display: block
+  padding: 3px 20px
+  clear: both
+  font-weight: 400
+  line-height: 1.42857143
+  color: #333
+  white-space: nowrap
+  padding: 4px 3px 4px 5px
+  cursor: pointer
+
+ul.mentions li:hover
+  background: rgba(0, 150, 136, .2)
+
+
+ul.mentions .active
+  background: #009688
+  color: #fff
+
