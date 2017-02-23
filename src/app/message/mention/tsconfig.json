@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../../mention",
+    "sourceMap": false,
+    "target": "es5",
+    "typeRoots": [
+      "../../node_modules/@types"
+    ]
+  },
+  "angularCompilerOptions": {
+    "genDir": "../../aot"
+  }
+}

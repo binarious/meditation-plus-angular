@@ -7,6 +7,7 @@ import { MessageListEntryComponent } from './list-entry/message-list-entry.compo
 import { EmojiModule } from '../emoji';
 import { ProfileModule } from '../profile';
 import { MomentModule } from 'angular2-moment';
+import { MentionModule } from './mention/mention.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { MomentModule } from 'angular2-moment';
     FormsModule,
     RouterModule,
     EmojiModule,
-    MomentModule
+    MomentModule,
+    MentionModule
   ],
   declarations: [
     MessageComponent,
