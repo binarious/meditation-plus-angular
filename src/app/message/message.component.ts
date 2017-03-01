@@ -121,7 +121,9 @@ export class MessageComponent implements OnInit, OnDestroy {
   }
 
   sendMessage(evt, messageAutoSize) {
-    evt.preventDefault();
+    if (evt) {
+      evt.preventDefault();
+    }
 
     if (!this.currentMessage) {
       return;
@@ -141,6 +143,19 @@ export class MessageComponent implements OnInit, OnDestroy {
         this.sending = false;
         console.error(err);
       });
+  }
+
+  /**
+   * Intercept the keypress of 'Enter' and submit message.
+   * @param {[type]} evt             JavaScript event
+   * @param {[type]} messageAutoSize Autosize property for passing it into 'sendMessage'
+   */
+  enterMessage(evt, messageAutoSize) {
+    var charCode = evt.which || evt.keyCode;
+
+    if (charCode === 13) {
+      this.sendMessage(evt, messageAutoSize)
+    }
   }
 
   /**
