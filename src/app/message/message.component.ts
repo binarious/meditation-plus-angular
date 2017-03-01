@@ -151,10 +151,10 @@ export class MessageComponent implements OnInit, OnDestroy {
    * @param {[type]} messageAutoSize Autosize property for passing it into 'sendMessage'
    */
   enterMessage(evt, messageAutoSize) {
-    var charCode = evt.which || evt.keyCode;
+    const charCode = evt.which || evt.keyCode;
 
     if (charCode === 13) {
-      this.sendMessage(evt, messageAutoSize)
+      this.sendMessage(evt, messageAutoSize);
     }
   }
 
