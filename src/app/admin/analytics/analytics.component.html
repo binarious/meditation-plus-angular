@@ -1,2 +1,29 @@
 <md-card>
+  <md-card-title>Analytics</md-card-title>
+  <div *ngIf="users" class="analytics-list">
+    <md-card>
+      <md-card-title>{{users.count}}</md-card-title>
+      <md-card-subtitle>accounts</md-card-subtitle>
+    </md-card>
+
+    <md-card>
+      <md-card-title>{{users.admins.length}}</md-card-title>
+      <md-card-subtitle>admins</md-card-subtitle>
+    </md-card>
+
+    <md-card>
+      <md-card-title>{{users.suspended.length}}</md-card-title>
+      <md-card-subtitle>suspended</md-card-subtitle>
+    </md-card>
+
+    <md-card>
+      <md-card-title>{{users.inactive}}</md-card-title>
+      <md-card-subtitle title="Haven't logged in since 90 days">inactive*</md-card-subtitle>
+    </md-card>
+  </div>
+
+  <div>
+    <h3>Admin Accounts</h3>
+    <h3>Suspended Accounts</h3>
+  </div>
 </md-card>

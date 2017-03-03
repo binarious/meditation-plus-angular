@@ -14,6 +14,19 @@ export class AnalyticsComponent {
   countries;
   timezones;
 
-  constructor(public analyticsService: AnalyticsService) {}
+  constructor(public analyticsService: AnalyticsService) {
+    analyticsService.getUserStats()
+      .map(res => res.json())
+      .subscribe(res => {
+        console.log(res);
+        this.users = res;
+      });
+
+    analyticsService.getTimezoneStats()
+      .map(res => res.json())
+      .subscribe(res => {
+        console.log(res);
+      });
+  }
 
 }
