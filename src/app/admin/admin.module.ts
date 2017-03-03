@@ -10,6 +10,8 @@ import { AppointmentFormComponent } from './appointment/appointment-form.compone
 import { CommitmentAdminComponent } from './commitment/commitment-admin.component';
 import { CommitmentFormComponent } from './commitment/commitment-form.component';
 import { BroadcastAdminComponent } from './broadcast/broadcast-admin.component';
+import { AnalyticsService } from './analytics/analytics.service';
+import { AnalyticsComponent } from './analytics/analytics.component';
 import { BroadcastFormComponent } from './broadcast/broadcast-form.component';
 import { BroadcastService } from './broadcast/broadcast.service';
 import { TestimonialAdminComponent } from './testimonial/testimonial-admin.component';
@@ -32,11 +34,13 @@ import { MomentModule } from 'angular2-moment';
     MomentModule
   ],
   providers: [
-    BroadcastService
+    BroadcastService,
+    AnalyticsService
   ],
   declarations: [
     AdminComponent,
     AdminIndexComponent,
+    AnalyticsComponent,
     AppointmentAdminComponent,
     AppointmentFormComponent,
     CommitmentFormComponent,
