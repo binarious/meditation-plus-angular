@@ -21,6 +21,7 @@ import { UserModule } from '../user';
 import { ProfileModule } from '../profile';
 import { EmojiModule } from '../emoji';
 import { MomentModule } from 'angular2-moment';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { MomentModule } from 'angular2-moment';
     UserModule,
     ProfileModule,
     EmojiModule,
-    MomentModule
+    MomentModule,
+    ChartsModule
   ],
   providers: [
     BroadcastService,
