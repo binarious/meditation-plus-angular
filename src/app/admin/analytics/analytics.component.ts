@@ -41,6 +41,12 @@ export class AnalyticsComponent {
 
         this.timezoneChart.isReady = true;
       });
+
+    analyticsService.getSignupStats()
+      .map(res => res.json())
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 
     // Pie

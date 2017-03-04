@@ -18,6 +18,16 @@ export class AnalyticsService {
     );
   }
 
+  public getSignupStats(minDate: Date = null, interval: Number = null) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/analytics-signups',
+      JSON.stringify({ minDate: minDate, interval: interval }), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   public getCountryStats() {
     return this.authHttp.get(
       ApiConfig.url + '/api/analytics-countries'
@@ -29,4 +39,5 @@ export class AnalyticsService {
       ApiConfig.url + '/api/analytics-timezones'
     );
   }
+
 }
