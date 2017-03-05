@@ -18,10 +18,21 @@ export class AnalyticsService {
     );
   }
 
-  public getSignupStats(minDate: Date = null, interval: Number = null) {
+  public getSignupStats(minDate = null, interval = null, format = null) {
+    console.log(minDate, "HA");
     return this.authHttp.post(
       ApiConfig.url + '/api/analytics-signups',
-      JSON.stringify({ minDate: minDate, interval: interval }), {
+      JSON.stringify({ minDate: minDate, interval: interval, format: format }), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public getMeditationStats(minDate = null, interval = null, format = null) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/analytics-meditations',
+      JSON.stringify({ minDate: minDate, interval: interval, format: format }), {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
