@@ -9,6 +9,7 @@ import * as chart from 'chart.js';
     './analytics.component.styl'
   ]
 })
+
 export class AnalyticsComponent {
 
   loadingA: boolean = false;

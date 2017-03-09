@@ -77,7 +77,8 @@
       </div>
     </md-tab>
     <md-tab label="Country & Timezone" (click)="loadTimezoneChart()">
-      <md-spinner *ngIf="loadingB" class="load-more-spinner"></md-spinner>
+      <worldmap-chart></worldmap-chart>
+      <!-- <md-spinner *ngIf="loadingB" class="load-more-spinner"></md-spinner>
       <div>
         <h3>Top Timezones</h3>
         <div class="timezone-chart">
@@ -90,7 +91,7 @@
           >
           </canvas>
         </div>
-      </div>
+      </div> -->
     </md-tab>
     <md-tab label="History">
       <md-spinner *ngIf="loadingC" class="load-more-spinner"></md-spinner>

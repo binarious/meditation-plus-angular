@@ -11,7 +11,6 @@ import { CommitmentAdminComponent } from './commitment/commitment-admin.componen
 import { CommitmentFormComponent } from './commitment/commitment-form.component';
 import { BroadcastAdminComponent } from './broadcast/broadcast-admin.component';
 import { AnalyticsService } from './analytics/analytics.service';
-import { AnalyticsComponent } from './analytics/analytics.component';
 import { BroadcastFormComponent } from './broadcast/broadcast-form.component';
 import { BroadcastService } from './broadcast/broadcast.service';
 import { TestimonialAdminComponent } from './testimonial/testimonial-admin.component';
@@ -22,6 +21,8 @@ import { ProfileModule } from '../profile';
 import { EmojiModule } from '../emoji';
 import { MomentModule } from 'angular2-moment';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AnalyticsComponent } from './analytics/analytics.component';
+import { WorldMapChart } from './analytics/worldmap-chart/worldmap-chart.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     BroadcastAdminComponent,
     TestimonialAdminComponent,
     UserAdminComponent,
-    UserAdminFormComponent
+    UserAdminFormComponent,
+    WorldMapChart
   ],
   exports: [
     AdminComponent,
@@ -64,7 +66,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     BroadcastAdminComponent,
     TestimonialAdminComponent,
     UserAdminComponent,
-    UserAdminFormComponent
+    UserAdminFormComponent,
+    WorldMapChart
   ]
 })
 export class AdminModule { }
