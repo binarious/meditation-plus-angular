@@ -1,5 +1,5 @@
 <div class="flexbox-parent">
-  <md-sidenav-layout class="flexbox-parent">
+  <md-sidenav-container class="flexbox-parent">
     <md-sidenav #start>
 
       <md-toolbar color="primary">
@@ -28,8 +28,9 @@
         <a [routerLink]="['/commit']" (click)="start.close()" md-list-item>
           <md-icon>assignment_turned_in</md-icon> Commitment
         </a>
-        <a md-list-item target="_blank" href="https://www.sirimangalo.org/text/how-to-meditate/"><md-icon>picture_as_pdf</md-icon> Guide</a>
-
+        <a md-list-item target="_blank" href="https://www.sirimangalo.org/text/how-to-meditate/">
+          <md-icon>picture_as_pdf</md-icon> Booklet
+        </a>
         <!--<a [routerLink]="['/testimonials']" (click)="start.close()" md-list-item>
           <md-icon>thumb_up</md-icon> Testimonials
         </a>-->
@@ -61,5 +62,5 @@
     <!-- Content goes here -->
     <router-outlet></router-outlet>
 
-  </md-sidenav-layout>
+  </md-sidenav-container>
 </div>
