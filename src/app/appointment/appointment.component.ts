@@ -233,7 +233,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     // read time for EST/EDT timezone
-    const eastern = moment.tz(this.printHour(hour ), 'HH:mm', 'America/Toronto');
+    const eastern = moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto');
     const local = eastern.clone().tz(this.localTimezone);
 
     // check if appointment falls to the next day
@@ -278,8 +278,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         },
         err => console.log(err)
       );
-
-    console.log(moment.tz('America/Toronto').format('z'));
   }
 
   ngOnDestroy() {
