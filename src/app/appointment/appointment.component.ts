@@ -34,7 +34,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   profile;
 
-  increment: number = 0;
+  increment: number;
 
   constructor(
     public appointmentService: AppointmentService,

@@ -13,7 +13,7 @@ export class AppointmentAdminComponent {
 
   // appointment data
   appointments: Object[] = [];
-  increment: number = 0;
+  increment: number;
 
   // EDT or EST
   zoneName: string = moment.tz('America/Toronto').zoneName();
