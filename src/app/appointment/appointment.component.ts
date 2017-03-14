@@ -30,6 +30,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   currentTab = 'table';
 
   localTimezone;
+  rootTimezone: string = moment.tz('America/Toronto').format('z');
 
   profile;
 
@@ -185,6 +186,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    */
   getLocalTimezone() {
     if (this.profile && this.profile.timezone) {
+      console.log(this.profile.timezone);
       // lookup correct timezone name from profile model
       for (const k of timezones) {
         // check if timezone is compatible with moment-timezone
@@ -221,9 +223,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     // check if appointment falls to the next day
     if (eastern.day() < local.day()) {
-      return local.format('HH:mm') + ' (prev. day)';
+      return local.format('HH:mm') + ' (+1 day)';
     } else if (eastern.day() > local.day()) {
-      return local.format('HH:mm') + ' (next day)';
+      return local.format('HH:mm') + ' (-1 day)';
     }
 
     // convert EST/EDT time to users timezone and return formatted hour
@@ -254,11 +256,14 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     this.userService.getProfile(this.getUserId())
       .map(res => res.json())
       .subscribe(
-        res => this.profile,
+        res => {
+          this.profile = res;
+          this.localTimezone = this.getLocalTimezone();
+        },
         err => console.log(err)
       );
 
-    this.localTimezone = this.getLocalTimezone();
+    console.log(moment.tz('America/Toronto').format('z'));
   }
 
   ngOnDestroy() {
