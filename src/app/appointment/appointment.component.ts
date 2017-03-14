@@ -34,6 +34,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   profile;
 
+  increment: number = 0;
+
   constructor(
     public appointmentService: AppointmentService,
     public appRef: ApplicationRef,
@@ -101,6 +103,16 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         return res;
       })
       .subscribe(res => this.appointments = res);
+  }
+
+  /**
+   * Load increment parameter for appointment hours
+   */
+  loadIncrement() {
+    this.appointmentService
+      .getIncrement()
+      .map(res => res.json())
+      .subscribe(res => this.increment = res);
   }
 
   /**
@@ -175,7 +187,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * @return {string}      Local hour in format 'HH:mm'
    */
   printHour(hour: number): string {
-    // automatically fills empty space with '0' (i.e. 40 => '0040')
+    hour = hour + this.increment * 100;
+    hour = hour < 0 || hour >= 2400 ? 0 : hour;
+
+    // add padding with '0' (i.e. 40 => '0040')
     const hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
 
     return moment(hourFormat, 'HHmm').format('HH:mm');
@@ -218,7 +233,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     // read time for EST/EDT timezone
-    const eastern = moment.tz(this.printHour(hour), 'HH:mm', 'America/Toronto');
+    const eastern = moment.tz(this.printHour(hour ), 'HH:mm', 'America/Toronto');
     const local = eastern.clone().tz(this.localTimezone);
 
     // check if appointment falls to the next day
@@ -246,6 +261,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadAppointments();
+    this.loadIncrement();
 
     // initialize websocket for instant data
     this.appointmentSocket = this.appointmentService.getSocket()
