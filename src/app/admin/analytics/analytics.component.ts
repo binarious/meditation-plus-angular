@@ -70,6 +70,8 @@ export class AnalyticsComponent {
   }
 
   changeTab(evt) {
+    console.log(evt.index);
+
     if (evt.index === 0) {
       this.loadUserStats();
     } else if (evt.index === 1) {
@@ -84,7 +86,6 @@ export class AnalyticsComponent {
     this.analyticsService.getUserStats()
       .map(res => res.json())
       .subscribe(res => {
-        console.log(res);
         this.users = res;
       });
   }
@@ -93,7 +94,7 @@ export class AnalyticsComponent {
     this.analyticsService.getCountryStats()
       .map(res => res.json())
       .subscribe(res => {
-        console.log(res);
+        this.countryChart = res;
       });
   }
 

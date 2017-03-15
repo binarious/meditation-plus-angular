@@ -9,7 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 
 export class WorldMapChart {
-  @Input() public data: Object;
+  @Input() data: any;
 
   fill = {
     "AE" : "",
@@ -190,10 +190,42 @@ export class WorldMapChart {
     "ZW" : ""
   };
 
-  setFill(countryCode: string, fill: string) {
-    if (this.fill.hasOwnProperty(countryCode)) {
-      this.fill[countryCode] = fill;
+  gradient(startColor, endColor, percentFade) {
+    // inspired by http://stackoverflow.com/questions/3080421/javascript-color-gradient
+    let diffRed = endColor.red - startColor.red;
+    let diffGreen = endColor.green - startColor.green;
+    let diffBlue = endColor.blue - startColor.blue;
+    let diffAlpha = endColor.alpha - startColor.alpha;
+
+    diffRed = (diffRed * percentFade) + startColor.red;
+    diffGreen = (diffGreen * percentFade) + startColor.green;
+    diffBlue = (diffBlue * percentFade) + startColor.blue;
+    diffAlpha = (diffAlpha * percentFade) + startColor.alpha;
+
+    return 'rgba(' + diffRed +', ' + diffGreen + ', ' + diffBlue +', ' + diffAlpha + ')';
+  }
+
+  fillChart() {
+    if (!this.data.length) {
+      return;
+    }
+
+    const max = Math.max.apply(Math, this.data.map(function(o){return o.count;}));
+
+    for(let item of this.data) {
+      const cc = item._id
+
+      if (cc && this.fill.hasOwnProperty(cc)) {
+        this.fill[cc] = this.gradient(
+          {red: 0, green: 140, blue: 0, alpha: 140},
+          {red: 0, green: 40, blue: 0, alpha: 255},
+          item.count / max
+        );
+      }
     }
   }
 
+  ngOnChanges() {
+    this.fillChart();
+  }
 }

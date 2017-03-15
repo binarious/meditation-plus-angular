@@ -77,7 +77,7 @@
       </div>
     </md-tab>
     <md-tab label="Country & Timezone" (click)="loadTimezoneChart()">
-      <worldmap-chart></worldmap-chart>
+      <worldmap-chart [data]="countryChart"></worldmap-chart>
       <!-- <md-spinner *ngIf="loadingB" class="load-more-spinner"></md-spinner>
       <div>
         <h3>Top Timezones</h3>
