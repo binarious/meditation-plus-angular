@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as chroma from 'chroma-js';
 
 @Component({
   selector: 'worldmap-chart',
@@ -190,39 +191,25 @@ export class WorldMapChart {
     "ZW" : ""
   };
 
-  gradient(startColor, endColor, percentFade) {
-    // inspired by http://stackoverflow.com/questions/3080421/javascript-color-gradient
-    let diffRed = endColor.red - startColor.red;
-    let diffGreen = endColor.green - startColor.green;
-    let diffBlue = endColor.blue - startColor.blue;
-    let diffAlpha = endColor.alpha - startColor.alpha;
-
-    diffRed = (diffRed * percentFade) + startColor.red;
-    diffGreen = (diffGreen * percentFade) + startColor.green;
-    diffBlue = (diffBlue * percentFade) + startColor.blue;
-    diffAlpha = (diffAlpha * percentFade) + startColor.alpha;
-
-    return 'rgba(' + diffRed +', ' + diffGreen + ', ' + diffBlue +', ' + diffAlpha + ')';
-  }
-
   fillChart() {
     if (!this.data.length) {
       return;
     }
 
-    const max = Math.max.apply(Math, this.data.map(function(o){return o.count;}));
+    const max = Math.max.apply(Math, this.data.map(o => o.count));
 
-    for(let item of this.data) {
-      const cc = item._id
+    // colors from
+    // https://vis4.net/labs/multihue/#colors=lightyellow,%20orange,%20deeppink,%20darkred|steps=9|bez=1|coL=1
+    const scale = chroma.scale(['#ffffe0', '#ffe0a9', '#ffbe84', '#ff986d', '#f47361', '#e35056', '#cb2f44', '#ae112a', '#8b0000']).domain([0, max]);
+
+    this.data.map(item => {
+      // 'cc' = 'country code'
+      const cc = item._id;
 
       if (cc && this.fill.hasOwnProperty(cc)) {
-        this.fill[cc] = this.gradient(
-          {red: 0, green: 140, blue: 0, alpha: 140},
-          {red: 0, green: 40, blue: 0, alpha: 255},
-          item.count / max
-        );
+        this.fill[cc] = scale(item.count);
       }
-    }
+    });
   }
 
   ngOnChanges() {
