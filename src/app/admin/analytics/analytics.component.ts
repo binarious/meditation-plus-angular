@@ -9,7 +9,6 @@ import * as chart from 'chart.js';
     './analytics.component.styl'
   ]
 })
-
 export class AnalyticsComponent {
 
   loadingA: boolean = false;
@@ -18,13 +17,18 @@ export class AnalyticsComponent {
 
   users;
 
-  countryChart = {};
+  countryChart = {
+    data: {},
+    isReady: false
+  };
 
   timezoneChart = {
     labels: [],
     data: [],
-    backgroundColor: ['#123123', '#456456'],
-    isReady: false
+    isReady: false,
+    options: {
+      title: 'Top 10 timezones'
+    }
   };
 
   signupChart = {
@@ -70,8 +74,6 @@ export class AnalyticsComponent {
   }
 
   changeTab(evt) {
-    console.log(evt.index);
-
     if (evt.index === 0) {
       this.loadUserStats();
     } else if (evt.index === 1) {
@@ -83,32 +85,52 @@ export class AnalyticsComponent {
   }
 
   loadUserStats() {
+    this.loadingA = true;
+
     this.analyticsService.getUserStats()
       .map(res => res.json())
       .subscribe(res => {
+        this.loadingA = false;
         this.users = res;
       });
   }
 
+  setLoadingB() {
+    this.loadingB = this.timezoneChart.isReady && this.countryChart.isReady ? true : false;
+  }
+
+  setLoadingC() {
+    this.loadingC = this.signupChart.isReady && this.meditationChart.isReady ? true : false;
+  }
+
   loadCountryStats() {
+    this.loadingB = true;
+
     this.analyticsService.getCountryStats()
       .map(res => res.json())
       .subscribe(res => {
-        this.countryChart = res;
+        this.countryChart.data = res;
+        this.setLoadingB();
       });
   }
 
   loadTimezoneStats() {
+    this.loadingB = true;
+
+    this.timezoneChart.labels = [];
+    this.timezoneChart.data = [];
+
     this.timezoneChart.isReady = false;
     this.analyticsService.getTimezoneStats()
       .map(res => res.json())
       .subscribe(res => {
         for(let x of res) {
-          this.timezoneChart.labels.push(x._id);
+          this.timezoneChart.labels.push(x._id ? x._id : 'Unknown');
           this.timezoneChart.data.push(x.count);
         }
 
         this.timezoneChart.isReady = true;
+        this.setLoadingB();
       });
   }
 
@@ -117,7 +139,6 @@ export class AnalyticsComponent {
     this.analyticsService.getSignupStats(minDate, interval, format)
       .map(res => res.json())
       .subscribe(res => {
-        console.log(minDate, res);
         this.signupChart.datasets = [{
           label: 'count of new users',
           data: res.data
@@ -156,7 +177,6 @@ export class AnalyticsComponent {
     } else {
       this.loadHistory();
     }
-    console.log(evt);
   }
 
 }
