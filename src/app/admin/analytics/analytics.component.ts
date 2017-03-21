@@ -11,9 +11,9 @@ import * as chart from 'chart.js';
 })
 export class AnalyticsComponent {
 
-  loadingA: boolean = false;
-  loadingB: boolean = false;
-  loadingC: boolean = false;
+  loadingA: boolean;
+  loadingB: boolean;
+  loadingC: boolean;
 
   users;
 
@@ -42,7 +42,7 @@ export class AnalyticsComponent {
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero:true
+            beginAtZero: true
           }
         }]
       }
@@ -61,7 +61,7 @@ export class AnalyticsComponent {
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero:true
+            beginAtZero: true
           }
         }]
       }
@@ -124,7 +124,7 @@ export class AnalyticsComponent {
     this.analyticsService.getTimezoneStats()
       .map(res => res.json())
       .subscribe(res => {
-        for(let x of res) {
+        for (const x of res) {
           this.timezoneChart.labels.push(x._id ? x._id : 'Unknown');
           this.timezoneChart.data.push(x.count);
         }

@@ -19,7 +19,6 @@ export class AnalyticsService {
   }
 
   public getSignupStats(minDate = null, interval = null, format = null) {
-    console.log(minDate, "HA");
     return this.authHttp.post(
       ApiConfig.url + '/api/analytics-signups',
       JSON.stringify({ minDate: minDate, interval: interval, format: format }), {

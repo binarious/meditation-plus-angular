@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Country } from '../../../profile/country';
 import * as chroma from 'chroma-js';
 
@@ -10,7 +10,7 @@ import * as chroma from 'chroma-js';
   ]
 })
 
-export class WorldMapChart {
+export class WorldChartComponent implements OnChanges {
   @Input() data: any;
 
   selectedCountry: string;

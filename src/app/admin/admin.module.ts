@@ -22,7 +22,7 @@ import { EmojiModule } from '../emoji';
 import { MomentModule } from 'angular2-moment';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AnalyticsComponent } from './analytics/analytics.component';
-import { WorldMapChart } from './analytics/worldmap-chart/worldmap-chart.component';
+import { WorldChartComponent } from './analytics/worldmap-chart/worldmap-chart.component';
 
 @NgModule({
   imports: [
@@ -53,7 +53,7 @@ import { WorldMapChart } from './analytics/worldmap-chart/worldmap-chart.compone
     TestimonialAdminComponent,
     UserAdminComponent,
     UserAdminFormComponent,
-    WorldMapChart
+    WorldChartComponent
   ],
   exports: [
     AdminComponent,
@@ -67,7 +67,7 @@ import { WorldMapChart } from './analytics/worldmap-chart/worldmap-chart.compone
     TestimonialAdminComponent,
     UserAdminComponent,
     UserAdminFormComponent,
-    WorldMapChart
+    WorldChartComponent
   ]
 })
 export class AdminModule { }
