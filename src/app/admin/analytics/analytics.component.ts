@@ -11,6 +11,7 @@ import * as chart from 'chart.js';
 })
 export class AnalyticsComponent {
 
+  // loading models for all 3 tabs
   loadingA: boolean;
   loadingB: boolean;
   loadingC: boolean;
@@ -73,6 +74,10 @@ export class AnalyticsComponent {
     this.loadUserStats();
   }
 
+  /**
+   * Handles loading of data when tab changes
+   * @param evt Click event
+   */
   changeTab(evt) {
     if (evt.index === 0) {
       this.loadUserStats();
@@ -84,6 +89,23 @@ export class AnalyticsComponent {
     }
   }
 
+  /**
+   * Sets loading status for 2nd tab
+   */
+  setLoadingB() {
+    this.loadingB = this.timezoneChart.isReady && this.countryChart.isReady ? true : false;
+  }
+
+  /**
+   * Sets loading status for last tab
+   */
+  setLoadingC() {
+    this.loadingC = this.signupChart.isReady && this.meditationChart.isReady ? true : false;
+  }
+
+  /**
+   * Loads data for user statistics
+   */
   loadUserStats() {
     this.loadingA = true;
 
@@ -95,14 +117,9 @@ export class AnalyticsComponent {
       });
   }
 
-  setLoadingB() {
-    this.loadingB = this.timezoneChart.isReady && this.countryChart.isReady ? true : false;
-  }
-
-  setLoadingC() {
-    this.loadingC = this.signupChart.isReady && this.meditationChart.isReady ? true : false;
-  }
-
+  /**
+   * Loads data for worldmap chart (2nd tab)
+   */
   loadCountryStats() {
     this.loadingB = true;
 
@@ -114,6 +131,9 @@ export class AnalyticsComponent {
       });
   }
 
+  /**
+   * Loads data for timezone piechart (2nd tab)
+   */
   loadTimezoneStats() {
     this.loadingB = true;
 
@@ -134,6 +154,12 @@ export class AnalyticsComponent {
       });
   }
 
+  /**
+   * Loads data for linechart of new users (3rd tab)
+   * @param minDate  = null Start of span the chart should cover
+   * @param interval = null Time interval between two data points
+   * @param format   = null Custom datetime format
+   */
   loadSignupStats(minDate = null, interval = null, format = null) {
     this.signupChart.isReady = false;
     this.analyticsService.getSignupStats(minDate, interval, format)
@@ -149,6 +175,12 @@ export class AnalyticsComponent {
       });
   }
 
+  /**
+   * Loads data for linechart of meditation sessions (3rd tab)
+   * @param minDate  = null Start of span the chart should cover
+   * @param interval = null Time interval between two data points
+   * @param format   = null Custom datetime format
+   */
   loadMeditationStats(minDate = null, interval = null, format = null) {
     this.meditationChart.isReady = false;
     this.analyticsService.getMeditationStats(minDate, interval, format)
@@ -164,11 +196,21 @@ export class AnalyticsComponent {
       });
   }
 
+  /**
+   * Loads all charts for the 3rd tab with same parameters
+   * @param minDate  = null Start of span the chart should cover
+   * @param interval = null Time interval between two data points
+   * @param format   = null Custom datetime format
+   */
   loadHistory(minDate = null, interval = null, format = null) {
     this.loadSignupStats(minDate, interval, format);
     this.loadMeditationStats(minDate, interval, format);
   }
 
+  /**
+   * Event for md-select that changes the span for charts of 3rd tab
+   * @param evt Change event
+   */
   changeHistoryTimespan(evt) {
     if (evt.value === 'month') {
       this.loadHistory(Date.now() - 2592E6);

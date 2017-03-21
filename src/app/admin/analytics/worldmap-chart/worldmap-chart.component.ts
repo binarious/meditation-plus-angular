@@ -204,6 +204,9 @@ export class WorldChartComponent implements OnChanges {
     });
   }
 
+  /**
+   * Generates chart data from @input
+   */
   fillChart() {
     if (!this.data.length) {
       return;
@@ -226,6 +229,10 @@ export class WorldChartComponent implements OnChanges {
     });
   }
 
+  /**
+   * Change selected country on map by clicking on it
+   * @param evt Click event
+   */
   viewStats(evt) {
     if (!evt || evt.target.tagName !== 'path') {
       return;

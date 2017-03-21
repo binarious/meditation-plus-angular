@@ -8,22 +8,22 @@
       <div *ngIf="!loadingA">
         <div *ngIf="users" class="analytics-list">
           <md-card>
-            <md-card-title>{{users.count}}</md-card-title>
+            <md-card-title>{{ users.count }}</md-card-title>
             <md-card-subtitle>accounts</md-card-subtitle>
           </md-card>
 
           <md-card>
-            <md-card-title>{{users.admins.length}}</md-card-title>
+            <md-card-title>{{ users.admins.length }}</md-card-title>
             <md-card-subtitle>admins</md-card-subtitle>
           </md-card>
 
           <md-card>
-            <md-card-title>{{users.suspended.length}}</md-card-title>
+            <md-card-title>{{ users.suspended.length }}</md-card-title>
             <md-card-subtitle>suspended</md-card-subtitle>
           </md-card>
 
           <md-card>
-            <md-card-title>{{users.inactive}}</md-card-title>
+            <md-card-title>{{ users.inactive }}</md-card-title>
             <md-card-subtitle title="Haven't logged in since 90 days">inactive*</md-card-subtitle>
           </md-card>
         </div>
@@ -35,7 +35,7 @@
           <md-icon>not_interested</md-icon>
           <span>Nothing found</span>
         </div>
-        <md-list *ngIf="users">
+        <md-list *ngIf="users && users.admins">
           <a *ngFor="let user of users.admins" class="online-row" [routerLink]="['/profile', user._id]">
             <md-list-item>
               <img
@@ -59,7 +59,7 @@
           <md-icon>not_interested</md-icon>
           <span>Nothing found</span>
         </div>
-        <md-list *ngIf="users">
+        <md-list *ngIf="users && users.suspended">
           <a *ngFor="let user of users.suspended" class="online-row" [routerLink]="['/profile', user._id]">
             <md-list-item>
               <img
@@ -84,7 +84,9 @@
 
       <div *ngIf="!loadingB">
         <worldmap-chart [data]="countryChart.data"></worldmap-chart>
+
         <md-divider></md-divider>
+
         <h3>Top Timezones</h3>
         <div class="timezone-chart">
           <canvas
