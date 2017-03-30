@@ -13,13 +13,12 @@ self.addEventListener('push', function(event) {
   var title = data.title || 'Meditation+';
   var body = data.message || '';
   var icon = './assets/icon/android-chrome-192x192.png';
-  var tag = 'simple-push-demo-notification-tag';
 
   event.waitUntil(
     self.registration.showNotification(title, {
       body: body,
       icon: icon,
-      tag: tag
+      vibrate: [200, 100, 200]
     })
   );
 });
