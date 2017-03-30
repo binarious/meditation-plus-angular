@@ -37,8 +37,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     public userService: UserService,
     public appRef: ApplicationRef,
     public wsService: WebsocketService
-  ) {
-  }
+  ) { }
 
   get isAdmin(): boolean {
     return this.userService.isAdmin();
@@ -228,6 +227,10 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.updateSocket = this.messageService.getUpdateSocket()
       .map(res => res.populated)
       .subscribe(data => this.updateMessage(data));
+  }
+
+  test(subscription) {
+    console.log(subscription);
   }
 
   scrollToBottom() {

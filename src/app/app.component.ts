@@ -55,6 +55,18 @@ export class AppComponent {
       });
 
     userService.registerRefresh();
+
+    // Ask permission to send PUSH NOTIFICATIONS
+    // and send the subscription to the server
+    if (navigator && 'serviceWorker' in navigator) {
+      navigator['serviceWorker'].ready.then(reg => {
+        reg.pushManager.subscribe({userVisibleOnly: true}).then(subscription => {
+          this.userService
+            .registerPushSubscription(subscription)
+            .subscribe();
+        });
+      });
+    }
   }
 
   public isLoggedIn() {

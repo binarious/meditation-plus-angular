@@ -218,6 +218,16 @@ export class UserService {
     });
   }
 
+  public registerPushSubscription(subscription) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/push/register',
+      JSON.stringify(subscription), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   /**
    * Refreshes the local JWT
    */
