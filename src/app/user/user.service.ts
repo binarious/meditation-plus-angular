@@ -58,6 +58,20 @@ export class UserService {
     return observable;
   }
 
+  public verify(token: string): Observable<Response> {
+    console.log(123, token);
+    return this.http.post(
+      ApiConfig.url + '/auth/verify',
+      JSON.stringify({
+        token: token
+      }), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
   /**
    * Register refresh subscription
    */
