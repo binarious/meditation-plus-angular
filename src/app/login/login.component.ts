@@ -10,7 +10,7 @@ import { AppState } from '../app.service';
   ],
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   name: string;
   email: string;
@@ -168,8 +168,8 @@ export class LoginComponent implements OnInit{
       this.userService
         .verify(verificationToken)
         .subscribe(
-          res => this.message = 'Your email has been verified successfully. You can now login.',
-          err => this.error = 'An error occurred. Please try clicking the verification link again or contact the IT support.'
+          () => this.message = 'Your email has been verified successfully. You can now login.',
+          () => this.error = 'An error occurred. Please try clicking the verification link again or contact the IT support.'
         );
     }
   }

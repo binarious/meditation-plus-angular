@@ -58,8 +58,12 @@ export class UserService {
     return observable;
   }
 
+  /**
+   * Verify account by sending token received via email to server
+   *
+   * @param  {string}               token secret token
+   */
   public verify(token: string): Observable<Response> {
-    console.log(123, token);
     return this.http.post(
       ApiConfig.url + '/auth/verify',
       JSON.stringify({
