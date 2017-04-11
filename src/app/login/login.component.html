@@ -72,6 +72,13 @@
 
         <p *ngIf="error" class="error">{{ error }}</p>
         <p *ngIf="message">{{ message }}</p>
+        <span
+          *ngIf="btnResend"
+          class="href"
+          (click)="resendEmail()"
+        >
+          Resend activation email
+        </span>
 
         <p *ngIf="!doSignup">
             <button

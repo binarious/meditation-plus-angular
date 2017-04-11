@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   message: string;
   doSignup = false;
   loading = false;
+  btnResend: boolean;
 
   constructor(
     public userService: UserService,
@@ -104,6 +105,7 @@ export class LoginComponent implements OnInit {
     this.password = '';
     this.password2 = '';
     this.email = '';
+    this.btnResend = false;
   }
 
   /**
@@ -135,8 +137,28 @@ export class LoginComponent implements OnInit {
           ? err.text()
           : 'An error occurred. Please try again later.';
         this.loading = false;
+        this.btnResend = this.error.indexOf('mail') > -1;
       }
     );
+  }
+
+  /**
+   * Resend activation email
+   */
+  resendEmail() {
+    if (!this.email) {
+      return;
+    }
+
+    this.userService.resend(this.email)
+      .subscribe(
+        () => {
+          this.error = '';
+          this.btnResend = false;
+          this.message = 'Email was send successfully.';
+        },
+        err => this.error = 'Failed to resend email.'
+      );
   }
 
   /**

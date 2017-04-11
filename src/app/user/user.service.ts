@@ -77,6 +77,24 @@ export class UserService {
   }
 
   /**
+   * Resend email activation with token
+   *
+   * @param  {string}               email mail address of user
+   */
+  public resend(email: string): Observable<Response> {
+    return this.http.post(
+      ApiConfig.url + '/auth/resend',
+      JSON.stringify({
+        email: email
+      }), {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+  /**
    * Register refresh subscription
    */
   public registerRefresh() {
