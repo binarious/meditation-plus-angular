@@ -15,6 +15,7 @@ export class ResetPasswordComponent implements OnInit {
   message: string;
   error: string;
   loading: boolean;
+  success: boolean;
 
   email: string;
   userId: string;
@@ -65,7 +66,7 @@ export class ResetPasswordComponent implements OnInit {
 
     this.userService.resetPassword(this.userId, this.token, this.password)
       .subscribe(
-        () => this.message = 'Password was changed successfully.',
+        () => this.success = true,
         err => {
           this.error = err.text();
           this.loading = false;
