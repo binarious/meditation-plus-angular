@@ -31,8 +31,7 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.userId = this.route.snapshot.params['user'];
-    this.token = this.route.snapshot.params['auth'];
-    this.email = this.route.snapshot.params['email'];
+    this.token = this.route.snapshot.params['token'];
   }
 
   sendMail(evt) {
@@ -47,7 +46,10 @@ export class ResetPasswordComponent implements OnInit {
     this.userService.resetPasswordInit(this.email)
       .subscribe(
         () => this.message = 'An email with instructions has been send to your account.',
-        err => this.error = err.text(),
+        err => {
+          this.error = err.text();
+          this.loading = false;
+        },
         () => this.loading = false
       );
   }
@@ -64,7 +66,10 @@ export class ResetPasswordComponent implements OnInit {
     this.userService.resetPassword(this.userId, this.token, this.password)
       .subscribe(
         () => this.message = 'Password was changed successfully.',
-        err => this.error = err.text(),
+        err => {
+          this.error = err.text();
+          this.loading = false;
+        },
         () => this.loading = false
       );
   }
