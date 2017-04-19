@@ -9,7 +9,6 @@ import { UserService } from '../user';
     './reset-password.component.styl'
   ]
 })
-
 export class ResetPasswordComponent implements OnInit {
 
   message: string;
@@ -46,7 +45,7 @@ export class ResetPasswordComponent implements OnInit {
 
     this.userService.resetPasswordInit(this.email)
       .subscribe(
-        () => this.message = 'An email with instructions has been send to your account.',
+        () => this.message = 'An email with instructions has been sent to your account.',
         err => {
           this.error = err.text();
           this.loading = false;
