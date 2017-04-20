@@ -1,3 +1,6 @@
+/**
+ * Register an event listener for incoming push messages from the server.
+ */
 self.addEventListener('push', function(event) {
   if (!(self.Notification && self.Notification.permission === 'granted')) {
     return;
