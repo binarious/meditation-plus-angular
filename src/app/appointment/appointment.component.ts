@@ -172,6 +172,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+
     this.appointmentService.deleteRegistration(appointment)
       .subscribe(() => {
         this.loadAppointments();
