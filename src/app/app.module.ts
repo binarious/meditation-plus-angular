@@ -32,6 +32,7 @@ import { ProfileModule } from './profile';
 import { OnlineComponent } from './online';
 import { CommitmentComponent } from './commitment';
 import { UpdateComponent } from './update';
+import { ResetPasswordComponent } from './reset-password';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -54,6 +55,7 @@ const APP_PROVIDERS = [
     CommitmentComponent,
     UpdateComponent,
     AppointmentComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
