@@ -64,16 +64,6 @@ export class MessageService {
     });
   }
 
-  /**
-   * Initializes Socket.io client with Jwt and listens to 'message'.
-   */
-  public getNewMessageSocket(): Observable<any> {
-    const websocket = this.wsService.getSocket();
-    return Observable.create(obs => {
-      websocket.on('message', res => obs.next(res));
-    });
-  }
-
   public getUpdateSocket(): Observable<any> {
     const websocket = this.wsService.getSocket();
     return Observable.create(obs => {
