@@ -13,7 +13,7 @@
     (click)="navigate('chat')"
     (tap)="navigate('chat')"
   >
-    CHAT
+    CHAT {{ newMessages > 0 && currentTab !== 'chat' ? '(' + newMessages + ')' : '' }}
   </a>
   <a
     md-button

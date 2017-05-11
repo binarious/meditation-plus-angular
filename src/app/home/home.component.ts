@@ -3,6 +3,7 @@ import { MeditationComponent } from '../meditation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
+import { WebsocketService } from '../shared';
 
 @Component({
   selector: 'home',
@@ -17,12 +18,14 @@ export class HomeComponent {
   currentTab = 'meditation';
   activated: string[] = ['meditation'];
   ownSession = false;
+  newMessages: number;
 
   constructor(
     public appState: AppState,
     public route: ActivatedRoute,
     public router: Router,
-    private userService: UserService
+    private userService: UserService,
+    public wsService: WebsocketService
   ) {
     this.appState.set('title', '');
     this.appState.set('openSidenav', false);
@@ -49,6 +52,15 @@ export class HomeComponent {
         });
       });
     }
+
+    this.wsService.onMessage()
+      .subscribe(
+        () => {
+          if (this.currentTab !== 'chat') {
+            this.newMessages++;
+          }
+        }
+      );
   }
 
   navigate(tab: string) {
@@ -68,6 +80,10 @@ export class HomeComponent {
 
     if (tab === 'meditation' && typeof this.medComponent !== 'undefined') {
       this.medComponent.onActivated();
+    }
+
+    if (tab === 'chat') {
+      this.newMessages = 0;
     }
 
     if (this.activated.indexOf(tab) < 0) {
