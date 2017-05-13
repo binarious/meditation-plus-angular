@@ -16,13 +16,7 @@ import { MaterialModule } from '@angular/material';
   ],
   providers: [
     WebsocketService,
-    {
-      provide: AuthHttp,
-      useFactory(http, router) {
-        return new AuthHttp(new AuthConfig(), http, router);
-      },
-      deps: [Http, Router]
-    }
+    AuthHttp
   ],
   exports: [
     CommonModule,
