@@ -51,11 +51,22 @@ export class MessageComponent implements OnInit, OnDestroy {
    * @param  {string} str search
    * @return {string}     username
    */
-  autocomplete(str: string): string {
-    if (!this.usernames) return '';
+  autocomplete(str: string): void {
+    if (!this.usernames || !str) return;
 
-    let matches = this.usernames.filter(name => new RegExp('^' + str, 'i').test(name));
-    return matches.length > 0 ? matches[0] + ' ' : str;
+    // match usernames from chat
+    const matches = this.usernames.filter(name => new RegExp('^' + str, 'i').test(name));
+    if (matches.length > 0) {
+      this.currentMessage += matches[0].substring(str.length) + ' ';
+    } else {
+      this.userService.getUsername(str)
+        .map(res => res.json())
+        .subscribe(username => {
+          if (username.length > 0) {
+            this.currentMessage += username.toString().substring(str.length) + ' ';
+          }
+        });
+    }
   }
 
   emojiSelect(evt) {
@@ -94,8 +105,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   extractUsernames(data): void {
     this.usernames = [];
 
-    for (let msg of data) {
-      let temp = msg.user && msg.user.username ? msg.user.username : null;
+    for (const msg of data) {
+      const temp = msg.user && msg.user.username ? msg.user.username : null;
 
       if (temp && this.usernames.indexOf(temp) === -1) {
         this.usernames.push(temp);
@@ -196,7 +207,7 @@ export class MessageComponent implements OnInit, OnDestroy {
       const search = this.currentMessage.match(/@\w+?$/);
 
       if (search) {
-        this.currentMessage += this.autocomplete(search[0].substring(1)).substring(search[0].length - 1);
+        this.autocomplete(search[0].substring(1));
       }
     }
   }
