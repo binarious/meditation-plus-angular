@@ -94,14 +94,11 @@ export class HomeComponent implements OnInit {
     if (lastMessageDate) {
       // Get number of missed messages
       this.wsService.onConnected()
-        .subscribe(latestMessage => {
-          this.messageService
-            .synchronize(new Date(lastMessageDate), latestMessage.createdAt)
-            .map(res => res.json())
-            .subscribe(res => {
-              this.newMessages = res.length;
-            });
-        });
+        .switchMap(latestMessage =>
+          this.messageService.synchronize(new Date(lastMessageDate), latestMessage.createdAt)
+        )
+        .map(res => res.json())
+        .subscribe(res => this.newMessages = res.length);
     }
 
     this.wsService.onMessage()
