@@ -1,3 +1,18 @@
+<a name="v1.10.0"></a>
+# [v1.10.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.1...v1.10.0) (2017-05-13)
+
+### Features
+* **meditation:** increased the maximum time of walking/sitting to 240 minutes.
+* **schedule:** improved the list view and added additional EST/EDT information.
+* **admin:** added a statistics section.
+* **registration:** we've added the activation of an account via email.
+* **login:** you can now reset your password.
+* **admin:** we've added the possibility to subscribe to new testimonials. You'll receive an email notification.
+* **general:** usernames are back. To be able to mention a user in the chat, it's required to have a unique identifier for the user. The current names aren't unique and it's not nice to use an internal database number to mention a user. Therefore we decided to reintroduce usernames. You need to choose one on your first login. Usernames are required, unique and cannot be changed afterwards.
+* **messages**: new messages will be indicated with a number on the chat tab.
+* **general:** we've made some performance improvements. 
+
+
 <a name="v1.9.1"></a>
 # [v1.9.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.0...v1.9.1) (2017-03-12)
 
