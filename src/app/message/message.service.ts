@@ -70,4 +70,18 @@ export class MessageService {
       websocket.on('message-update', res => obs.next(res));
     });
   }
+
+  /**
+   * Save the datetime last received message to local storage
+   */
+  public setLastMessage(messageDate) {
+    return window.localStorage.setItem('lastMessage', messageDate);
+  }
+
+  /**
+   * Get the datetime last received message from local storage
+   */
+  public getLastMessage() {
+    return window.localStorage.getItem('lastMessage');
+  }
 }
