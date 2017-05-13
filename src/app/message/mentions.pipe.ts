@@ -5,7 +5,10 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
  * Replace any occurence of a '@username' like string with
  * a link to the profile page of this user
 */
-@Pipe({name: 'mentions'})
+@Pipe({
+  name: 'mentions',
+  pure: true
+})
 export class MentionsPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
 
