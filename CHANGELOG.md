@@ -1,6 +1,9 @@
 <a name="v1.10.0"></a>
 # [v1.10.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.1...v1.10.0) (2017-05-13)
 
+### Bug Fixes
+* **messages**: Fixed a bug that caused a crash if the chat is empty and a user sends the first message.  
+
 ### Features
 * **meditation:** increased the maximum time of walking/sitting to 240 minutes.
 * **schedule:** improved the list view and added additional EST/EDT information.
@@ -12,9 +15,6 @@
 * **messages**: new messages will be indicated with a number on the chat tab.
 * **messages**: users will receive PUSH notifications when they are mentioned in a chat message (if they gave their browsers permission to do so).
 * **general:** we've made some performance improvements. 
-
-### Bug Fixes
-* **messages**: Fixed a bug that caused a crash if the chat is empty and an user sends the first message.  
 
 <a name="v1.9.1"></a>
 # [v1.9.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.0...v1.9.1) (2017-03-12)
