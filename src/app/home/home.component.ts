@@ -54,13 +54,8 @@ export class HomeComponent {
     }
 
     this.wsService.onMessage()
-      .subscribe(
-        () => {
-          if (this.currentTab !== 'chat') {
-            this.newMessages++;
-          }
-        }
-      );
+      .filter(() => this.currentTab !== 'chat')
+      .subscribe(() => this.newMessages++);
   }
 
   navigate(tab: string) {

@@ -13,7 +13,13 @@
     (click)="navigate('chat')"
     (tap)="navigate('chat')"
   >
-    CHAT {{ !ownSession && newMessages > 0 && currentTab !== 'chat' ? '(' + newMessages + ')' : '' }}
+    CHAT
+    <span
+      *ngIf="!ownSession && newMessages > 0 && currentTab !== 'chat'"
+      class="chat-indicator"
+    >
+      ({{newMessages}})
+    </span>
   </a>
   <a
     md-button
