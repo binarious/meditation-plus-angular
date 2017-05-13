@@ -14,7 +14,7 @@
 * **general:** we've made some performance improvements. 
 
 ### Bug Fixes
-* **messages**: Fixed a bug that caused a crash if the chat is empty an user sends the first message.  
+* **messages**: Fixed a bug that caused a crash if the chat is empty and an user sends the first message.  
 
 <a name="v1.9.1"></a>
 # [v1.9.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.0...v1.9.1) (2017-03-12)
