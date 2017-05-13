@@ -14,13 +14,11 @@ export class AuthHttp {
   }
 
   private authIntercept(response: Observable<Response>): Observable<Response> {
-    const sharableResponse = response.share();
-    sharableResponse.subscribe(null, err => {
+    return response.do(null, err => {
       if (this.isUnauthorized(err.status)) {
         this.router.navigate(['/login']);
       }
     });
-    return sharableResponse;
   }
 
   public setGlobalHeaders(headers: Array<Object>, request: Request | RequestOptionsArgs) {
@@ -36,11 +34,11 @@ export class AuthHttp {
   }
 
   public post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.authIntercept(this.authHttp.post(url, options));
+    return this.authIntercept(this.authHttp.post(url, body, options));
   }
 
   public put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.authIntercept(this.authHttp.put(url, options));
+    return this.authIntercept(this.authHttp.put(url, body, options));
   }
 
   public delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -48,7 +46,7 @@ export class AuthHttp {
   }
 
   public patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.authIntercept(this.authHttp.patch(url, options));
+    return this.authIntercept(this.authHttp.patch(url, body, options));
   }
 
   public head(url: string, options?: RequestOptionsArgs): Observable<Response> {
