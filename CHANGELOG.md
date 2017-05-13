@@ -15,6 +15,7 @@
 * **messages**: new messages will be indicated with a number on the chat tab.
 * **messages**: users will receive PUSH notifications when they are mentioned in a chat message (if they gave their browsers permission to do so).
 * **general:** we've made some performance improvements. 
+* **general:** updated to a newer version of material2. Select boxes now have a style. 
 
 <a name="v1.9.1"></a>
 # [v1.9.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.0...v1.9.1) (2017-03-12)
