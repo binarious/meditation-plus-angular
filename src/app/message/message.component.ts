@@ -52,7 +52,9 @@ export class MessageComponent implements OnInit, OnDestroy {
    * @return {string}     username
    */
   autocomplete(str: string): void {
-    if (!this.usernames || !str) return;
+    if (!this.usernames || !str) {
+      return;
+    }
 
     // match usernames from chat
     const matches = this.usernames.filter(name => new RegExp('^' + str, 'i').test(name));
