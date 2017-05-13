@@ -32,6 +32,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   loadingPage = false;
   menuOpen = false;
 
+  usernames: string[];
+
   constructor(
     public messageService: MessageService,
     public userService: UserService,
@@ -42,6 +44,18 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   get isAdmin(): boolean {
     return this.userService.isAdmin();
+  }
+
+  /**
+   * Find the first matching username for given search string
+   * @param  {string} str search
+   * @return {string}     username
+   */
+  autocomplete(str: string): string {
+    if (!this.usernames) return '';
+
+    let matches = this.usernames.filter(name => new RegExp('^' + str, 'i').test(name));
+    return matches.length > 0 ? matches[0] + ' ' : str;
   }
 
   emojiSelect(evt) {
@@ -69,7 +83,26 @@ export class MessageComponent implements OnInit, OnDestroy {
         if (page > 0 && data.length === 0) {
           this.noMorePages = true;
         }
+
+        this.extractUsernames(data);
       }, () => this.loadingPage = false);
+  }
+
+  /**
+   * Extract and sort all usernames from message data
+   */
+  extractUsernames(data): void {
+    this.usernames = [];
+
+    for (let msg of data) {
+      let temp = msg.user && msg.user.username ? msg.user.username : null;
+
+      if (temp && this.usernames.indexOf(temp) === -1) {
+        this.usernames.push(temp);
+      }
+    }
+
+    this.usernames.sort();
   }
 
   /**
@@ -154,7 +187,17 @@ export class MessageComponent implements OnInit, OnDestroy {
     const charCode = evt.which || evt.keyCode;
 
     if (charCode === 13) {
+      // ENTER
       this.sendMessage(evt, messageAutoSize);
+    } else if (charCode === 9)  {
+      // TAB
+      evt.preventDefault();
+
+      const search = this.currentMessage.match(/@\w+?$/);
+
+      if (search) {
+        this.currentMessage += this.autocomplete(search[0].substring(1)).substring(search[0].length - 1);
+      }
     }
   }
 
