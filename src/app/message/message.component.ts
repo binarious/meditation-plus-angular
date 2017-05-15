@@ -97,6 +97,10 @@ export class MessageComponent implements OnInit, OnDestroy {
           this.noMorePages = true;
         }
 
+        if (data.length >= 1) {
+          this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
+        }
+
         this.extractUsernames(data);
       }, () => this.loadingPage = false);
   }
