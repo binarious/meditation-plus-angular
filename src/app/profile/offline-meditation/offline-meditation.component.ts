@@ -16,16 +16,16 @@ export class OfflineMeditationComponent {
 
   @Output() reload = new EventEmitter();
 
-  walking: string = '';
-  sitting: string = '';
+  walking = '';
+  sitting = '';
   date: Date = new Date();
-  time: string = '';
+  time = '';
 
   today: Date = new Date();
 
-  success: boolean = false;
-  error: string = '';
-  sending: boolean = false;
+  success = false;
+  error = '';
+  sending = false;
 
   constructor(public meditationService: MeditationService) {}
 
@@ -58,8 +58,8 @@ export class OfflineMeditationComponent {
 
     // specify exact time
     const timeSplit = this.time.split(':');
-    this.date.setHours(parseInt(timeSplit[0]));
-    this.date.setMinutes(parseInt(timeSplit[0]));
+    this.date.setHours(parseInt(timeSplit[0]), 10);
+    this.date.setMinutes(parseInt(timeSplit[0]), 10);
 
     // send data to server
     this.sending = true;
