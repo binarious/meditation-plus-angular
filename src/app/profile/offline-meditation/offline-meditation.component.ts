@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MeditationService } from '../../meditation/meditation.service';
 import * as moment from 'moment';
 
@@ -24,8 +24,8 @@ export class OfflineMeditationComponent {
   today: Date = new Date();
 
   success: boolean = false;
-  error = '';
-  sending = false;
+  error: string = '';
+  sending: boolean = false;
 
   constructor(public meditationService: MeditationService) {}
 
