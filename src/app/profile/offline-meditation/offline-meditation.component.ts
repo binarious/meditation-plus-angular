@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MeditationService } from '../../meditation/meditation.service';
 import * as moment from 'moment';
+import { NgForm } from '@angular/forms';
 
 /**
  * Component for logging offline meditations
@@ -15,6 +16,7 @@ import * as moment from 'moment';
 export class OfflineMeditationComponent {
 
   @Output() reload = new EventEmitter();
+  @ViewChild('form') public medFor: NgForm;
 
   walking = '';
   sitting = '';
@@ -30,6 +32,7 @@ export class OfflineMeditationComponent {
   constructor(public meditationService: MeditationService) {}
 
   clearFormData() {
+    this.medFor.resetForm();
     this.walking = '';
     this.sitting = '';
     this.date = new Date();
