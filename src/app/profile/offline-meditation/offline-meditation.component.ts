@@ -31,7 +31,7 @@ export class OfflineMeditationComponent {
   sending = false;
 
   constructor(public meditationService: MeditationService) {
-    // set minimum date for logging an offline session for 31
+    // set minimum date for logging an offline session
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() - 31);
   }
