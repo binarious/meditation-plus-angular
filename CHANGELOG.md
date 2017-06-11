@@ -1,3 +1,25 @@
+<a name="v1.10.1"></a>
+# [v1.10.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.10.0...v1.10.1) (2017-06-1X)
+
+### Bug Fixes
+* **general:** Fixed a bug that caused hint of new messages in chat tab to be incorrect
+* **messages:** Fixed a bug that caused Tab-Completion of usernames to be incorrect
+* **testimonials:** Deleted users are now displayed correctly.
+* **ask/message:** Fixed a bug that caused hint of text length to disappear.
+* **ask:** Fixed a bug that caused answered dates of questions to disappear.
+
+### Features
+* **meditation:** Push Notifications are disabled during a meditation session
+* **meditation:** It is now possible to use Push Notifications in addition to the meditation alarm
+* **administration:** Administrators are now able to set the verified state of a user
+* **administration:** Administrators can receive emails on new testimonials
+* **general:** The number of new questions are now indicated in the home tab, too.
+* **ask:** Added notifications for when an own question gets answered and 
+* **profile:** Improved interface for submitting offline meditations by adding a datepicker.
+* **livestream:** Add Push Notification option for livestreams.
+* **Help:** Move help section to new Github Wiki.
+* **Login:** Add a link for troubleshooting.
+
 <a name="v1.10.0"></a>
 # [v1.10.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.1...v1.10.0) (2017-05-13)
 
