@@ -2,24 +2,24 @@
 # [v1.10.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.10.0...v1.10.1) (2017-06-1X)
 
 ### Bug Fixes
-* **general:** Fixed a bug that caused hint of new messages in chat tab to be incorrect
-* **messages:** Fixed a bug that caused Tab-Completion of usernames to be incorrect
+* **general:** Fixed a bug that caused hint label of new messages in chat tab to be incorrect.
+* **messages:** Fixed a bug that caused tab completion of usernames to be incorrect.
 * **testimonials:** Deleted users are now displayed correctly.
-* **ask/message:** Fixed a bug that caused hint of text length to disappear.
-* **ask:** Fixed a bug that caused answered dates of questions to disappear.
+* **ask/message:** Fixed a bug that caused hint label of text length to disappear.
+* **ask:** Fixed a bug that caused answered dates of questions to not display.
 * **online:** The list of online users is now more accurate.
 
 ### Features
-* **meditation:** Push Notifications are disabled during a meditation session
-* **meditation:** It is now possible to use Push Notifications in addition to the meditation alarm
-* **administration:** Administrators are now able to set the verified state of a user
+* **meditation:** Push notifications are now disabled during a meditation session.
+* **meditation:** It is now possible to use Push notifications in addition to the meditation alarm.
+* **administration:** Administrators are now able to set the verified state of a user's email address.
 * **administration:** Administrators can receive emails on new testimonials
 * **general:** The number of new questions are now indicated in the home tab, too.
 * **ask:** Added notifications for when an own question gets answered and 
-* **profile:** Improved interface for submitting offline meditations by adding a datepicker.
-* **livestream:** Add Push Notification option for livestreams.
-* **Help:** Move help section to new Github Wiki.
-* **Login:** Add a link for troubleshooting.
+* **profile:** Improved the interface for submitting offline meditations by adding a datepicker.
+* **livestream:** Added Push notification option for livestreams.
+* **Help:** Moved help section to new Github Wiki.
+* **Login:** Added a link for troubleshooting.
 * **password-reset:** allow username as well as identifier for recovering passwords.
 * **message/admin:** admins are now able to mention all possible users by typing '@all' into chat.
 
