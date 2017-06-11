@@ -7,6 +7,7 @@
 * **testimonials:** Deleted users are now displayed correctly.
 * **ask/message:** Fixed a bug that caused hint of text length to disappear.
 * **ask:** Fixed a bug that caused answered dates of questions to disappear.
+* **online:** The list of online users is now more accurate.
 
 ### Features
 * **meditation:** Push Notifications are disabled during a meditation session
@@ -19,6 +20,8 @@
 * **livestream:** Add Push Notification option for livestreams.
 * **Help:** Move help section to new Github Wiki.
 * **Login:** Add a link for troubleshooting.
+* **password-reset:** allow username as well as identifier for recovering passwords.
+* **message/admin:** admins are now able to mention all possible users by typing '@all' into chat.
 
 <a name="v1.10.0"></a>
 # [v1.10.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.1...v1.10.0) (2017-05-13)
