@@ -1,10 +1,8 @@
-import {TestHelper} from '../../../testing/test.helper'
-import {Observable} from 'rxjs/Rx';
-import {Message} from '../message';
-export class FakeMessageService {
+import { TestHelper } from '../../../testing/test.helper';
+import { Observable } from 'rxjs/Rx';
+import { Message } from '../message';
 
-  public constructor() {
-  }
+export class FakeMessageService {
 
   public getRecent(page = 0): Observable<any> {
     return TestHelper.fakeResponse([{
@@ -20,28 +18,27 @@ export class FakeMessageService {
         _id: '125',
         text: 'Last Message',
         createdAt: '',
-      }])
-
+      }]);
   }
 
   public post(message: string): Observable<any> {
-    return TestHelper.noRespose()
+    return TestHelper.noRespose();
   }
 
   public update(message: Message): Observable<any> {
-    return TestHelper.noRespose()
+    return TestHelper.noRespose();
   }
 
   public delete(message: Message): Observable<any> {
-    return TestHelper.noRespose()
+    return TestHelper.noRespose();
   }
 
   public synchronize(timeFrameStart: Date, timeFrameEnd: Date, countOnly: Boolean = false): Observable<any> {
-    return TestHelper.noRespose()
+    return TestHelper.noRespose();
   }
 
   public getUpdateSocket(): Observable<any> {
-    return TestHelper.noRespose()
+    return TestHelper.noRespose();
   }
 
   /**

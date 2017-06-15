@@ -1,13 +1,13 @@
-import {Response, ResponseOptions} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {DebugElement} from "@angular/core";
-import {ComponentFixture} from '@angular/core/testing';
+import { Response, ResponseOptions } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { ComponentFixture } from '@angular/core/testing';
 
 function createEvent(eventType: any): Event {
   const evt: Event = document.createEvent('Event');
   evt.initEvent(eventType, true, true);
   return evt;
 }
+
 export class TestHelper {
   public static fakeResponse(json: {} = {}) {
     return Observable.create(obs => {
@@ -27,14 +27,17 @@ export class TestHelper {
     });
   }
 
-
   public static dispatchEvent(element: any, eventType: any) {
     element.dispatchEvent(createEvent(eventType));
   }
 
-  public static sendInputs(fixture: ComponentFixture<any>, inputs: Array<any>)
-  // inputs has to be native element, useful to test forms
-  {
+  /**
+   * Tell Angular to digest the dom values
+   * @param fixture
+   * @param inputs  have to be native-dom
+   * @returns {Promise<any>}
+   */
+  public static sendInputs(fixture: ComponentFixture<any>, inputs: Array<any>) {
     inputs.forEach(input => {
       this.dispatchEvent(input, 'input');
     });

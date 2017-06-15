@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 
 /**
@@ -7,11 +6,12 @@ import { Component } from '@angular/core';
  * MockComponent({ selector: 'arm', inputs: ['side'] });
  */
 export function MockComponent(options: Component): Component {
-  let metadata: Component = {
+  const metadata: Component = {
     selector: options.selector,
     template: options.template || '',
     inputs: options.inputs,
     outputs: options.outputs
   };
-  return Component(metadata)(class _ {});
+  return Component(metadata)(class _ {
+  });
 }
