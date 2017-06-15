@@ -14,6 +14,7 @@ import {AvatarDirective} from '../profile/avatar.directive';
 import {AppState} from '../app.service'
 import {MeditationComponent} from './meditation.component';
 import {addMatchers} from '../../testing/jasmine-matchers'
+import {TestHelper} from "../../testing/test.helper";
 describe('MeditationComponent', () => {
   let component: MeditationComponent;
   let fixture: ComponentFixture<MeditationComponent>;
@@ -51,9 +52,6 @@ describe('MeditationComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.debugElement.nativeElement;
-
-
-
   });
 
   it('should have disabled submit button',()=>{
@@ -66,8 +64,32 @@ describe('MeditationComponent', () => {
   it('should have 20 minute commitment',()=>{
     const compiled = fixture.debugElement.nativeElement;
     let commitment =compiled.querySelector('.commitment')
-    debugger
     expect(commitment).toHaveText('20 minutes daily')
+  })
+
+  it ('should send meditation time to service',()=>{
+    const compiled = fixture.debugElement.nativeElement;
+    let mockService =
+      fixture.debugElement.injector.get<any>(MeditationService) as FakeMeditationService;
+    let spy = spyOn(mockService, 'post').and.callThrough();
+
+    let walking = compiled.querySelector("input[name='walking']")
+    walking.value = '10'
+
+    let sitting = compiled.querySelector("input[name='sitting']")
+    sitting.value = '20'
+    TestHelper.sendInputs(fixture, [walking,sitting]).then(() => {
+      expect(
+        compiled.querySelector('button[type="submit"]').disabled
+      ).toBe(false);  // expect user can click submit button
+      // simulate submit
+      let form = compiled.querySelector('form');
+      TestHelper.dispatchEvent(form, 'submit');
+
+      // the service function is called with currentMessage
+      expect(spy.calls.count()).toBe(1);
+      expect(spy.calls.argsFor(0)).toEqual([10,20])
+    })
 
   })
 });
