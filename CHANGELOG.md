@@ -1,5 +1,5 @@
-<a name="v1.10.1"></a>
-# [v1.10.1](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.10.0...v1.10.1) (2017-06-1X)
+<a name="v1.11.0"></a>
+# [v1.11.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.10.0...v1.11.0) (2017-06-1X)
 
 ### Bug Fixes
 * **general:** Fixed a bug that caused hint label of new messages in chat tab to be incorrect.
@@ -18,8 +18,8 @@
 * **ask:** Added notifications for when an own question gets answered and 
 * **profile:** Improved the interface for submitting offline meditations by adding a datepicker.
 * **livestream:** Added Push notification option for livestreams.
-* **Help:** Moved help section to new Github Wiki.
-* **Login:** Added a link for troubleshooting.
+* **help:** Moved help section to new Github Wiki.
+* **login:** Added a link for troubleshooting.
 * **password-reset:** allow username as well as identifier for recovering passwords.
 * **message/admin:** admins are now able to mention all possible users by typing '@all' into chat.
 
