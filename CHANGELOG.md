@@ -15,7 +15,7 @@
 * **administration:** Administrators are now able to set the verified state of a user's email address.
 * **administration:** Administrators can receive emails on new testimonials
 * **general:** The number of new questions are now indicated in the home tab, too.
-* **ask:** Added notifications for when an own question gets answered and 
+* **ask:** Added notifications for when an own question gets answered.
 * **profile:** Improved the interface for submitting offline meditations by adding a datepicker.
 * **livestream:** Added Push notification option for livestreams.
 * **help:** Moved help section to new Github Wiki.
