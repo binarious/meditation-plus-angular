@@ -15,7 +15,9 @@ export class MentionsPipe implements PipeTransform {
   transform(text: string) {
     return this.sanitizer.bypassSecurityTrustHtml(
       text.replace(/@([a-zA-Z][a-zA-Z0-9-_\.]{3,20}|all)/g, m =>
-        `<a style="text-decoration:none;color:#000;font-weight:bold;" href="/profile/${m.substring(1)}">${m}</a>`
+        `<a style="text-decoration:none;color:#000;font-weight:bold;" ${
+          m === '@all' ? '#' : 'href="/profile/' + m.substring(1) + '"'
+        }>${m}</a>`
       )
     );
   }
