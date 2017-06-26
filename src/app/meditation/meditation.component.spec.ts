@@ -95,11 +95,13 @@ describe('MeditationComponent', () => {
 
       const sitting = compiled.querySelector('input[name="sitting"]');
       TestHelper.setInputValue(sitting, '20');
+
       fixture.detectChanges();
 
       expect(
         compiled.querySelector('button[type="submit"]').disabled
       ).toBe(false);  // expect user can click submit button
+
       // simulate submit
       const form = compiled.querySelector('form');
       TestHelper.dispatchEvent(form, 'submit');
