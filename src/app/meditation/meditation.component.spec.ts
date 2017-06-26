@@ -56,6 +56,12 @@ describe('MeditationComponent', () => {
   });
 
   it('should have disabled submit button', () => {
+    // clear field that could have been read from localstorage from other tests
+    component.walking = null;
+    component.sitting = null;
+
+    fixture.detectChanges();
+
     const compiled = fixture.debugElement.nativeElement;
     expect(
       compiled.querySelector('button[type="submit"]').disabled
@@ -74,23 +80,16 @@ describe('MeditationComponent', () => {
       fixture.debugElement.injector.get<any>(MeditationService) as FakeMeditationService;
     const spy = spyOn(mockService, 'post').and.callThrough();
 
-    const walking = compiled.querySelector('input[name="walking"]');
-    walking.value = '10';
+    component.walking = '10';
+    component.sitting = '20';
 
-    const sitting = compiled.querySelector('input[name="sitting"]');
-    sitting.value = '20';
+    // simulate submit
+    const form = compiled.querySelector('form');
+    TestHelper.dispatchEvent(form, 'submit');
 
-    TestHelper.sendInputs(fixture, [walking, sitting]).then(() => {
-      expect(
-        compiled.querySelector('button[type="submit"]').disabled
-      ).toBe(false);  // expect user can click submit button
-      // simulate submit
-      const form = compiled.querySelector('form');
-      TestHelper.dispatchEvent(form, 'submit');
+    // the service function is called with currentMessage
+    expect(spy.calls.count()).toBe(1);
+    expect(spy.calls.argsFor(0)).toEqual([10, 20]);
 
-      // the service function is called with currentMessage
-      expect(spy.calls.count()).toBe(1);
-      expect(spy.calls.argsFor(0)).toEqual([10, 20]);
-    });
   });
 });
