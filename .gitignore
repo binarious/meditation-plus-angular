@@ -46,3 +46,6 @@ src/api.config.ts
 version.js
 yarn-error.log
 .vscode
+test\.bat
+
+messages\.json
