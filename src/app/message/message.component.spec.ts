@@ -63,29 +63,29 @@ describe('MessageComponent', () => {
       compiled.querySelector('button[type="submit"]').disabled
     ).toBe(true);
   });
-  it('should send message to service', (done) => {
+
+  it('should send message to service', () => {
     const compiled = fixture.debugElement.nativeElement;
 
     const mockService =
       fixture.debugElement.injector.get<any>(MessageService) as FakeMessageService;
     const spy = spyOn(mockService, 'post').and.callThrough();
 
-
     component.currentMessage = '##HELLO_GOODBYE##';
-    TestHelper.advance(fixture).then(() => {
-      expect(
-        compiled.querySelector('button[type="submit"]').disabled
-      ).toBe(false);  // expect user can click submit button
+    fixture.detectChanges(); // pass to view
 
-      // simulate submit
-      const form = compiled.querySelector('form');
-      TestHelper.dispatchEvent(form, 'submit');
+    expect(
+      compiled.querySelector('button[type="submit"]').disabled
+    ).toBe(false);  // expect user can click submit button
 
-      // the service function is called with currentMessage
-      expect(spy.calls.count()).toBe(1);
-      expect(spy.calls.argsFor(0)).toEqual(['##HELLO_GOODBYE##']);
-      done();
-    });
+    // simulate submit
+    const form = compiled.querySelector('form');
+    TestHelper.dispatchEvent(form, 'submit');
+
+    // the service function is called with currentMessage
+    expect(spy.calls.count()).toBe(1);
+    expect(spy.calls.argsFor(0)).toEqual(['##HELLO_GOODBYE##']);
+
   });
 
 
