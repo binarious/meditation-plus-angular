@@ -47,6 +47,7 @@ describe('MeditationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MeditationComponent);
     component = fixture.componentInstance;
+    // remove polling subscription as it prevents component state to stabilize.
     const spy = spyOn(component, 'pollMeditations').and.returnValue(TestHelper.noRespose());
     fixture.detectChanges();
   });
@@ -76,6 +77,7 @@ describe('MeditationComponent', () => {
   });
 
   it('should finish all async in ngInit', (done) => {
+    // this test caught the presence of polling in the component before stubbing pollMeditations()
     fixture.whenStable().then(() => {
       done();
     });
