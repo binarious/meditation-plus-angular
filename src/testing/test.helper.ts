@@ -1,6 +1,6 @@
 import { Response, ResponseOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { ComponentFixture,tick } from '@angular/core/testing';
+import { ComponentFixture, tick } from '@angular/core/testing';
 
 function createEvent(eventType: any): Event {
   const evt: Event = document.createEvent('Event');
@@ -29,13 +29,8 @@ export class TestHelper {
 
   public static dispatchEvent(element: any, eventType: any) {
     element.dispatchEvent(createEvent(eventType));
-
   }
 
-  public static tick(fixture:ComponentFixture<any>) {
-    fixture.detectChanges();
-    tick();
-  }
   /**
    * Tell Angular to digest the dom values
    * @param fixture
