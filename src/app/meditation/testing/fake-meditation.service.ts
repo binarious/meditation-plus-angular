@@ -140,19 +140,19 @@ export class FakeMeditationService {
   }
 
   public post(walking: number, sitting: number, start = null) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public stop() {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public like() {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getSocket(): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
 }

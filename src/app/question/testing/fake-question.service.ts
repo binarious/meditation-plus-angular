@@ -62,31 +62,31 @@ export class FakeQuestionService {
   }
 
   public post(question: string): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public like(question): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public delete(question): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public answer(question): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public answering(question): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public unanswering(question): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public findSuggestions(question: string): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getCount(): Observable<any> {
@@ -94,6 +94,6 @@ export class FakeQuestionService {
   }
 
   public getSocket(): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 }

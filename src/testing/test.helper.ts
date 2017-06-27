@@ -16,7 +16,7 @@ export class TestHelper {
     });
   }
 
-  public static noRespose() {
+  public static noResponse() {
     return Observable.create(() => {
     });
   }

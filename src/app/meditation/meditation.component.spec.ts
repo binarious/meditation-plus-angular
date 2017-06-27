@@ -48,7 +48,7 @@ describe('MeditationComponent', () => {
     fixture = TestBed.createComponent(MeditationComponent);
     component = fixture.componentInstance;
     // remove polling subscription as it prevents component state to stabilize.
-    const spy = spyOn(component, 'pollMeditations').and.returnValue(TestHelper.noRespose());
+    const spy = spyOn(component, 'pollMeditations').and.returnValue(TestHelper.noResponse());
     fixture.detectChanges();
   });
 

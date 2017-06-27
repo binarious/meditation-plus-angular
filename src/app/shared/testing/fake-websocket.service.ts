@@ -4,13 +4,13 @@ import { Observable } from 'rxjs/Rx';
 export class FakeWebsocketService {
 
   public onConnected(): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**
    * Event that gets triggered when any user sends a new chat message
    */
   public onMessage(): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 }

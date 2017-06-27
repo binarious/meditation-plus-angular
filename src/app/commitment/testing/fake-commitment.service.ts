@@ -3,11 +3,11 @@ import { TestHelper } from '../../../testing/test.helper';
 export class FakeCommitmentService {
 
   public getAll() {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public get(id: string) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getCurrentUser() {
@@ -25,19 +25,19 @@ export class FakeCommitmentService {
   }
 
   public save(commitment) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public commit(commitment) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public uncommit(commitment) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public delete(commitment) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**

@@ -22,23 +22,23 @@ export class FakeMessageService {
   }
 
   public post(message: string): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public update(message: Message): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public delete(message: Message): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public synchronize(timeFrameStart: Date, timeFrameEnd: Date, countOnly: Boolean = false): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getUpdateSocket(): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**

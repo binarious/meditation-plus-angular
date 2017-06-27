@@ -11,7 +11,7 @@ export class FakeUserService {
    * @param {String} username
    */
   public login(email: string, password: string, username: string = undefined) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**
@@ -20,7 +20,7 @@ export class FakeUserService {
    * @param  {string}               token secret token
    */
   public verify(token: string): Observable<Response> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**
@@ -29,15 +29,15 @@ export class FakeUserService {
    * @param  {string}               email mail address of user
    */
   public resend(email: string): Observable<Response> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public resetPasswordInit(email: string): Observable<Response> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public resetPassword(userId: string, token: string, password: string): Observable<Response> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**
@@ -55,7 +55,7 @@ export class FakeUserService {
   }
 
   public signup(name: string, password: string, email: string, username: string) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**
@@ -78,7 +78,7 @@ export class FakeUserService {
    * @return {Observable<Response>}
    */
   public updateProfile(profile: Object): Observable<Response> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   /**
@@ -155,43 +155,43 @@ export class FakeUserService {
    * @return {Observable<Response>}
    */
   public getProfileByUsername(username: string): Observable<Response> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getAll() {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public search(term: string) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getOnline() {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getOnlineSocket(): Observable<any> {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public get(id: string) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public save(user) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public delete(user) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public registerPushSubscription(subscription) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
   public getUsername(search: string) {
-    return TestHelper.noRespose();
+    return TestHelper.noResponse();
   }
 
 }
