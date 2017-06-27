@@ -27,7 +27,8 @@ describe('MessageComponent', () => {
         FormsModule,
         NoopAnimationsModule
       ],
-      declarations: [MessageComponent,
+      declarations: [
+        MessageComponent,
         MockComponent({selector: 'emoji-select'}),
         MockComponent({selector: 'message-list-entry', inputs: ['message', 'admin', 'menuOpen']}),
       ],
