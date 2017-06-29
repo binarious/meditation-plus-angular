@@ -34,7 +34,12 @@ export class FakeMessageService {
   }
 
   public synchronize(timeFrameStart: Date, timeFrameEnd: Date, countOnly: Boolean = false): Observable<any> {
-    return TestHelper.noResponse();
+    return TestHelper.fakeResponse([{
+        _id: '123',
+        text: 'sync-messages',
+        createdAt: '',
+      }]
+    );
   }
 
   public getUpdateSocket(): Observable<any> {

@@ -90,7 +90,7 @@ export class FakeQuestionService {
   }
 
   public getCount(): Observable<any> {
-    return Observable.of([3]);
+    return TestHelper.fakeResponse(3);
   }
 
   public getSocket(): Observable<any> {
