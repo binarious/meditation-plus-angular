@@ -39,7 +39,8 @@ describe('MeditationComponent', () => {
         AppState,
         {provide: MeditationService, useClass: FakeMeditationService},
         {provide: CommitmentService, useClass: FakeCommitmentService},
-        {provide: UserService, useClass: FakeUserService}]
+        {provide: UserService, useClass: FakeUserService}
+        ]
     })
       .compileComponents();
   }));
