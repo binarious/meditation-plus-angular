@@ -89,7 +89,7 @@ export class FakeUserService {
   public getProfile(id: string = null): Observable<Response> {
     return TestHelper.fakeResponse({
       '_id': '5',
-      'gravatarHash': '07eda263b3707f9784714c041ae46be6',
+      'gravatarHash': 'hash',
       'name': 'tom',
       'sound': '/assets/audio/bell.mp3',
       'local': {},
@@ -101,7 +101,7 @@ export class FakeUserService {
       'stableBell': true,
       'verified': true,
       'recoverUntil': '2017-05-16T00:49:43.075Z',
-      'verifyToken': 'u4h5Feg5oCTjBqSNrMHepz33OpC8pyTP',
+      'verifyToken': 'token',
       'username': 'tom',
       'meditations': {
         'lastMonths': {

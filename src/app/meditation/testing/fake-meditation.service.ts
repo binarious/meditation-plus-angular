@@ -14,10 +14,10 @@ export class FakeMeditationService {
         'end': '2017-06-10T06:56:33.905Z',
         'user': {
           '_id': '5',
-          'gravatarHash': '4de3df4fa010cd20c1c226fda92b3b83',
-          'name': 'Uilium Powell',
+          'gravatarHash': 'hhhh',
+          'name': 'Ulric',
           'country': 'US',
-          'username': 'Uilium'
+          'username': 'Ulric'
         },
         'numOfLikes': 1,
         '__v': 0,
@@ -34,7 +34,7 @@ export class FakeMeditationService {
         'end': '2017-06-10T06:51:29.644Z',
         'user': {
           '_id': '3',
-          'gravatarHash': '45be0ca262c8397dca1e3d532f409107',
+          'gravatarHash': 'gggg',
           'name': 'Steve',
           'username': 'Steve',
           'country': 'GB'
@@ -55,7 +55,7 @@ export class FakeMeditationService {
         'end': '2017-06-10T05:47:53.504Z',
         'user': {
           '_id': '1',
-          'gravatarHash': 'fdf6ec8209d47779b611b707d3a94316',
+          'gravatarHash': 'nnnn',
           'name': 'Sam',
           'country': 'US',
           'username': 'sammy'
@@ -75,7 +75,7 @@ export class FakeMeditationService {
         'end': '2017-06-10T04:42:22.749Z',
         'user': {
           '_id': '2',
-          'gravatarHash': '24ccb628332548141c94e1bedc684e52',
+          'gravatarHash': 'kkkk',
           'name': 'Matt',
           'country': 'GB',
           'username': 'Matt'
@@ -95,10 +95,10 @@ export class FakeMeditationService {
         'end': '2017-06-10T03:33:37.058Z',
         'user': {
           '_id': '3',
-          'gravatarHash': '15208a28d6105fb02eeee57dc350b4ad',
-          'name': 'ariel',
+          'gravatarHash': 'llll',
+          'name': 'Adam',
           'country': 'IL',
-          'username': 'ariel'
+          'username': 'adam'
         },
         'numOfLikes': 2,
         '__v': 0,

@@ -30,15 +30,15 @@ class TestHostComponent implements OnInit {
     this.mode = 0;
 
     this.question = {
-      '_id': '5951b4b7800d4a3a760c1426',
+      '_id': '333',
       'updatedAt': '2017-06-27T01:28:23.810Z',
       'createdAt': '2017-06-27T01:28:23.810Z',
       'text': 'question 1 \n',
       'user': {
-        '_id': '59277eae51afb44182bd71b3',
-        'gravatarHash': 'aeac41c9efb18b94e94c44c4258d0fc4',
-        'name': 'NONAME',
-        'username': 'Stawrogin'
+        '_id': '444',
+        'gravatarHash': 'hash',
+        'name': 'Adam',
+        'username': 'adam'
       },
       'likes': [],
       '__v': 0
