@@ -35,7 +35,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   profile;
 
   nextAppointments: any[] = [];
-  countdown;
+  countdown: string;
 
   increment: number;
 
@@ -63,8 +63,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     const timeDiff = this.getTimeDiff(this.nextAppointments[0]);
 
+    // remove current appointment from stack if it is in the past
     if (timeDiff.asMinutes() < 0) {
       this.nextAppointments.shift();
+      this.setCountdown();
     }
 
     this.countdown =
@@ -105,6 +107,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         const currentDay = moment.tz('America/Toronto').weekday();
         const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
 
+        this.nextAppointments = [];
         // find current user and check if appointment is now
         for (const appointment of res.appointments) {
           const isUser = appointment.user && appointment.user._id === this.getUserId();
