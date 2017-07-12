@@ -34,6 +34,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   profile;
 
+  nextAppointments: any[] = [];
+  countdown;
+
   increment: number;
 
   constructor(
@@ -47,6 +50,30 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.currentTab = (<any>res).tab);
+  }
+
+  /**
+   * Sets the label for remaining time until next appointment
+   */
+  setCountdown(): void {
+    if (this.nextAppointments.length === 0) {
+      this.countdown = '';
+      return;
+    }
+
+    const timeDiff = this.getTimeDiff(this.nextAppointments[0]);
+
+    if (timeDiff.asMinutes() < 0) {
+      this.nextAppointments.shift();
+    }
+
+    this.countdown =
+      timeDiff.days() + ' day(s) ' +
+      timeDiff.hours() + ' hour(s) ' +
+      timeDiff.minutes() + ' minute(s) ';
+
+    // recursive updates all 5 seconds
+    setTimeout(() => this.setCountdown(), 5000);
   }
 
   /**
@@ -75,25 +102,28 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         this.rightBeforeAppointment = false;
         this.loadedInitially = true;
 
+        const currentDay = moment.tz('America/Toronto').weekday();
+        const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
+
         // find current user and check if appointment is now
         for (const appointment of res.appointments) {
-          if (!appointment.user) {
-            continue;
+          const isUser = appointment.user && appointment.user._id === this.getUserId();
+
+          if (this.nextAppointments.length < (this.isAdmin ? 3 : 1)
+            && (isUser || this.isAdmin && appointment.user)
+            && currentDay <= appointment.weekDay && currentHour < appointment.hour) {
+            console.log('here');
+            this.nextAppointments.push(appointment);
+            this.setCountdown();
           }
-          if (appointment.user._id !== this.getUserId()) {
+
+          if (!isUser) {
             continue;
           }
 
           this.userHasAppointment = true;
 
-          const currentDay = moment.tz('America/Toronto').weekday();
-          const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
-          const currentMoment = moment(this.printHour(currentHour), 'HH:mm');
-          const appointMoment = moment(this.printHour(appointment.hour), 'HH:mm');
-
-          if (Math.abs(moment.duration(appointMoment.diff(currentMoment)).asMinutes()) <= 5
-            && appointment.weekDay === currentDay
-          ) {
+          if (this.getTimeDiff(appointment).asMinutes() <= 5) {
             this.activateHangoutsButton();
             break;
           }
@@ -103,6 +133,27 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         return res;
       })
       .subscribe(res => this.appointments = res);
+  }
+
+  /**
+   * Calculates the minutes until a given appointment
+   *
+   * @param  {Object}     appointment  An appointment
+   * @return {number}                  minutes until appointment
+   */
+  getTimeDiff(appointment) {
+    const today = moment.tz('America/Toronto').weekday();
+    const time = this.printHour(appointment.hour).split(':');
+    const appointmentMoment = moment
+      .tz('America/Toronto')
+      .day(appointment.weekDay + (today > appointment.weekDay ? 7 : 0))
+      .hour(parseInt(time[0], 10))
+      .minute(parseInt(time[1], 10))
+      .seconds(0)
+      .milliseconds(0);
+    const currentMoment = moment.tz('America/Toronto').seconds(0).millisecond(0);
+
+    return moment.duration(appointmentMoment.diff(currentMoment));
   }
 
   /**
@@ -187,7 +238,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
    * @return {string}      Local hour in format 'HH:mm'
    */
   printHour(hour: number): string {
-    hour = hour + this.increment * 100;
+    if (this.increment) {
+      hour = hour + this.increment * 100;
+    }
+
     hour = hour < 0 || hour >= 2400 ? 0 : hour;
 
     // add padding with '0' (i.e. 40 => '0040')
