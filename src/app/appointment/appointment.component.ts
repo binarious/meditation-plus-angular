@@ -114,7 +114,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         for (const appointment of res.appointments) {
           const isUser = appointment.user && appointment.user._id === this.getUserId();
 
-          if (currentDay == appointment.weekDay && currentHour < appointment.hour
+          if (currentDay === appointment.weekDay && currentHour < appointment.hour
             && (isUser || this.isAdmin && appointment.user)) {
             this.nextAppointments.push(appointment);
             if (this.nextAppointments.length === 1) {
