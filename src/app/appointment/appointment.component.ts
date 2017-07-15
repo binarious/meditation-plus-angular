@@ -36,6 +36,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   nextAppointments: any[] = [];
   countdown: string;
+  countdownSub: Subscription;
 
   increment: number;
 
@@ -52,7 +53,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .subscribe(res => this.currentTab = (<any>res).tab);
 
     // periodically update countdown
-    setInterval(() => this.setCountdown(), 5000);
+    this.countdownSub = Observable.interval(5000)
+      .subscribe(() => this.setCountdown());
   }
 
   /**
@@ -72,11 +74,12 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       this.setCountdown();
     }
 
+    console.log(moment.duration(timeDiff.minutes(), 'minutes').minutes());
     this.countdown =
       (timeDiff.hours()
         ?  moment.duration(timeDiff.hours(), 'hours').humanize() + ' and '
         : '')
-      + moment.duration(timeDiff.minutes(), 'minutes').humanize();
+      + timeDiff.minutes() + ' minutes';
   }
 
   /**
@@ -338,5 +341,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.appointmentSocket.unsubscribe();
+    this.countdownSub.unsubscribe();
   }
 }
