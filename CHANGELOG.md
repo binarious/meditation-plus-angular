@@ -23,7 +23,7 @@
 * **password-reset:** allow username as well as identifier for recovering passwords.
 * **message/admin:** admins are now able to mention all possible users by typing '@all' into chat.
 * **schedule:** added a countdown until the next appointment
-* **schedule:** admins can now receive notifications for when the schedule changes
+* **schedule:** admins can now receive notifications for schedule changes
 
 <a name="v1.10.0"></a>
 # [v1.10.0](https://github.com/Sirimangalo/meditation-plus-angular/compare/v1.9.1...v1.10.0) (2017-05-13)
