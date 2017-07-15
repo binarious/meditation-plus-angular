@@ -50,6 +50,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     this.route.params
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.currentTab = (<any>res).tab);
+
+    // periodically update countdown
+    setInterval(() => this.setCountdown(), 5000);
   }
 
   /**
@@ -70,12 +73,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     }
 
     this.countdown =
-      timeDiff.days() + ' day(s) ' +
-      timeDiff.hours() + ' hour(s) ' +
-      timeDiff.minutes() + ' minute(s) ';
-
-    // recursive updates all 5 seconds
-    setTimeout(() => this.setCountdown(), 5000);
+      (timeDiff.hours()
+        ?  moment.duration(timeDiff.hours(), 'hours').humanize() + ' and '
+        : '')
+      + moment.duration(timeDiff.minutes(), 'minutes').humanize();
   }
 
   /**
@@ -108,16 +109,17 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         const currentHour = parseInt(moment.tz('America/Toronto').format('HHmm'), 10);
 
         this.nextAppointments = [];
+
         // find current user and check if appointment is now
         for (const appointment of res.appointments) {
           const isUser = appointment.user && appointment.user._id === this.getUserId();
 
-          // push the next 3 appointments onto a stack if user is an admin
-          if (this.nextAppointments.length < (this.isAdmin ? 3 : 1)
-            && (isUser || this.isAdmin && appointment.user)
-            && currentDay <= appointment.weekDay && currentHour < appointment.hour) {
+          if (currentDay == appointment.weekDay && currentHour < appointment.hour
+            && (isUser || this.isAdmin && appointment.user)) {
             this.nextAppointments.push(appointment);
-            this.setCountdown();
+            if (this.nextAppointments.length === 1) {
+              this.setCountdown();
+            }
           }
 
           if (!isUser) {
@@ -154,7 +156,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .minute(parseInt(time[1], 10))
       .seconds(0)
       .milliseconds(0);
-    const currentMoment = moment.tz('America/Toronto').seconds(0).millisecond(0);
+    const currentMoment = moment.tz('America/Toronto').millisecond(0);
 
     return moment.duration(appointmentMoment.diff(currentMoment));
   }
@@ -247,10 +249,8 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
     hour = hour < 0 || hour >= 2400 ? 0 : hour;
 
-    // add padding with '0' (i.e. 40 => '0040')
-    const hourFormat = Array(5 - hour.toString().length).join('0') + hour.toString();
-
-    return moment(hourFormat, 'HHmm').format('HH:mm');
+    const hourStr = '0000' + hour.toString();
+    return hourStr.substr(-4, 2) + ':' + hourStr.substr(-2, 2);
   }
 
   /**
