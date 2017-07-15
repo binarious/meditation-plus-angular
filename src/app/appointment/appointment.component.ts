@@ -112,10 +112,10 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         for (const appointment of res.appointments) {
           const isUser = appointment.user && appointment.user._id === this.getUserId();
 
+          // push the next 3 appointments onto a stack if user is an admin
           if (this.nextAppointments.length < (this.isAdmin ? 3 : 1)
             && (isUser || this.isAdmin && appointment.user)
             && currentDay <= appointment.weekDay && currentHour < appointment.hour) {
-            console.log('here');
             this.nextAppointments.push(appointment);
             this.setCountdown();
           }
