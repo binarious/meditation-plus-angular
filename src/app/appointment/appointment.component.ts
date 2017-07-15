@@ -74,7 +74,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       this.setCountdown();
     }
 
-    console.log(moment.duration(timeDiff.minutes(), 'minutes').minutes());
     this.countdown =
       (timeDiff.hours()
         ?  moment.duration(timeDiff.hours(), 'hours').humanize() + ' and '
