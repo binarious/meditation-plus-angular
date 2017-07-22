@@ -119,15 +119,17 @@ export class AppointmentAdminComponent {
     this.tickerLoading = true;
 
     // update settings
-    let tickerSubs = this.settings.appointmentsTicker
+    let tickerSubs = this.settings && this.settings.appointmentsTicker
       ? this.settings.appointmentsTicker
       : [];
 
     // toggle subscription of appointments in settings
     let i = tickerSubs.indexOf(this.subscription.endpoint);
     if (i >= 0) {
-      delete tickerSubs[i];
+      // remove from array
+      tickerSubs.splice(i, 1);
     } else {
+      // add to array
       tickerSubs.push(this.subscription.endpoint);
     }
 
