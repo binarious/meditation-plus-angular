@@ -76,4 +76,18 @@ export class AppointmentService {
       })
     });
   }
+
+  public appointmentsTicker(
+     subscription,
+     unsubscribe: Boolean = false,
+     statusOnly: Boolean = false
+  ) {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/settings/appointmentsTicker',
+      JSON.stringify({ subscription, unsubscribe }), {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 }

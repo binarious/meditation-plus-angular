@@ -6,6 +6,38 @@
   <md-icon>add</md-icon>
 </button>
 
+<div *ngIf="subscription" class="appointment-ticker">
+  <button
+    *ngIf="!tickerSubscribed"
+    md-raised-button
+    color="primary"
+    type="submit"
+    (click)="toggleTicker()"
+    [disabled]="tickerLoading"
+  >
+    <md-spinner
+      *ngIf="tickerLoading"
+      class="in-button-spinner">
+    </md-spinner>
+    Notify this device
+  </button>
+
+  <button
+    *ngIf="tickerSubscribed"
+    md-raised-button
+    color="warning"
+    type="submit"
+    (click)="toggleTicker()"
+    [disabled]="tickerLoading"
+  >
+    <md-spinner
+      *ngIf="tickerLoading"
+      class="in-button-spinner">
+    </md-spinner>
+    Unsubscribe notifications
+  </button>
+</div>
+
 <div class="appointment-increment">
   <md-slider
     min="-24"
@@ -18,6 +50,7 @@
   </md-slider>
   <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
 </div>
+
 
 <div class="appointment-list">
   <md-card *ngFor="let appointment of appointments">
