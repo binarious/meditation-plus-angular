@@ -29,13 +29,6 @@ self.addEventListener('push', function(event) {
 // copied from:
 // https://www.ajaxtown.com/article/web-push-notification-with-service-worker
 self.addEventListener('notificationclick', function(event) {
-  console.log(event);
-
-  if ('actions' in Notification.prototype && event.action === 'appointment-next') {
-    event.notification.title = 'Changed...';
-    return;
-  }
-
   // close the notification
   event.notification.close();
 
