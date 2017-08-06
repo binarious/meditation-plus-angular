@@ -103,7 +103,7 @@ export class AppointmentAdminComponent {
         this.settings = res;
         this.increment = res.appointmentsIncrement
           ? res.appointmentsIncrement
-          : 0
+          : 0;
       });
   }
 
@@ -119,12 +119,12 @@ export class AppointmentAdminComponent {
     this.tickerLoading = true;
 
     // update settings
-    let tickerSubs = this.settings && this.settings.appointmentsTicker
+    const tickerSubs = this.settings && this.settings.appointmentsTicker
       ? this.settings.appointmentsTicker
       : [];
 
     // toggle subscription of appointments in settings
-    let i = tickerSubs.indexOf(this.subscription.endpoint);
+    const i = tickerSubs.indexOf(this.subscription.endpoint);
     if (i >= 0) {
       // remove from array
       tickerSubs.splice(i, 1);
