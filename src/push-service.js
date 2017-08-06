@@ -12,7 +12,7 @@ self.addEventListener('push', function(event) {
 
   // set a default icon if none was declared
   if (!('icon' in data)) {
-    data.icon './assets/icon/android-chrome-192x192.png';
+    data.icon = './assets/icon/android-chrome-192x192.png';
   }
 
   // show notification
