@@ -280,7 +280,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.bell.play();
 
     // check for Network API support
-    var connection = window.navigator['connection']    ||
+    const connection = window.navigator['connection']    ||
                      window.navigator['mozConnection'] ||
                      null;
 
@@ -354,11 +354,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.bell.play();
   }
 
-  audioCanPlay(type: string): boolean {
-    var a = document.createElement('audio');
-    return !!(a.canPlayType && a.canPlayType(type).replace(/no/, ''));
-  }
-
   /**
    * Stopping active meditation session.
    */
@@ -384,7 +379,7 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.appState.set('isMeditating', false);
 
     if (this.bell) {
-      this.bell.pause;
+      this.bell.pause();
     }
 
     if (this.bellInterval) {
