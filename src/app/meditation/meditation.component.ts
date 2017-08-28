@@ -28,7 +28,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
   profile;
 
   // url for static audio file
-  bellUrl = '';
   bell;
   bellInterval;
 
@@ -280,23 +279,20 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.bell.src = '/assets/audio/halfsec.mp3';
     this.bell.play();
 
-    // wait for the half second file to play
-    setTimeout(() => {
-      // check for Network API support
-      var connection = window.navigator['connection']    ||
-                       window.navigator['mozConnection'] ||
-                       null;
+    // check for Network API support
+    var connection = window.navigator['connection']    ||
+                     window.navigator['mozConnection'] ||
+                     null;
 
-      // use the more stable HTML5 <audio> solution for playing a bell
-      // if the user has activated this feature or we know that he isn't
-      // using a cellular connection.
-      if (this.profile && this.profile.stableBell ||
-          connection && connection.type && connection.type !== 'cellular') {
-        this.stableTimer(walking, sitting);
-      } else {
-        this.fallbackTimer(walking, sitting);
-      }
-    }, 550);
+    // use the more stable HTML5 <audio> solution for playing a bell
+    // if the user has activated this feature or we know that he isn't
+    // using a cellular connection.
+    if (this.profile && this.profile.stableBell ||
+        connection && connection.type && connection.type !== 'cellular') {
+      this.stableTimer(walking, sitting);
+    } else {
+      this.fallbackTimer(walking, sitting);
+    }
   }
 
   fallbackTimer(walking = 0, sitting = 0): void {
