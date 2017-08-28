@@ -25,6 +25,8 @@ export class AppointmentAdminComponent {
   settings;
   subscription;
 
+  toggleView: boolean;
+
   constructor(
     public appointmentService: AppointmentService,
     private settingsService: SettingsService,
