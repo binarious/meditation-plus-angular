@@ -23,7 +23,6 @@ import * as StableInterval from 'stable-interval';
 })
 export class MeditationComponent implements OnInit, OnDestroy {
 
-
   // user profile
   profile;
 
@@ -280,9 +279,9 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.bell.play();
 
     // check for Network API support
-    const connection = window.navigator['connection']    ||
-                     window.navigator['mozConnection'] ||
-                     null;
+    const connection = window.navigator['connection']
+      || window.navigator['mozConnection']
+      || null;
 
     // use the more stable HTML5 <audio> solution for playing a bell
     // if the user has activated this feature or we know that he isn't
