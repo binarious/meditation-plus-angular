@@ -32,7 +32,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   localTimezone: string;
   rootTimezone = 'America/Toronto';
-  rootTimezoneShort = moment.tz(this.rootTimezone).format('z');
+  rootTimezoneShort = moment.tz(this.rootTimezone).zoneName();
 
   profile;
 
@@ -68,7 +68,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         }
 
         this.rootTimezone = res.appointmentsTimezone;
-        this.rootTimezoneShort = moment.tz(this.rootTimezone).format('z');
+        this.rootTimezoneShort = moment.tz(this.rootTimezone).zoneName();
       });
   }
 
