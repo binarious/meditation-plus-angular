@@ -18,13 +18,13 @@ export class AppointmentAdminComponent {
   increment = 0;
   timezone: string;
   timezones = moment.tz.names();
+  // define standard timezone until 'timezone' is loaded
+  zoneName = moment.tz('America/Toronto').zoneName();
 
   // notification stati
   tickerSubscribed: Boolean;
   tickerLoading: Boolean;
   settings;
-
-  toggleView: boolean;
 
   constructor(
     public appointmentService: AppointmentService,
@@ -84,6 +84,7 @@ export class AppointmentAdminComponent {
       .subscribe(res => {
         this.settings = res;
         this.timezone = res.appointmentsTimezone;
+        this.zoneName = moment.tz(this.timezone).zoneName();
         this.increment = res.appointmentsIncrement
           ? res.appointmentsIncrement
           : 0;
