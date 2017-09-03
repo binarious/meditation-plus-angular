@@ -79,7 +79,9 @@ export class UserFormComponent implements OnInit {
   }
 
   toggleNotifyAppointments() {
-    if (!this.pushSubscription || !this.model.notifications.appointment) return;
+    if (!this.pushSubscription || !this.model.notifications.appointment) {
+      return;
+    }
 
     const index = this.model.notifications.appointment.indexOf(this.pushSubscription._id);
     if (index >= 0) {
