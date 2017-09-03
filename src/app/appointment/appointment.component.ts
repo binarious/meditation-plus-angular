@@ -31,7 +31,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
   currentTab = 'table';
 
   localTimezone: string;
-  rootTimezone: string = 'America/Toronto';
+  rootTimezone = 'America/Toronto';
 
   profile;
 
