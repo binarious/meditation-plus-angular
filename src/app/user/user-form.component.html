@@ -206,6 +206,15 @@
     <small>Role</small>
   </div>
 
+  <div class="flex row" *ngIf="model.notifications.appointment && pushSubscription">
+    <md-checkbox
+      [checked]="model.notifications.appointment.indexOf(pushSubscription._id) !== -1"
+      (change)="toggleNotifyAppointments()"
+      name="notify-appointment">
+      Receive constant notifications for appointments (for this device)
+    </md-checkbox>
+  </div>
+
   <div class="flex row">
     <md-select
       [(ngModel)]="model.role"
