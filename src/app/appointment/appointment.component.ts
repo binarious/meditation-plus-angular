@@ -67,7 +67,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
           return;
         }
 
-        this.rootTimezone = res.appointmentsTimezone
+        this.rootTimezone = res.appointmentsTimezone;
         this.rootTimezoneShort = moment.tz(this.rootTimezone).format('z');
       });
   }
