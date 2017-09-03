@@ -13,7 +13,7 @@
     step="1"
     thumb-label="true"
     [(ngModel)]="increment"
-    (change)="updateIncrement()"
+    (change)="updateSettings('appointmentsIncrement', increment)"
     >
   </md-slider>
   <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
