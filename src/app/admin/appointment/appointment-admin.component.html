@@ -6,78 +6,32 @@
   <md-icon>add</md-icon>
 </button>
 
-<md-card>
-  <md-card-title>Appointments Settings</md-card-title>
+<div class="appointment-settings">
+  <md-slider
+    min="-24"
+    max="24"
+    step="1"
+    thumb-label="true"
+    [(ngModel)]="increment"
+    (change)="updateIncrement()"
+    >
+  </md-slider>
+  <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
 
-  <button md-mini-fab title="toggle settings" (click)="toggleView = !toggleView">
-    <md-icon *ngIf="!toggleView">settings</md-icon>
-    <md-icon *ngIf="toggleView">close</md-icon>
-  </button>
+  <md-select
+    [(ngModel)]="timezone"
+    (change)="updateSettings('appointmentsTimezone', timezone)"
+    name="timezone"
+    placeholder="Timezone"
+    class="fill"
+  >
+    <md-option value="">- Select timezone -</md-option>
+    <md-option *ngFor="let tzone of timezones" [value]="tzone">
+      {{ tzone }}
+    </md-option>
+  </md-select>
+</div>
 
-  <div *ngIf="toggleView">
-    <h4>global increment in hours</h4>
-    <div class="flex flex-center">
-      <md-slider
-        min="-24"
-        max="24"
-        step="1"
-        thumb-label="true"
-        [(ngModel)]="increment"
-        (change)="updateSettings('appointmentsIncrement', increment)"
-        class="fill"
-        >
-      </md-slider>
-      <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
-    </div>
-
-    <h4>timezone for appointments</h4>
-    <div class="flex flex-center">
-      <md-select
-        [(ngModel)]="timezone"
-        (change)="updateSettings('appointmentsTimezone', timezone)"
-        name="timezone"
-        placeholder="Timezone"
-        class="fill"
-      >
-        <md-option value="">- Select timezone -</md-option>
-        <md-option *ngFor="let tzone of timezones" [value]="tzone">
-          {{ tzone }}
-        </md-option>
-      </md-select>
-    </div>
-
-    <h4 *ngIf="subscription">subscribe for push notifications</h4>
-    <div *ngIf="subscription" class="appointment-ticker">
-      <button
-        *ngIf="!tickerSubscribed"
-        md-raised-button
-        color="primary"
-        (click)="toggleTicker()"
-        [disabled]="tickerLoading"
-      >
-        <md-spinner
-          *ngIf="tickerLoading"
-          class="in-button-spinner">
-        </md-spinner>
-        Notify this device
-      </button>
-
-      <button
-        *ngIf="tickerSubscribed"
-        md-raised-button
-        color="warn"
-        (click)="toggleTicker()"
-        [disabled]="tickerLoading"
-      >
-        <md-spinner
-          *ngIf="tickerLoading"
-          class="in-button-spinner">
-        </md-spinner>
-        Unsubscribe notifications
-      </button>
-    </div>
-  </div>
-</md-card>
 
 <div class="appointment-list">
   <md-card *ngFor="let appointment of appointments">
