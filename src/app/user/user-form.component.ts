@@ -45,9 +45,11 @@ export class UserFormComponent implements OnInit {
         reg.pushManager.subscribe({ userVisibleOnly: true }).then(subscription => {
           this.userService
             .registerPushSubscription(subscription)
+            .map(res => res.json())
             .subscribe(doc => {
               this.pushSubscription = doc;
-              this.toggleNotifyAppointments();
+              this.appointNotify =
+                this.model.notifications.appointment.indexOf(doc._id) >= 0;
             });
         });
       });
