@@ -75,15 +75,9 @@ export class BroadcastAdminComponent {
 
     this.settingsService.set('livestreamInfo', this.livestreamInfo)
       .subscribe(
-        () => {
-          this.loadingSubmit = false;
-          this.loadSettings();
-        },
-        err => {
-          this.loadingSubmit = false;
-          this.settingsError = err.text();
-        }
-
+        () => this.loadSettings(),
+        err => this.settingsError = err.text(),
+        () => this.loadingSubmit = false
       );
   }
 
