@@ -134,6 +134,12 @@
 </div>
 
 <div class="flex row">
+  <md-checkbox [(ngModel)]="model.notifications.appointment" name="notify-appointment">
+    Notify via Push when appointment call is coming in
+  </md-checkbox>
+</div>
+
+<div class="flex row">
   <md-checkbox [(ngModel)]="model.notifications.question" name="notify-question">
     Notify when own question was answered
   </md-checkbox>
@@ -239,6 +245,12 @@
   <div class="flex row">
     <md-slide-toggle [(ngModel)]="model.verified">
       has verified email address
+    </md-slide-toggle>
+  </div>
+
+  <div *ngIf="model.role === 'ROLE_ADMIN'" class="flex row">
+    <md-slide-toggle [(ngModel)]="model.appointmentsCallee">
+      can receive appointment calls
     </md-slide-toggle>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, ApplicationRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
@@ -7,12 +7,8 @@ import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
 import { SettingsService } from '../shared/settings.service';
 import * as moment from 'moment-timezone';
-import * as $script from 'scriptjs';
 // tslint:disable-next-line
 import * as timezones from 'timezones.json';
-
-// HACK: for Google APIs
-declare var gapi: any;
 
 @Component({
   selector: 'appointment',
@@ -42,7 +38,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
 
   constructor(
     public appointmentService: AppointmentService,
-    public appRef: ApplicationRef,
     public appState: AppState,
     public route: ActivatedRoute,
     public userService: UserService,
@@ -123,7 +118,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .getAll()
       .map(res => res.json())
       .map(res => {
-        this.rightBeforeAppointment = false;
         this.loadedInitially = true;
 
         const currentMoment = this.getCurrentMoment();
@@ -151,7 +145,7 @@ export class AppointmentComponent implements OnInit, OnDestroy {
           this.userHasAppointment = true;
 
           if (Math.abs(this.getTimeDiff(appointment).asMinutes()) <= 5) {
-            this.activateHangoutsButton();
+            // this.activateHangoutsButton();
             break;
           }
         }
@@ -181,30 +175,6 @@ export class AppointmentComponent implements OnInit, OnDestroy {
     const currentMoment = this.getCurrentMoment().millisecond(0);
 
     return moment.duration(appointmentMoment.diff(currentMoment));
-  }
-
-  /**
-   * Display Hangouts Button
-   */
-  activateHangoutsButton() {
-    // initialize Google Hangouts Button
-    $script('https://apis.google.com/js/platform.js', () => {
-      this.rightBeforeAppointment = true;
-
-      // kick in Change Detection
-      this.appRef.tick();
-
-      gapi.hangout.render('hangout-button', {
-        render: 'createhangout',
-        invites: [{ 'id': 'yuttadhammo@gmail.com', 'invite_type': 'EMAIL' }],
-        initial_apps: [{
-          app_id: '211383333638',
-          start_data: 'dQw4w9WgXcQ',
-          app_type: 'ROOM_APP'
-        }],
-        widget_size: 175
-      });
-    });
   }
 
   /**
@@ -342,6 +312,9 @@ export class AppointmentComponent implements OnInit, OnDestroy {
         },
         err => console.log(err)
       );
+
+    this.appointmentService.getNow()
+      .subscribe(res => this.rightBeforeAppointment = res !== null);
   }
 
   ngOnDestroy() {

@@ -76,4 +76,22 @@ export class AppointmentService {
       })
     });
   }
+
+  public logAppointmentCall() {
+    return this.authHttp.post(
+      ApiConfig.url + '/api/appointment/call', '', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public getNow(): Observable<any> {
+    const websocket = this.wsService.getSocket();
+    websocket.emit('appointment');
+
+    return Observable.create(obs => {
+      websocket.on('appointment', res => obs.next(res));
+    });
+  }
 }
