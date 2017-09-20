@@ -1,0 +1,143 @@
+<!-- actual call interface (upper part of window) -->
+<div class="flexbox-parent flex-row">
+
+  <div id="call" class="fill">
+    <div class="video">
+      <!-- loading animation -->
+      <div class="loading-animation" *ngIf="!connected">
+        <p>{{ loadingMessage }}</p>
+        <div id="fountainG">
+          <div id="fountainG_1" class="fountainG"></div>
+          <div id="fountainG_2" class="fountainG"></div>
+          <div id="fountainG_3" class="fountainG"></div>
+          <div id="fountainG_4" class="fountainG"></div>
+          <div id="fountainG_5" class="fountainG"></div>
+          <div id="fountainG_6" class="fountainG"></div>
+          <div id="fountainG_7" class="fountainG"></div>
+          <div id="fountainG_8" class="fountainG"></div>
+        </div>
+      </div>
+
+      <div class="opponent-media">
+        <md-icon title="opponent camera is off" *ngIf="!opponentCamera">videocam_off</md-icon>
+        <md-icon title="opponent mic is muted" *ngIf="!opponentMic">mic_off</md-icon>
+      </div>
+
+      <!--  video from remote stream (big image)-->
+      <video
+        #remoteVideo
+        [class.minimized]="showChat"
+        class="video-remote"
+        autoplay="true"
+      ></video>
+
+      <!-- video from local webcam (small image) -->
+      <video
+        #localVideo
+        [class.hidden]="!(supportCamera && cameraOn)"
+        class="video-local"
+        autoplay="true"
+        muted
+        onloadedmetadata="this.muted = true"
+      ></video>
+
+      <!-- action buttons -->
+      <div class="control-buttons">
+        <button
+          md-mini-fab
+          title="toggle camera"
+          (click)="toggleCamera()"
+          *ngIf="supportCamera"
+        >
+          <md-icon *ngIf="this.cameraOn">videocam</md-icon>
+          <md-icon *ngIf="!this.cameraOn">videocam_off</md-icon>
+        </button>
+
+        <button
+          md-mini-fab
+          title="toggle microphone"
+          (click)="toggleMicrophone()"
+          *ngIf="supportMic"
+        >
+          <md-icon *ngIf="this.micOn">mic</md-icon>
+          <md-icon *ngIf="!this.micOn">mic_off</md-icon>
+        </button>
+        <button
+          md-mini-fab
+          title="end call"
+          (click)="exit()"
+          class="btn-end"
+        >
+          <md-icon>call_end</md-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="appointment" class="flex appointment-info">
+      <img class="avatar" [src]="'https://www.gravatar.com/avatar/' + appointment.user.gravatarHash + '?s=160&d=mm'">
+      <span>Appointment with {{ appointment.user.name }} (<b>@{{ appointment.user.username }}</b>) scheduled for {{ appointment.weekDay }} at {{ appointment.hour }}</span>
+    </div>
+
+  </div>
+
+  <!-- chat -->
+
+  <div id="chat" class="flexbox-parent">
+    <div class="flexbox-item-grow fill-area fill-area-content">
+      <md-list>
+        <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
+          <message-list-entry
+            [message]="message"
+          ></message-list-entry>
+        </div>
+        <!-- <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
+          <md-list-item>
+            <img
+              *ngIf="message.user"
+              md-list-avatar avatar
+              [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]"
+              [hash]="message.user.gravatarHash"
+              [size]="40"
+            >
+            <img *ngIf="!message.user" md-list-avatar avatar [hash]="null" [size]="40">
+            <h3 md-line>
+              <b *ngIf="message.user" class="chat-name"><a [routerLink]="message.user.username ? ['/profile', message.user.username] : ['/profile/id', message.user._id]">{{ message.user.name }} <small class="username" *ngIf="message.user.username">@{{ message.user.username }}</small></a></b>
+              <flag [countryCode]="message.user?.country"></flag>
+              <span class="fill"></span>
+              <span class="chat-time">
+                {{ message.createdAt|amTimeAgo }}
+              </span>
+            </h3>
+            <p md-line>
+              <span
+                class="chat-text"
+                [innerHTML]="message.text|emoji|linky:{twitter:false}"
+              ></span>
+            </p>
+          </md-list-item>
+        </div> -->
+      </md-list>
+    </div>
+
+    <!-- message input -->
+    <form (submit)="sendMessage($event)" class="flex">
+      <md-input-container class="fill">
+        <input
+          mdInput
+          name="message"
+          #message
+          [(ngModel)]="currentMessage"
+          [disabled]="!connected"
+          placeholder="Type message..."
+          maxlength="500"
+        >
+        <md-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 500</md-hint>
+      </md-input-container>
+      <button md-mini-fab type="submit" [disabled]="!connected || !currentMessage" title="Send message">
+        <md-icon>send</md-icon>
+      </button>
+    </form>
+
+  </div>
+
+</div>
