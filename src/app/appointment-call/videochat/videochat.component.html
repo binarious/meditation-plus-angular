@@ -26,7 +26,6 @@
       <!--  video from remote stream (big image)-->
       <video
         #remoteVideo
-        [class.minimized]="showChat"
         class="video-remote"
         autoplay="true"
       ></video>
@@ -85,7 +84,7 @@
   <div id="chat" class="flexbox-parent">
     <div class="flexbox-item-grow fill-area fill-area-content">
       <md-list>
-        <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
+        <div *ngFor="let message of messages" class="message-row">
           <message-list-entry
             [message]="message"
           ></message-list-entry>
