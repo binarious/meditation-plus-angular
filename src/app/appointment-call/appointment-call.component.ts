@@ -1,4 +1,4 @@
-import { Component, ApplicationRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, ApplicationRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 import { AppointmentService } from '../appointment/appointment.service';
@@ -17,13 +17,13 @@ declare var gapi: any;
     './appointment-call.component.styl',
   ]
 })
-export class AppointmentCallComponent {
+export class AppointmentCallComponent implements OnDestroy {
 
   appointment: Object;
   started: boolean;
   settings: any;
 
-  loading: boolean = true;
+  loading = true;
   initiated: boolean;
   ended: boolean;
   error: string;
@@ -104,7 +104,7 @@ export class AppointmentCallComponent {
    * @return {string}      Formatted String
    */
   parseHour(hour: number): string {
-    let res = ('0000' + hour.toString()).slice(-4);
+    const res = ('0000' + hour.toString()).slice(-4);
     return res.slice(0, 2) + ':' + res.slice(2);
   }
 

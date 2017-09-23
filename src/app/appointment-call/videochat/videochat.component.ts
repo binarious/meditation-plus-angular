@@ -31,12 +31,12 @@ export class VideoChatComponent implements OnInit, OnDestroy {
   supportCamera: boolean;
   supportMic: boolean;
 
-  cameraOn: boolean = true;
-  micOn: boolean = true;
+  cameraOn = true;
+  micOn = true;
 
   // same properties as above only for opponent
-  opponentCamera: boolean = true;
-  opponentMic: boolean = true;
+  opponentCamera = true;
+  opponentMic = true;
   opponentProfile;
 
   connected: boolean;
@@ -45,7 +45,7 @@ export class VideoChatComponent implements OnInit, OnDestroy {
   messages: Object[] = [];
 
   // UI modelss
-  loadingMessage: string = 'Initializing';
+  loadingMessage = 'Initializing';
 
   constructor(public videochatService: VideoChatService) {
     if (!SimplePeer.WEBRTC_SUPPORT) {
@@ -133,7 +133,7 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     });
 
     this.rtcPeer.on('close', () => {
-      this.loadingMessage = 'Connection was interrupted.'
+      this.loadingMessage = 'Connection was interrupted.';
       this.rtcPeer.destroy();
       this.rtcPeer = null;
     });
@@ -148,19 +148,19 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       this.rtcPeer.destroy();
       this.error.emit('An error occurred: ' + err);
     });
-
-    window['AppointmentPeerObject'] = this.rtcPeer;
   }
 
   /**
    * Toggles camera
    */
   toggleCamera(): void {
-    if (!this.rtcStream) return;
+    if (!this.rtcStream) {
+      return;
+    }
 
     this.cameraOn = !this.cameraOn;
 
-    for (let track of this.rtcStream.getVideoTracks()) {
+    for (const track of this.rtcStream.getVideoTracks()) {
       track.enabled = this.cameraOn;
     }
 
@@ -171,11 +171,13 @@ export class VideoChatComponent implements OnInit, OnDestroy {
    * Toggles microphone
    */
   toggleMicrophone(): void {
-    if (!this.rtcStream) return;
+    if (!this.rtcStream) {
+      return;
+    }
 
     this.micOn = !this.micOn;
 
-    for (let track of this.rtcStream.getAudioTracks()) {
+    for (const track of this.rtcStream.getAudioTracks()) {
       track.enabled = this.micOn;
     }
 
@@ -197,7 +199,7 @@ export class VideoChatComponent implements OnInit, OnDestroy {
 
   sendMessage(evt) {
     if (evt) {
-      evt.preventDefault()
+      evt.preventDefault();
     }
 
     this.videochatService.message(this.currentMessage);
@@ -226,10 +228,10 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     this.getMediaPermission(true)
       .then(
         stream => this.initialize(stream),
-        err => this.getMediaPermission(false)
+        () => this.getMediaPermission(false)
           .then(
             stream => this.initialize(stream, false),
-            err => this.error.emit('Could not get media permission.')
+            () => this.error.emit('Could not get media permission.')
           )
       );
 
