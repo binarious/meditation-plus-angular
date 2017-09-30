@@ -12,7 +12,7 @@ import { UserService } from '../user';
 })
 export class OnlineComponent implements OnChanges, OnDestroy {
 
-  @Input() detailed: boolean = true;
+  @Input() detailed = true;
 
   socketSubscription: Subscription;
   onlineCounter = 0;
