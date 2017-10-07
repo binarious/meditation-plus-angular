@@ -48,6 +48,13 @@ export class AppointmentComponent implements OnInit, OnDestroy {
       .filter(res => res.hasOwnProperty('tab'))
       .subscribe(res => this.currentTab = (<any>res).tab);
 
+    this.settingsService.get()
+      .map(res => res.json())
+      .subscribe(res => {
+        this.rootTimezone = res.appointmentsTimezone;
+        this.rootTimezoneShort = moment.tz(this.rootTimezone).zoneName();
+      });
+
   }
 
   /**
