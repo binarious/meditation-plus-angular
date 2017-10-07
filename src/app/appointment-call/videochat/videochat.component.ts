@@ -167,12 +167,6 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       this.showStream(this.remoteVideo.nativeElement, stream);
     });
 
-    // this.rtcPeer.on('close', () => {
-    //   this.loadingMessage = 'Connection was interrupted.';
-    //   this.rtcPeer.destroy();
-    //   this.rtcPeer = null;
-    // });
-
     this.rtcPeer.on('error', err => {
       console.error('RTCERROR', err);
 
