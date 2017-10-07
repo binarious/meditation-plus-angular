@@ -1,9 +1,10 @@
 import { Component, ApplicationRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs/Rx';
 import { AppointmentService } from '../appointment/appointment.service';
 import { UserService } from '../user/user.service';
 import { SettingsService } from '../shared/settings.service';
+import { AppState } from '../app.service';
 import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
 
@@ -20,56 +21,58 @@ declare var gapi: any;
 export class AppointmentCallComponent implements OnDestroy {
 
   appointment: Object;
+  // true if somebody else has already joined
   started: boolean;
   settings: any;
 
   loading = true;
+  // true after clicking the 'Join appointment button'
   initiated: boolean;
   ended: boolean;
   error: string;
 
-  updateSubscription;
+  updateSubscription: Subscription;
 
   constructor(
     private appointmentService: AppointmentService,
     private appRef: ApplicationRef,
+    public appState: AppState,
     private route: ActivatedRoute,
     private userService: UserService,
     private settingsService: SettingsService
   ) {
-    this.reset();
+    // load settings
     this.settingsService.get()
       .map(res => res.json())
       .subscribe(res => this.settings = res);
 
+    // load & listen for appointment call
+    this.loadAppointment();
     this.updateSubscription = Observable.interval(2500)
       .subscribe(() => this.loadAppointment());
   }
 
-  reset(): void {
-    this.initiated = false;
-    this.ended = false;
-    this.error = '';
-    this.loading = true;
-    this.loadAppointment();
-  }
-
+  /**
+   * Tries to load appointment for current user
+   */
   loadAppointment(): void {
     this.appointmentService.getNow()
-      .subscribe(res => {
-        this.loading = false;
+      .subscribe(
+        res => {
+          this.loading = false;
 
-        // activate hangout button only the first time
-        if (!this.appointment) {
-          this.activateHangoutsButton();
-        }
+          if (res.appointment) {
+            // activate hangout button only the first time
+            if (!this.appointment) {
+              this.activateHangoutsButton();
+            }
 
-        // don't update if response is null
-        if (res.appointment) {
-          this.appointment = res.appointment;
-          this.started = res.started;
-        }
-      }, err => console.error(err));
+            this.appointment = res.appointment;
+            this.started = res.started;
+          }
+        },
+        err => console.error(err)
+      );
   }
 
   /**
@@ -95,41 +98,19 @@ export class AppointmentCallComponent implements OnDestroy {
   }
 
   /**
-   * Format a number representing an hour to
-   * a string in the format 'HH:mmm'.
-   *
-   * Example: 700 => '07:00', 55 => '00:55'
-   *
-   * @param  {number} hour Number representing an hour
-   * @return {string}      Formatted String
+   * Reloads page
    */
-  parseHour(hour: number): string {
-    const res = ('0000' + hour.toString()).slice(-4);
-    return res.slice(0, 2) + ':' + res.slice(2);
+  reload(): void {
+    window.location.reload();
   }
 
   /**
-   * Parses hour and converts it to local timezone
-   *
-   * @param  {number} hour Number representing an hour
-   * @return {string}      Formatted String
+   * Shows an error message
    */
-  localHour(hour: number): string {
-    if (!this.settings) {
-      return;
-    }
-
-    return moment
-      .tz(this.parseHour(hour), 'HH:mm', this.settings.appointmentsTimezone)
-      .tz(moment.tz.guess())
-      .format('HH:mm');
-  }
-
-  initiateAppointment(): void {
-    this.initiated = true;
-  }
-
   showError(evt): void {
+    // unhide toolbar
+    this.appState.set('hideToolbar', true);
+
     if (!evt || typeof evt !== 'string') {
       return;
     }
@@ -137,8 +118,26 @@ export class AppointmentCallComponent implements OnDestroy {
     this.error = evt;
   }
 
+  /**
+   * Initiates call
+   */
+  initiate(): void {
+    // destroy waiting subscription
+    if (this.updateSubscription) {
+      this.updateSubscription.unsubscribe();
+    }
+
+    // hide toolbar
+    this.appState.set('hideToolbar', true);
+    this.initiated = true;
+  }
+
+  /**
+   * Shows exit screen and reload page
+   */
   showEndingScreen(): void {
     this.ended = true;
+    setTimeout(() => window.location.reload(), 3000);
   }
 
   ngOnDestroy(): void {

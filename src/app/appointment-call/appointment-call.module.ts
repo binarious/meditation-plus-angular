@@ -8,6 +8,7 @@ import { MomentModule } from 'angular2-moment';
 import { VideoChatComponent } from './videochat/videochat.component';
 import { AppointmentCallComponent } from './appointment-call.component';
 import { MessageModule } from '../message';
+import { AppointmentModule } from '../appointment';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { MessageModule } from '../message';
     MomentModule,
     ProfileModule,
     EmojiModule,
-    MessageModule
+    MessageModule,
+    AppointmentModule
   ],
   declarations: [
     AppointmentCallComponent,

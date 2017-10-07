@@ -26,22 +26,17 @@ export class VideoChatService {
 
   public toggleMedia(audio: boolean, video: boolean): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('appointment:toggledMedia', audio, video);
+    websocket.emit('appointment:toggleMedia', { audio, video });
   }
 
-  public reconnect(): void {
+  public ready(initiator: boolean = false): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('appointment:reconnect');
+    websocket.emit('appointment:ready', initiator);
   }
 
-  public ready(): void {
+  public leave(gracefully = true): void {
     const websocket = this.wsService.getSocket();
-    websocket.emit('appointment:ready');
-  }
-
-  public leave(endCall = false): void {
-    const websocket = this.wsService.getSocket();
-    websocket.emit('appointment:leave', endCall);
+    websocket.emit('appointment:leave', gracefully);
   }
 
   // Events
