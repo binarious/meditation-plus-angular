@@ -1,8 +1,15 @@
 #!/bin/bash
 set -x
 
-server="meditation-dev.sirimangalo.org"
-version="$TRAVIS_BUILD_NUMBER.0.0"
+# Determine server and version based on tag or branch
+if [ ! -z "$TRAVIS_TAG" ]
+then
+  server="meditation.sirimangalo.org"
+  version=$TRAVIS_TAG
+else
+  server="meditation-dev.sirimangalo.org"
+  version="$TRAVIS_BUILD_NUMBER.0.0"
+fi
 
 # set version
 touch ./version.js
