@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { ProfileModule } from '../profile';
 import { AppointmentComponent } from './appointment.component';
+import { FormatHourPipe } from './hour.pipe';
 
 @NgModule({
   imports: [
@@ -11,10 +12,12 @@ import { AppointmentComponent } from './appointment.component';
     ProfileModule
   ],
   declarations: [
-    AppointmentComponent
+    AppointmentComponent,
+    FormatHourPipe
   ],
   exports: [
-    AppointmentComponent
+    AppointmentComponent,
+    FormatHourPipe
   ]
 })
 export class AppointmentModule { }

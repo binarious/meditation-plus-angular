@@ -12,6 +12,7 @@ import { FakeSettingsService } from '../shared/testing/fake-settings.service';
 import { AvatarDirective } from '../profile/avatar.directive';
 import * as moment from 'moment-timezone';
 import { TestHelper } from '../../testing/test.helper';
+import { FormatHourPipe } from './hour.pipe';
 
 describe('AppointmentComponent', () => {
   let component: AppointmentComponent;
@@ -46,11 +47,12 @@ describe('AppointmentComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
-        RouterTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         AppointmentComponent,
-        AvatarDirective
+        AvatarDirective,
+        FormatHourPipe
       ],
       providers: [
         AppState,
