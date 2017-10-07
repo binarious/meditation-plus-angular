@@ -82,7 +82,7 @@
     >
       <md-icon *ngIf="showChat">close</md-icon>
       <md-icon *ngIf="!showChat">message</md-icon>
-      <span *ngIf="!showChat && missedMessages">({{ missedMessages }})</span>
+      <span *ngIf="!showChat && missedMessages > 0">({{ missedMessages }})</span>
     </button>
 </div>
 
