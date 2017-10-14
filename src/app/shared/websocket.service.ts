@@ -14,7 +14,7 @@ export class WebsocketService {
     if (!this.socket) {
       this.socket = io(ApiConfig.url, {
         transports: ['websocket'],
-        query: 'token=' + window.localStorage.getItem('id_token')
+        query: 'token=' + window.localStorage.getItem('token')
       });
     }
 

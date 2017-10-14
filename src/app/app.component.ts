@@ -55,6 +55,7 @@ export class AppComponent {
       });
 
     userService.registerRefresh();
+    console.log(tokenNotExpired());
   }
 
   public isLoggedIn() {

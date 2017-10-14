@@ -44,7 +44,7 @@ export class UserService {
       res => {
         this.refreshedToken = moment();
 
-        window.localStorage.setItem('id_token', res.token);
+        window.localStorage.setItem('token', res.token);
         window.localStorage.setItem('id', res.id);
         window.localStorage.setItem('role', res.role);
 
@@ -125,7 +125,7 @@ export class UserService {
    * Register refresh subscription
    */
   public registerRefresh() {
-    if (this.refreshSubscription || !window.localStorage.getItem('id_token')) {
+    if (this.refreshSubscription || !window.localStorage.getItem('token')) {
       return;
     }
 
@@ -167,7 +167,7 @@ export class UserService {
    * localStorage.
    */
   public logout(): void {
-    window.localStorage.removeItem('id_token');
+    window.localStorage.removeItem('token');
     window.localStorage.removeItem('id');
     window.localStorage.removeItem('role');
 
@@ -333,7 +333,7 @@ export class UserService {
     ).map(res => res.json())
       .subscribe(res => {
         this.refreshedToken = moment();
-        window.localStorage.setItem('id_token', res.token);
+        window.localStorage.setItem('token', res.token);
       },
       err => {
         console.error(err);

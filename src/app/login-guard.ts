@@ -15,8 +15,8 @@ export class LoginGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (window.localStorage.getItem('id_token') &&
-      !jwtHelper.isTokenExpired(window.localStorage.getItem('id_token'))) {
+    if (window.localStorage.getItem('token') &&
+      !jwtHelper.isTokenExpired(window.localStorage.getItem('token'))) {
 
       this.router.navigate(['/']);
       return false;
