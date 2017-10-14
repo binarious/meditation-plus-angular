@@ -62,7 +62,6 @@ export class AppComponent {
       .subscribe(res => this.hideToolbar = true);
 
     userService.registerRefresh();
-    console.log(tokenNotExpired());
   }
 
   public isLoggedIn() {
