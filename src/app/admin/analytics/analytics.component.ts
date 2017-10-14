@@ -208,7 +208,7 @@ export class AnalyticsComponent {
   }
 
   /**
-   * Event for md-select that changes the span for charts of 3rd tab
+   * Event for mat-select that changes the span for charts of 3rd tab
    * @param evt Change event
    */
   changeHistoryTimespan(evt) {

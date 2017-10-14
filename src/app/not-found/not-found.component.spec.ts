@@ -29,7 +29,7 @@ describe('not-found component', () => {
     const compiled = fixture.debugElement.nativeElement;
 
     expect(
-      compiled.querySelector('md-card-title').innerHTML
+      compiled.querySelector('mat-card-title').innerHTML
     ).toContain('Page has not been found');
   }));
 });
