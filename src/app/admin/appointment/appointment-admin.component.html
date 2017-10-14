@@ -36,8 +36,8 @@
   <mat-card *ngFor="let appointment of appointments">
     <mat-card-title>
       {{ printWeekDay(appointment.weekDay) }} -
-      {{ printHour(appointment.hour) }} {{ zoneName }}
-    </mat-card-title>
+      {{ appointment.hour | formatHour }} {{ zoneName }}
+    </md-card-title>
 
     <mat-card-content>
       <button
