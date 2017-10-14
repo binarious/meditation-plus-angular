@@ -18,7 +18,7 @@
     <b *ngIf="!question.user">Deleted User</b>
     <flag [countryCode]="question.user?.country"></flag>
     <span *ngIf="loading">
-      <mat-spinner class="in-button-spinner"></mat-spinner>
+      <mat-spinner diameter="22" strokeWidth="2" class="in-button-spinner"></mat-spinner>
     </span>
     <span class="fill"></span>
     <span class="question-time">

@@ -6,10 +6,10 @@
   padding: 5px
 
 mat-spinner.in-button-spinner
-  width: 18px
-  height: 30px
+  width: 18px !important
+  height: 30px !important
   display: inline-block
-  vertical-align: middle
+  vertical-align: middle !important
   margin-right: 9px
 
 .error
@@ -18,7 +18,7 @@ mat-spinner.in-button-spinner
 .loader
   text-align: center
 
-.loader mat-spinner
+.loader md-spinner
   margin: auto
 
 /**
@@ -48,17 +48,17 @@ html, body
  * Sidenav
  */
 
-mat-sidenav
+md-sidenav
   width: 300px
 
-mat-sidenav-container > .mat-sidenav-content
+md-sidenav-container > .mat-sidenav-content
   display: flex !important
   flex-direction: column
 
-mat-sidenav mat-icon
+md-sidenav md-icon
   margin-right: 10px
 
-mat-list-item[disabled]
+md-list-item[disabled]
   display: block
   opacity: .4
   cursor: move
@@ -122,12 +122,12 @@ mat-list-item[disabled]
   -webkit-flex: 1
   flex: 1
 
-mat-content
+md-content
   display: -webkit-flex
   display: flex
   -webkit-flex-direction: column
   flex-direction: column
   height: 100%
 
-mat-icon.icon-fix
+md-icon.icon-fix
   margin-left: 8px
