@@ -224,9 +224,9 @@
 
   <h4>Appointment Callee</h4>
   <div class="flex row" *ngIf="admin">
-    <md-checkbox [(ngModel)]="model.appointmentsCallee" (change)="toggleNotifyAppointments()" name="appointment-callee">
+    <mat-checkbox [(ngModel)]="model.appointmentsCallee" (change)="toggleNotifyAppointments()" name="appointment-callee">
       Can answer appointment calls (admin option)
-    </md-checkbox>
+    </mat-checkbox>
   </div>
 
   <h4>Suspend</h4>
