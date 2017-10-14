@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
 
 import { AppState } from './app.service';
 import { UserService } from './user/user.service';
-import { tokenNotExpired } from 'angular2-jwt/angular2-jwt';
+import { tokenNotExpired } from 'angular2-jwt';
 import { OnlineComponent } from './online';
 
 /*

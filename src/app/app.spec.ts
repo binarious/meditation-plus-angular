@@ -6,7 +6,7 @@ import { AppState } from './app.service';
 import { UserService } from './user/user.service';
 import { Http } from '@angular/http';
 import { Title } from '@angular/platform-browser';
-import { AuthHttp } from 'angular2-jwt/angular2-jwt';
+import { AuthHttp } from 'angular2-jwt';
 
 describe('App', () => {
   beforeEach(() => TestBed.configureTestingModule({

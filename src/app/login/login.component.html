@@ -25,7 +25,7 @@
                 required
                 dividerColor="(mail.valid || mail.pristine) ? 'primary' : 'warn'"
                 *ngIf="doSignup">
-              <span mdPrefix *ngIf="!doSignup">
+              <span matPrefix *ngIf="!doSignup">
                 <mat-icon>email</mat-icon>&nbsp;
               </span>
           </mat-form-field>
@@ -43,7 +43,7 @@
               type="password"
               placeholder="Password (min 8)"
               dividerColor="(pass.valid || pass.pristine) ? 'primary' : 'warn'">
-              <span mdPrefix *ngIf="!doSignup">
+              <span matPrefix *ngIf="!doSignup">
                 <mat-icon>lock</mat-icon>&nbsp;
               </span>
           </mat-form-field>
@@ -60,7 +60,7 @@
               required
               pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$"
               dividerColor="(usrName.valid || usrName.pristine) ? 'primary' : 'warn'">
-              <span mdPrefix>
+              <span matPrefix>
                 <mat-icon>person</mat-icon>&nbsp;
               </span>
           </mat-form-field>

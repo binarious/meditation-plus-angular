@@ -21,7 +21,10 @@ import { Http, RequestOptions } from '@angular/http';
 // Source: https://github.com/auth0/angular2-jwt/issues/158#issuecomment-250461735
 export function authFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
-    // Config options if you want
+    // Config updated for ^0.2.3 of angular2-jwt
+    // Source: https://github.com/auth0/angular2-jwt/issues/329#issuecomment-316317214
+    tokenName: 'id_token',
+    tokenGetter: (() => localStorage.getItem('id_token')),
   }), http, options);
 }
 
