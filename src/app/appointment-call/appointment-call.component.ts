@@ -1,12 +1,13 @@
+import { Observable } from 'rxjs/Observable';
 import { Component, ApplicationRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { AppointmentService } from '../appointment/appointment.service';
 import { UserService } from '../user/user.service';
 import { SettingsService } from '../shared/settings.service';
 import { AppState } from '../app.service';
 import * as moment from 'moment-timezone';
 import * as $script from 'scriptjs';
+import { Subscription } from 'rxjs/Subscription';
 
 // HACK: for Google APIs
 declare var gapi: any;

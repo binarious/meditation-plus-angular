@@ -9,12 +9,12 @@ import {
   ViewChild
 } from '@angular/core';
 import { MessageService } from './message.service';
-import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { UserService } from '../user/user.service';
 import { Message, MessageWebsocketResponse } from './message';
 import * as moment from 'moment';
 import { WebsocketService } from '../shared';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'message',

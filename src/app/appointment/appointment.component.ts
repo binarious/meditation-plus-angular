@@ -2,7 +2,6 @@ import { Component, ApplicationRef, OnInit, OnDestroy } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { UserService } from '../user/user.service';
 import { SettingsService } from '../shared/settings.service';

@@ -7,7 +7,6 @@ import {
   ApplicationRef
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { TestimonialService } from '../../testimonial';
 

@@ -1,15 +1,16 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/core';
 import { MeditationService } from './meditation.service';
 import { CommitmentService } from '../commitment/commitment.service';
 import { UserService } from '../user/user.service';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { AppState } from '../app.service';
 
 // tslint:disable-next-line
 import * as StableInterval from 'stable-interval';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Component for the meditation tab inside home.

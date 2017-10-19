@@ -3,6 +3,7 @@ import { AppointmentService } from '../../appointment';
 import { UserService } from '../../user';
 import { SettingsService } from '../../shared';
 import * as moment from 'moment-timezone';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'appointment-admin',
@@ -28,8 +29,7 @@ export class AppointmentAdminComponent {
 
   constructor(
     public appointmentService: AppointmentService,
-    private settingsService: SettingsService,
-    private userService: UserService
+    private settingsService: SettingsService
   ) {
     this.loadAppointments();
     this.loadSettings();

@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
-import { Observable } from 'rxjs/Rx';
 import { AppState } from '../app.service';
 import { Country } from '../profile/country';
 import * as jstz from 'jstimezonedetect';

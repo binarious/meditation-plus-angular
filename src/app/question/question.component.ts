@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { QuestionService } from './question.service';
-import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { UserService } from '../user/user.service';
 

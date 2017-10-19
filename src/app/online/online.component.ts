@@ -1,5 +1,5 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component, Input, Injectable, forwardRef, OnChanges, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { UserService } from '../user';
 
 @Injectable()

@@ -1,10 +1,11 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { ApiConfig } from '../../api.config';
 import { AuthHttp } from '../shared/auth-http.service';
 import * as moment from 'moment';
 import { WebsocketService } from '../shared';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {

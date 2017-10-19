@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AnalyticsService } from './analytics.service';
-import * as chart from 'chart.js';
+import 'chart.js';
 
 @Component({
   selector: 'analytics',
