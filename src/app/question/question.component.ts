@@ -1,16 +1,12 @@
 import {
   Component,
-  ViewChild,
-  ElementRef,
   EventEmitter,
-  ApplicationRef,
   OnInit,
   OnDestroy,
   Output
 } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { QuestionService } from './question.service';
-import { Response } from '@angular/http';
 import { UserService } from '../user/user.service';
 
 @Component({
@@ -47,7 +43,6 @@ export class QuestionComponent implements OnInit, OnDestroy {
   constructor(
     public questionService: QuestionService,
     public userService: UserService,
-    private appRef: ApplicationRef,
     public fb: FormBuilder
   ) {
     this.form = fb.group({

@@ -1,13 +1,8 @@
 import {
-  inject,
   async,
-  fakeAsync,
-  tick,
-  ComponentFixture,
   TestBed
 } from '@angular/core/testing';
 import { NotFoundComponent } from './not-found.component';
-import { AppState } from '../app.service';
 import { APP_BASE_HREF } from '@angular/common';
 import { AppModule } from '../';
 

@@ -1,6 +1,5 @@
 import {
   Component,
-  Pipe,
   Input,
   ChangeDetectionStrategy,
   ViewChild,

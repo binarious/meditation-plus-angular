@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { CommitmentService } from './commitment.service';
 import { UserService } from '../user/user.service';
-import { Response } from '@angular/http';
 import { AppState } from '../app.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'commitment',

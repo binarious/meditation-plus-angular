@@ -6,6 +6,7 @@ import { AuthHttp } from '../shared/auth-http.service';
 import * as moment from 'moment';
 import { WebsocketService } from '../shared';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/share';
 
 @Injectable()
 export class UserService {

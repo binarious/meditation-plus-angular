@@ -10,7 +10,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { VideoChatService } from './videochat.service';
-import { MessageListEntryComponent } from '../../message/list-entry/message-list-entry.component';
 import * as SimplePeer from 'simple-peer';
 import { Observable } from 'rxjs/Observable';
 

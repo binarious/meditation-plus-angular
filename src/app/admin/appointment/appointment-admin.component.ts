@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AppointmentService } from '../../appointment';
-import { UserService } from '../../user';
 import { SettingsService } from '../../shared';
 import * as moment from 'moment-timezone';
 import 'rxjs/add/operator/map';
