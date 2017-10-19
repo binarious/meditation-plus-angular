@@ -15,15 +15,16 @@
       </mat-form-field>
     </div>
     <div class="flex row">
-      <mat-select
-        [(ngModel)]="commitment.type"
-        name="type"
-        class="fill"
-        placeholder="Type of commitment">
-        <mat-option value="daily">daily</mat-option>
-        <mat-option value="weekly">weekly</mat-option>
-        <mat-option value="monthly">monthly</mat-option>
-      </mat-select>
+      <mat-form-field class="fill">
+        <mat-select
+          [(ngModel)]="commitment.type"
+          name="type"
+          placeholder="Type of commitment">
+          <mat-option value="daily">daily</mat-option>
+          <mat-option value="weekly">weekly</mat-option>
+          <mat-option value="monthly">monthly</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <p>

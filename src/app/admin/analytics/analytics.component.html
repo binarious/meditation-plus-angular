@@ -106,11 +106,13 @@
       <mat-spinner *ngIf="loadingC" class="load-more-spinner"></mat-spinner>
 
       <div *ngIf="!loadingC">
-        <mat-select placeholder="Timespan" (change)="changeHistoryTimespan($event)">
-          <mat-option value="week" selected>Last Week</mat-option>
-          <mat-option value="month">Last Month</mat-option>
-          <mat-option value="year">Last Year</mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-select placeholder="Timespan" (change)="changeHistoryTimespan($event)">
+            <mat-option value="week" selected>Last Week</mat-option>
+            <mat-option value="month">Last Month</mat-option>
+            <mat-option value="year">Last Year</mat-option>
+          </mat-select>
+        </mat-form-field>
 
         <div class="signup-chart">
           <canvas

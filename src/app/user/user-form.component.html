@@ -56,31 +56,33 @@
 </div>
 
 <div class="flex row">
-  <mat-select
-    [(ngModel)]="model.country"
-    name="country"
-    placeholder="Country"
-    class="fill"
-  >
-    <mat-option value="">- Select country -</mat-option>
-    <mat-option *ngFor="let country of countryList" value="{{ country.code }}">
-      {{ country.name }}
-    </mat-option>
-  </mat-select>
+  <mat-form-field class="fill">
+    <mat-select
+      [(ngModel)]="model.country"
+      name="country"
+      placeholder="Country"
+    >
+      <mat-option value="">- Select country -</mat-option>
+      <mat-option *ngFor="let country of countryList" value="{{ country.code }}">
+        {{ country.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="flex row">
-  <mat-select
-    [(ngModel)]="model.timezone"
-    name="timezone"
-    placeholder="Timezone"
-    class="fill"
-  >
-    <mat-option value="">- Select timezone -</mat-option>
-    <mat-option *ngFor="let timezone of timezones" value="{{ timezone.value }}">
-      {{ timezone.text }}
-    </mat-option>
-  </mat-select>
+  <mat-form-field class="fill">
+    <mat-select
+      [(ngModel)]="model.timezone"
+      name="timezone"
+      placeholder="Timezone"
+    >
+      <mat-option value="">- Select timezone -</mat-option>
+      <mat-option *ngFor="let timezone of timezones" value="{{ timezone.value }}">
+        {{ timezone.text }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <button
     class="bell-btn"
     mat-mini-fab
@@ -93,18 +95,19 @@
 
 <h3>Notifications</h3>
 <div class="flex row">
-  <mat-select
-    [(ngModel)]="model.sound"
-    name="sounds"
-    placeholder="Meditation bell"
-    class="fill"
-    (change)="stopSound()"
-  >
-    <mat-option value="">- Select sound -</mat-option>
-    <mat-option *ngFor="let sound of sounds" value="{{ sound.src }}">
-      {{ sound.name }}
-    </mat-option>
-  </mat-select>
+  <mat-form-field class="fill">
+    <mat-select
+      [(ngModel)]="model.sound"
+      name="sounds"
+      placeholder="Meditation bell"
+      (change)="stopSound()"
+    >
+      <mat-option value="">- Select sound -</mat-option>
+      <mat-option *ngFor="let sound of sounds" value="{{ sound.src }}">
+        {{ sound.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <button
     class="bell-btn"
     mat-mini-fab
@@ -212,14 +215,15 @@
   </div>
 
   <div class="flex row">
-    <mat-select
-      [(ngModel)]="model.role"
-      name="role"
-      class="fill"
-    >
-      <mat-option value="ROLE_USER">User</mat-option>
-      <mat-option value="ROLE_ADMIN">Admin</mat-option>
-    </mat-select>
+    <mat-form-field class="fill">
+      <mat-select
+        [(ngModel)]="model.role"
+        name="role"
+      >
+        <mat-option value="ROLE_USER">User</mat-option>
+        <mat-option value="ROLE_ADMIN">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <h4>Appointment Callee</h4>

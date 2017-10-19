@@ -2,21 +2,22 @@
 
   <form (submit)="submit()">
     <div class="flex row">
-      <mat-select
-        name="day"
-        [(ngModel)]="appointment.weekDay"
-        class="fill"
-        placeholder="Please select day"
-        style="margin-bottom: 15px;"
-        required>
-        <mat-option [value]="1">Monday</mat-option>
-        <mat-option [value]="2">Tuesday</mat-option>
-        <mat-option [value]="3">Wednesday</mat-option>
-        <mat-option [value]="4">Thursday</mat-option>
-        <mat-option [value]="5">Friday</mat-option>
-        <mat-option [value]="6">Saturday</mat-option>
-        <mat-option [value]="0">Sunday</mat-option>
-      </mat-select>
+      <mat-form-field class="fill">
+        <mat-select
+          name="day"
+          [(ngModel)]="appointment.weekDay"
+          placeholder="Please select day"
+          style="margin-bottom: 15px;"
+          required>
+          <mat-option [value]="1">Monday</mat-option>
+          <mat-option [value]="2">Tuesday</mat-option>
+          <mat-option [value]="3">Wednesday</mat-option>
+          <mat-option [value]="4">Thursday</mat-option>
+          <mat-option [value]="5">Friday</mat-option>
+          <mat-option [value]="6">Saturday</mat-option>
+          <mat-option [value]="0">Sunday</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="flex row">
       <mat-form-field class="fill">

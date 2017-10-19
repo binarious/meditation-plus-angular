@@ -18,18 +18,18 @@
   </mat-slider>
   <b>{{ (increment >= 0 ? '+' : '') + increment }} h</b>
 
-  <mat-select
-    [(ngModel)]="timezone"
-    (change)="updateSettings('appointmentsTimezone', timezone)"
-    name="timezone"
-    placeholder="Timezone"
-    class="fill"
-  >
-    <mat-option value="">- Select timezone -</mat-option>
-    <mat-option *ngFor="let tzone of timezones" [value]="tzone">
-      {{ tzone }}
-    </mat-option>
-  </mat-select>
+  <mat-form-field>
+    <mat-select
+      [(ngModel)]="timezone"
+      (change)="updateSettings('appointmentsTimezone', timezone)"
+      name="timezone"
+      placeholder="Timezone"
+    >
+      <mat-option *ngFor="let tzone of timezones" [value]="tzone">
+        {{ tzone }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="appointment-list">
