@@ -50,7 +50,7 @@
       </mat-nav-list>
 
     </mat-sidenav>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" *ngIf="!hideToolbar">
       <button mat-icon-button (click)="start.open()" *ngIf="isLoggedIn()">
         <mat-icon>menu</mat-icon>
       </button>
