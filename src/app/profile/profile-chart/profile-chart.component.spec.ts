@@ -33,6 +33,6 @@ describe('ProfileChartComponent', () => {
     expect(component.rotateArray([3, 1, 2], 1)).toEqual([1, 2, 3]);
     expect(component.rotateArray([1, 2, 3], 3)).toEqual([1, 2, 3]);
     expect(component.rotateArray([3, 1, 2], 10)).toEqual([1, 2, 3]);
-    expect(component.rotateArray([4,5,1,2,3], 2)).toEqual([1,2,3,4,5]);
+    expect(component.rotateArray([4, 5, 1, 2, 3], 2)).toEqual([1, 2, 3, 4, 5]);
   });
 });

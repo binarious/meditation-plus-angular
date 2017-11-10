@@ -37,7 +37,7 @@ describe('BadgeComponent', () => {
       component.mergeBadges(component.maxLevel, val);
 
       // check for too many badges
-      for (let star of component.stars) {
+      for (const star of component.stars) {
         if (!(star.level in obj) || obj[star.level] < 0) {
           // return right away
           return false;
@@ -47,7 +47,7 @@ describe('BadgeComponent', () => {
       }
 
       // check for too less badges
-      for (let key in obj) {
+      for (const key in obj) {
         if (obj[key] !== 0) {
           return false;
         }
@@ -144,6 +144,5 @@ describe('BadgeComponent', () => {
       component.mergeBadges(3.4, null);
       expect(component.stars).toEqual([]);
     });
-  })
-
+  });
 });

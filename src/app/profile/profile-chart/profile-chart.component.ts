@@ -1,8 +1,6 @@
 import { Component, ViewChild, Input, OnChanges } from '@angular/core';
 import * as moment from 'moment-timezone';
 
-declare var Chart;
-
 @Component({
   selector: 'profile-charts',
   templateUrl: './profile-chart.component.html',
@@ -111,19 +109,19 @@ export class ProfileChartComponent implements OnChanges {
         return;
     }
 
-    let dataTotal = {
+    const dataTotal = {
       data: new Array(labels.length).fill(0),
       label: 'Minutes meditated',
       fill: chartName !== 'month'
     };
 
-    let dataWalking = {
+    const dataWalking = {
       data: new Array(labels.length).fill(0),
       label: 'Minutes walking',
       fill: chartName !== 'month'
     };
 
-    let dataSitting = {
+    const dataSitting = {
       data: new Array(labels.length).fill(0),
       label: 'Minutes walking',
       fill: chartName !== 'month'

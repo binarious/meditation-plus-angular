@@ -243,9 +243,9 @@ export class UserService {
     );
   }
 
-  public getProfileStats(username: string): Observable<Response> {
+  public getProfileStats(usernameOrId: string): Observable<Response> {
     return this.authHttp.get(
-      this.url + '/api/profile/stats/' + username, {
+      this.url + '/api/profile/stats/' + usernameOrId, {
         headers: new Headers({
           'Content-Type': 'application/json'
         })

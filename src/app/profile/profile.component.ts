@@ -84,7 +84,7 @@ export class ProfileComponent implements OnInit {
   }
 
   loadStats(params): void {
-     this.userService.getProfileStats(params.id ? params.id : params.username)
+    this.userService.getProfileStats(params.id ? params.id : params.username)
       .map(res => res.json())
       .subscribe(res => {
         this.profileStats = res.general;
