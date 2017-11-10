@@ -243,6 +243,17 @@ export class UserService {
     );
   }
 
+  public getProfileStats(username: string): Observable<Response> {
+    return this.authHttp.get(
+      this.url + '/api/profile/stats/' + username, {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }
+    );
+  }
+
+
   public getAll() {
     return this.authHttp.get(
       ApiConfig.url + '/api/user'
