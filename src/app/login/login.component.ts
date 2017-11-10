@@ -96,10 +96,14 @@ export class LoginComponent implements OnInit {
       },
       err => {
 <<<<<<< HEAD
+<<<<<<< HEAD
         this.error = err.error;
 =======
         this.error = err.error
 >>>>>>> chore: upgrade to angular 5
+=======
+        this.error = err.error;
+>>>>>>> fix lint
         this.loading = false;
       },
       () => this.loading = false
