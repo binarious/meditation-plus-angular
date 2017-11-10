@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import * as moment from 'moment-timezone';
 
 @Component({
