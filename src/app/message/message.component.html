@@ -1,21 +1,27 @@
 <div #messageList class="flexbox-item-grow fill-area fill-area-content messages list">
-  <div *ngIf="!loadedInitially" class="loader">
+  <div *ngIf="(loading$ | async) && (page$ | async) == 0" class="loader">
     <mat-spinner></mat-spinner>
   </div>
 
   <mat-list>
     <button
-      *ngIf="loadedInitially && !noMorePages"
+      *ngIf="!(noPagesLeft$ | async)"
       mat-raised-button
-      (click)="loadMessages(loadedPage + 1)"
-      [disabled]="loadingPage"
+      (click)="loadNextPage()"
+      [disabled]="loading$ | async"
       class="load-more-button"
     >
-      <mat-spinner *ngIf="loadingPage" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
+      <mat-spinner
+        *ngIf="loading$ | async"
+        [diameter]="22"
+        [strokeWidth]="2"
+        class="in-button-spinner"
+      ></mat-spinner>
+
       LOAD MORE
     </button>
 
-    <div *ngFor="let message of messages; trackBy: trackById" class="message-row">
+    <div *ngFor="let message of messages$ | async; trackBy: trackById" class="message-row">
       <message-list-entry
         (menuOpened)="menuOpen = true"
         (menuClosed)="menuOpen = false"
@@ -29,7 +35,7 @@
 
 <mat-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-  <form (submit)="sendMessage($event)" class="flex">
+  <form (submit)="currentMessage && sendMessage()" class="flex">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <mat-icon>tag_faces</mat-icon>
     </a>
@@ -45,15 +51,15 @@
         #messageAutoSize="matTextareaAutosize"
         maxlength="1000"
         autocomplete="off"
-        [disabled]="sending"
+        [disabled]="posting$ | async"
         rows="1"
         (keydown)="enterMessage($event)"
       ></textarea>
       <mat-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</mat-hint>
     </mat-form-field>
-    <button mat-mini-fab type="submit" [disabled]="!currentMessage || sending" title="Send message">
-      <mat-icon *ngIf="!sending">send</mat-icon>
-      <mat-spinner *ngIf="sending" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
+    <button mat-mini-fab type="submit" [disabled]="!currentMessage || (posting$ | async)" title="Send message">
+      <mat-icon *ngIf="!(posting$ | async)">send</mat-icon>
+      <mat-spinner *ngIf="(posting$ | async)" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
     </button>
   </form>
 </mat-card>

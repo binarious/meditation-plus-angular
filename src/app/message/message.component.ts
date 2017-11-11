@@ -15,10 +15,15 @@ import * as moment from 'moment';
 import { WebsocketService } from '../shared';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/skipUntil';
-import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/of';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/reducers';
+import * as message from 'app/message/actions/message.actions';
+import { MessageState } from 'app/message/reducers/message.reducers';
+import { throttleTime, mapTo, startWith, debounceTime, merge, take } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators/switchMap';
+import { clearTimeout, setTimeout } from 'timers';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'message',
@@ -34,7 +39,13 @@ export class MessageComponent implements OnInit, OnDestroy {
   @ViewChild('messageList', {read: ElementRef}) messageList: ElementRef;
   @ViewChild('message', {read: ElementRef}) messageElem: ElementRef;
 
-  messages: Message[];
+  messages$: Observable<Message[]>;
+  usernames$: Observable<string[]>;
+  loading$: Observable<boolean>;
+  page$: Observable<number>;
+  noPagesLeft$: Observable<boolean>;
+  posting$: Observable<boolean>;
+
   messageSocket;
   updateSocket;
   currentMessage = '';
@@ -42,20 +53,35 @@ export class MessageComponent implements OnInit, OnDestroy {
   lastScrollHeight = 0;
   showEmojiSelect = false;
   loadedInitially = false;
-  sending = false;
-  loadedPage = 0;
   noMorePages = false;
-  loadingPage = false;
   menuOpen = false;
 
-  usernames: string[];
+  store: Store<MessageState>;
 
   constructor(
     public messageService: MessageService,
     public userService: UserService,
     public appRef: ApplicationRef,
-    public wsService: WebsocketService
+    public wsService: WebsocketService,
+    public appStore: Store<AppState>,
+    private zone: NgZone
   ) {
+    this.store = appStore.select('messages');
+    this.messages$ = this.store.select('messages');
+    this.usernames$ = this.store.select('usernames');
+    this.loading$ = this.store.select('loading');
+    this.page$ = this.store.select('loadedPage');
+    this.noPagesLeft$ = this.store.select('noPagesLeft');
+    this.posting$ = this.store.select('posting');
+
+    appStore.dispatch(new message.LoadMessages(0));
+  }
+
+  loadNextPage() {
+    this.page$.pipe(
+      take(1)
+    )
+    .subscribe(page => this.store.dispatch(new message.LoadMessages(page + 1)));
   }
 
   get isAdmin(): boolean {
@@ -66,7 +92,7 @@ export class MessageComponent implements OnInit, OnDestroy {
    * Find the first matching username for given search string
    * @param  {string} str search
    * @return {string}     username
-   */
+   *
   autocomplete(caretPosition: number): void {
     if (!this.usernames) {
       return;
@@ -94,136 +120,15 @@ export class MessageComponent implements OnInit, OnDestroy {
       }
 
     }
-  }
+  }*/
 
   emojiSelect(evt) {
     this.currentMessage += ':' + evt + ':';
     this.showEmojiSelect = false;
   }
 
-  loadMessages(page = 0, initially: boolean = false) {
-    this.loadingPage = true;
-    this.messageService.getRecent(page)
-      .map(res => res.json())
-      .subscribe(
-        (data: Message[]) => {
-          if (page === 0) {
-            this.loadedInitially = true;
-            this.messages = data;
-            this.appRef.tick();
-            this.scrollToBottom();
-          } else {
-            this.messages.unshift(...data);
-          }
-
-          this.loadingPage = false;
-          this.loadedPage = page;
-
-          if (page > 0 && data.length === 0) {
-            this.noMorePages = true;
-          }
-
-          if (data.length >= 1) {
-            this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
-          }
-
-          this.extractUsernames(data);
-        },
-        () => this.loadingPage = false,
-        () => {
-          if (initially) {
-            this.loadingFinished.emit();
-          }
-        });
-  }
-
-  /**
-   * Extract and sort all usernames from message data
-   */
-  extractUsernames(data): void {
-    this.usernames = [];
-
-    for (const msg of data) {
-      const temp = msg.user && msg.user.username ? msg.user.username : null;
-
-      if (temp && this.usernames.indexOf(temp) === -1) {
-        this.usernames.push(temp);
-      }
-    }
-
-    this.usernames.sort();
-  }
-
-  /**
-   * Method for handling single incoming messages
-   * @param {object} data Message object
-   */
-  messageHandler(data: MessageWebsocketResponse) {
-    this.messages.push(data.current);
-
-    // resort messages
-    this.messages.sort((a: any, b: any) => {
-      return moment(a.createdAt).unix() - moment(b.createdAt).unix();
-    });
-
-    // check if messages are missing
-    const lastMessage = this.messages.length > 1 ? this.messages[this.messages.length - 2] : null;
-    if (lastMessage && !moment(lastMessage.createdAt).isSame(data.previous.createdAt)) {
-      this.synchronize(this.messages.length - 2, lastMessage, moment(data.previous.createdAt));
-    }
-
-    this.appRef.tick();
-
-    // scroll to bottom if at bottom
-    if (this.lastScrollTop + 5 >= this.lastScrollHeight
-      - this.messageList.nativeElement.offsetHeight) {
-      this.scrollToBottom();
-    }
-  }
-
-  synchronize(index: number, lastReceived: Message, toDate: moment.Moment) {
-    this.messageService.synchronize(lastReceived.createdAt, toDate.toDate())
-      .map(res => res.json())
-      .subscribe((data: Message[]) => {
-        this.messages.splice(index, 0, ...data);
-
-        // resort messages
-        this.messages.sort((a: any, b: any) => {
-          return moment(a.createdAt).unix() - moment(b.createdAt).unix();
-        });
-
-        this.appRef.tick();
-
-        if (data.length >= 1) {
-          this.messageService.setLastMessage(data[data.length - 1].createdAt.toString());
-        }
-
-        // scroll to bottom if at bottom
-        if (this.lastScrollTop + 5 >= this.lastScrollHeight
-          - this.messageList.nativeElement.offsetHeight) {
-          this.scrollToBottom();
-        }
-      });
-  }
-
-  sendMessage(evt) {
-    if (evt) {
-      evt.preventDefault();
-    }
-
-    if (!this.currentMessage) {
-      return;
-    }
-
-    this.sending = true;
-    this.messageService.post(this.currentMessage)
-      .subscribe(() => {
-        this.sending = false;
-        this.currentMessage = '';
-      }, (err) => {
-        this.sending = false;
-        console.error(err);
-      });
+  sendMessage() {
+    this.store.dispatch(new message.PostMessage(this.currentMessage));
   }
 
   /**
@@ -236,42 +141,34 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     if (charCode === 13) {
       // ENTER
-      this.sendMessage(evt);
+      this.sendMessage();
     } else if (charCode === 9)  {
       // TAB
       evt.preventDefault();
-      this.autocomplete(evt.target.selectionEnd ? evt.target.selectionEnd : this.currentMessage.length);
+     // this.autocomplete(evt.target.selectionEnd ? evt.target.selectionEnd : this.currentMessage.length);
     }
   }
 
   /**
-   * Registers scrolling as observable.
+   * Registers scrolling as observable. Running this outside of zone to ignore
+   * a change detection run on every scroll event. This resulted in a huge performance boost.
    */
   registerScrolling() {
-    const scrolls = Observable.fromEvent(this.messageList.nativeElement, 'scroll');
-
-    const scrollStart = scrolls
-      .debounceTime(100)
-      .flatMap(ev => scrolls.take(1))
-      .map(() => true);
-
-    const scrollStop = scrollStart.flatMap(
-      () => scrolls
-        .skipUntil(scrollStart)
-        .debounceTime(100)
-        .take(1)
-    ).map(() => false);
-
-    scrollStart
-      .merge(scrollStop)
-      .distinctUntilChanged()
-      .subscribe(isScrolling => {
-        this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
-        this.lastScrollTop = this.messageList.nativeElement.scrollTop;
-      });
+    this.zone.runOutsideAngular(() => {
+      let scrollTimer = null;
+      this.messageList.nativeElement.addEventListener('scroll', () => {
+        if (scrollTimer !== null) {
+          clearTimeout(scrollTimer);
+        }
+        scrollTimer = setTimeout(() => {
+          this.lastScrollHeight = this.messageList.nativeElement.scrollHeight;
+          this.lastScrollTop = this.messageList.nativeElement.scrollTop;
+        }, 150);
+      }, false);
+    });
   }
 
-  updateMessage(message: Message) {
+  /*updateMessage(message: Message) {
     this.messages = this.messages
       .map(val => {
         if (val._id === message._id) {
@@ -280,18 +177,20 @@ export class MessageComponent implements OnInit, OnDestroy {
 
         return val;
       });
-  }
+  }*/
 
   ngOnInit() {
     this.registerScrolling();
 
-    // getting chat data instantly
-    this.loadMessages();
+    this.messages$
+      .filter(() => this.lastScrollTop + 5 >= this.lastScrollHeight
+        - this.messageList.nativeElement.offsetHeight)
+      .subscribe(() => this.scrollToBottom());
 
     // subscribe to the websocket
     this.messageSocket = this.wsService.onMessage()
-      .subscribe(data => { this.messageHandler(data); });
-
+      .subscribe(data => this.store.dispatch(new message.WebsocketOnMessage(data)));
+    /*
     // synchronize messages on reconnection
     this.wsService.onConnected()
       .subscribe(data => {
@@ -313,11 +212,13 @@ export class MessageComponent implements OnInit, OnDestroy {
     // subscribe to message updates
     this.updateSocket = this.messageService.getUpdateSocket()
       .map(res => res.populated)
-      .subscribe(data => this.updateMessage(data));
+      .subscribe(data => this.updateMessage(data));*/
   }
 
   scrollToBottom() {
-    this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
+    window.setTimeout(() => {
+      this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
+    }, 10);
   }
 
   trackById(index, item: Message) {
