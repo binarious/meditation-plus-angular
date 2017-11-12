@@ -1,4 +1,4 @@
-import { Message } from "app/message/message";
+import { Message } from 'app/message/message';
 import * as message from '../actions/message.actions';
 import * as moment from 'moment';
 
@@ -26,12 +26,12 @@ export function messageReducer(
   state = initialMessageState,
   action: message.Actions
 ): MessageState {
-  switch(action.type) {
+  switch (action.type) {
     case message.LOAD: {
       return {
         ...state,
         loading: true
-      }
+      };
     }
     case message.LOAD_DONE: {
       const messages = state.loadedPage === 0
@@ -41,7 +41,7 @@ export function messageReducer(
       const usernames = new Set();
       messages.forEach(msg => {
         const name = msg.user && msg.user.username ? msg.user.username : null;
-        name && usernames.add(name);
+        return name && usernames.add(name);
       });
 
       return {
@@ -51,15 +51,15 @@ export function messageReducer(
         noPagesLeft: action.page > 0 && action.payload.length === 0,
         usernames: Array.from(usernames).sort(),
         loading: false
-      }
+      };
     }
 
     case message.POST: {
-      return {...state, posting: true}
+      return {...state, posting: true};
     }
 
     case message.POST_DONE: {
-      return {...state, posting: false, currentMessage: ''}
+      return {...state, posting: false, currentMessage: ''};
     }
 
     case message.SYNC_DONE: {
@@ -70,7 +70,7 @@ export function messageReducer(
           0,
           ...action.payload.messages
         ).sort(sortMessages)
-      }
+      };
     }
 
     case message.WS_ON_MESSAGE: {
@@ -78,14 +78,14 @@ export function messageReducer(
         ...state,
         messages: [...state.messages, ...action.payload.current]
           .sort(sortMessages)
-      }
+      };
     }
 
     case message.SET_CUR_MESSAGE: {
       return {
         ...state,
         currentMessage: action.payload
-      }
+      };
     }
 
     case message.UPDATE: {
@@ -98,7 +98,7 @@ export function messageReducer(
 
           return val;
         })
-      }
+      };
     }
 
     default: {

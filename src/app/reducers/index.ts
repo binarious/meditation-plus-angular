@@ -4,7 +4,7 @@ import {
 import { MessageState, messageReducer } from 'app/message/reducers/message.reducers';
 
 export interface AppState {
-  messages: MessageState
+  messages: MessageState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {

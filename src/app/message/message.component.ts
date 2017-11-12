@@ -10,8 +10,7 @@ import {
 } from '@angular/core';
 import { MessageService } from './message.service';
 import { UserService } from '../user/user.service';
-import { Message, MessageWebsocketResponse } from './message';
-import * as moment from 'moment';
+import { Message } from './message';
 import { WebsocketService } from '../shared';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
@@ -20,8 +19,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import * as message from 'app/message/actions/message.actions';
 import { MessageState } from 'app/message/reducers/message.reducers';
-import { throttleTime, mapTo, startWith, debounceTime, merge, take } from 'rxjs/operators';
-import { switchMap } from 'rxjs/operators/switchMap';
+import { take } from 'rxjs/operators';
 import { clearTimeout, setTimeout } from 'timers';
 import { NgZone } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -121,7 +119,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   }
 
   emojiSelect(evt) {
-    this.message.setValue(`${this.message.value}:${evt}:`)
+    this.message.setValue(`${this.message.value}:${evt}:`);
     this.showEmojiSelect = false;
   }
 

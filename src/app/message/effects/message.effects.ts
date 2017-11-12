@@ -9,7 +9,6 @@ import { Message } from 'app/message/message';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { filter } from 'rxjs/operators/filter';
-import { MessageState } from 'app/message/reducers/message.reducers';
 import { UserService } from 'app/user';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/if';
@@ -43,7 +42,7 @@ export class MessageEffects {
       .ofType(message.POST)
       .pipe(
         withLatestFrom(this.store$.select('messages').select('currentMessage')),
-        switchMap(([payload, message]) => this.service.post(message)),
+        switchMap(([payload, curMessage]) => this.service.post(curMessage)),
         map(data => data.json()),
         map(payload => ({ type: message.POST_DONE, payload }))
       );
@@ -115,7 +114,7 @@ export class MessageEffects {
         map(([caretPos, usernames, curMsg]) => {
           const textBfCaret = curMsg.substring(0, caretPos);
           const search = textBfCaret.match(/@\w+$/g);
-          return [caretPos, usernames, curMsg, textBfCaret, search]
+          return [caretPos, usernames, curMsg, textBfCaret, search];
         }),
         filter(([caretPos, usernames, curMsg, textBfCaret, search]) => search && search.length > 0),
         switchMap(([caretPos, usernames, curMsg, textBfCaret, search]) => {
@@ -134,7 +133,7 @@ export class MessageEffects {
                 caretPos, curMsg, textBfCaret,
                 search, username
               ))
-            )
+            );
         })
       );
 
