@@ -35,7 +35,7 @@
 
 <mat-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-  <form (submit)="currentMessage && sendMessage()" class="flex" [formGroup]="form">
+  <form (submit)="sendMessage()" class="flex" [formGroup]="form">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <mat-icon>tag_faces</mat-icon>
     </a>
@@ -58,7 +58,7 @@
       ></textarea>
       <mat-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</mat-hint>
     </mat-form-field>
-    <button mat-mini-fab type="submit" [disabled]="!currentMessage || (posting$ | async)" title="Send message">
+    <button mat-mini-fab type="submit" [disabled]="!message.value || (posting$ | async)" title="Send message">
       <mat-icon *ngIf="!(posting$ | async)">send</mat-icon>
       <mat-spinner *ngIf="(posting$ | async)" [diameter]="22" [strokeWidth]="2" class="in-button-spinner"></mat-spinner>
     </button>
