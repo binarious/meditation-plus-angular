@@ -35,7 +35,7 @@
 
 <mat-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-  <form (submit)="sendMessage()" class="flex" [formGroup]="form">
+  <form (submit)="sendMessage($event)" class="flex" [formGroup]="form">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <mat-icon>tag_faces</mat-icon>
     </a>
