@@ -1,22 +1,22 @@
-import { Action } from "@ngrx/store";
-import { Message } from "app/message/message";
+import { Action } from '@ngrx/store';
+import { Message } from 'app/message/message';
 import { Moment } from 'moment';
 
 export const LOAD = '[Message] Load';
 export const LOAD_DONE = '[Message] Load Done';
 export const POST = '[Message] Post';
-export const POST_DONE = '[Message] Post Done'
-export const EDIT = '[Message] Edit'
-export const EDIT_DONE = '[Message] Edit Done'
-export const DELETE = '[Message] Delete'
-export const DELETE_DONE = '[Message] Delete Done'
-export const SYNC = '[Message] Sync'
-export const SYNC_DONE = '[Message] Sync Done'
-export const WS_ON_MESSAGE = '[Message] WS On Message'
-export const WS_ON_CONNECT = '[Message] WS On Connect'
-export const AUTOCOMPLETE_USER = '[Message] Autocomplete User'
+export const POST_DONE = '[Message] Post Done';
+export const EDIT = '[Message] Edit';
+export const EDIT_DONE = '[Message] Edit Done';
+export const DELETE = '[Message] Delete';
+export const DELETE_DONE = '[Message] Delete Done';
+export const SYNC = '[Message] Sync';
+export const SYNC_DONE = '[Message] Sync Done';
+export const WS_ON_MESSAGE = '[Message] WS On Message';
+export const WS_ON_CONNECT = '[Message] WS On Connect';
+export const AUTOCOMPLETE_USER = '[Message] Autocomplete User';
 export const SET_CUR_MESSAGE = '[Message] Set Current';
-export const UPDATE = '[Message] Update'
+export const UPDATE = '[Message] Update';
 
 export class LoadMessages implements Action {
   readonly type = LOAD;
