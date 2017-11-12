@@ -24,6 +24,7 @@ import { throttleTime, mapTo, startWith, debounceTime, merge, take } from 'rxjs/
 import { switchMap } from 'rxjs/operators/switchMap';
 import { clearTimeout, setTimeout } from 'timers';
 import { NgZone } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'message',
@@ -35,9 +36,7 @@ import { NgZone } from '@angular/core';
 export class MessageComponent implements OnInit, OnDestroy {
 
   @Output() loadingFinished: EventEmitter<any> = new EventEmitter<any>();
-
   @ViewChild('messageList', {read: ElementRef}) messageList: ElementRef;
-  @ViewChild('message', {read: ElementRef}) messageElem: ElementRef;
 
   messages$: Observable<Message[]>;
   usernames$: Observable<string[]>;
@@ -48,15 +47,14 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   messageSocket;
   updateSocket;
-  currentMessage = '';
   lastScrollTop = 0;
   lastScrollHeight = 0;
   showEmojiSelect = false;
-  loadedInitially = false;
-  noMorePages = false;
   menuOpen = false;
 
   store: Store<MessageState>;
+  form: FormGroup;
+  message: FormControl;
 
   constructor(
     public messageService: MessageService,
@@ -66,6 +64,11 @@ export class MessageComponent implements OnInit, OnDestroy {
     public appStore: Store<AppState>,
     private zone: NgZone
   ) {
+    this.form = new FormGroup({
+      message: new FormControl()
+    });
+    this.message = this.form.get('message') as FormControl;
+
     this.store = appStore.select('messages');
     this.messages$ = this.store.select('messages');
     this.usernames$ = this.store.select('usernames');
@@ -75,6 +78,35 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.posting$ = this.store.select('posting');
 
     appStore.dispatch(new message.LoadMessages(0));
+    this.store.select('currentMessage').subscribe(
+      val => this.form.get('message').setValue(val, { emitEvent: false })
+    );
+    this.message.valueChanges.subscribe(
+      val => appStore.dispatch(new message.SetCurrentMessage(val))
+    );
+  }
+
+  ngOnInit() {
+    this.registerScrolling();
+
+    this.messages$
+      .filter(() => this.lastScrollTop + 5 >= this.lastScrollHeight
+        - this.messageList.nativeElement.offsetHeight)
+      .subscribe(() => this.scrollToBottom());
+
+    // subscribe to the websocket
+    this.messageSocket = this.wsService.onMessage()
+      .subscribe(data => this.store.dispatch(new message.WebsocketOnMessage(data)));
+
+    // synchronize messages on reconnection
+    this.wsService.onConnected()
+      .subscribe(data => this.store.dispatch(new message.WebsocketOnConnect()));
+
+    // subscribe to message updates
+    this.updateSocket = this.messageService.getUpdateSocket()
+    .subscribe(data => this.store.dispatch(new message.UpdateMessage(data.populated)));
+
+    this.loadingFinished.emit();
   }
 
   loadNextPage() {
@@ -88,65 +120,23 @@ export class MessageComponent implements OnInit, OnDestroy {
     return this.userService.isAdmin();
   }
 
-  /**
-   * Find the first matching username for given search string
-   * @param  {string} str search
-   * @return {string}     username
-   *
-  autocomplete(caretPosition: number): void {
-    if (!this.usernames) {
-      return;
-    }
-
-    let textBeforeCaret = this.currentMessage.substring(0, caretPosition);
-    const search = textBeforeCaret.match(/@\w+$/g);
-
-    if (search) {
-      const matches = this.usernames
-        .filter(name => new RegExp('^' + search[0].substring(1), 'i').test(name));
-
-      if (matches.length > 0) {
-        textBeforeCaret = textBeforeCaret.slice(0, 1 - search[0].length) + matches[0] + ' ';
-        this.currentMessage = textBeforeCaret + this.currentMessage.substring(caretPosition);
-      } else {
-        this.userService.getUsername(search[0])
-          .map(res => res.json())
-          .subscribe(username => {
-            if (username.length > 0) {
-              textBeforeCaret = textBeforeCaret.slice(0, 1 - search[0].length) + matches[0] + ' ';
-              this.currentMessage = textBeforeCaret + this.currentMessage.substring(caretPosition);
-            }
-          });
-      }
-
-    }
-  }*/
-
   emojiSelect(evt) {
-    this.currentMessage += ':' + evt + ':';
+    this.message.setValue(`${this.message.value}:${evt}:`)
     this.showEmojiSelect = false;
   }
 
-  sendMessage() {
-    this.store.dispatch(new message.PostMessage(this.currentMessage));
+  sendMessage(evt: KeyboardEvent) {
+    evt.preventDefault();
+    this.store.dispatch(new message.PostMessage());
   }
 
-  /**
-   * Intercept the keypress of 'Enter' and submit message.
-   * @param {[type]} evt             JavaScript event
-   * @param {[type]} messageAutoSize Autosize property for passing it into 'sendMessage'
-   */
-  enterMessage(evt) {
-    const charCode = evt.which || evt.keyCode;
-
-    if (charCode === 13) {
-      // ENTER
-      this.sendMessage();
-    } else if (charCode === 9)  {
-      // TAB
-      evt.preventDefault();
-     // this.autocomplete(evt.target.selectionEnd ? evt.target.selectionEnd : this.currentMessage.length);
-    }
+  autocomplete(evt: KeyboardEvent) {
+    evt.preventDefault();
+    this.store.dispatch(new message.AutocompleteUser(
+      (evt.target as HTMLTextAreaElement).selectionEnd
+        ? (evt.target as HTMLTextAreaElement).selectionEnd
+        : this.message.value.length
+    ));
   }
 
   /**
@@ -166,53 +156,6 @@ export class MessageComponent implements OnInit, OnDestroy {
         }, 150);
       }, false);
     });
-  }
-
-  /*updateMessage(message: Message) {
-    this.messages = this.messages
-      .map(val => {
-        if (val._id === message._id) {
-          return message;
-        }
-
-        return val;
-      });
-  }*/
-
-  ngOnInit() {
-    this.registerScrolling();
-
-    this.messages$
-      .filter(() => this.lastScrollTop + 5 >= this.lastScrollHeight
-        - this.messageList.nativeElement.offsetHeight)
-      .subscribe(() => this.scrollToBottom());
-
-    // subscribe to the websocket
-    this.messageSocket = this.wsService.onMessage()
-      .subscribe(data => this.store.dispatch(new message.WebsocketOnMessage(data)));
-    /*
-    // synchronize messages on reconnection
-    this.wsService.onConnected()
-      .subscribe(data => {
-        if (!this.messages || this.messages.length === 0) {
-          return;
-        }
-
-        const lastMessage = this.messages[this.messages.length - 1];
-        // check if messages are missing
-        if (!moment(lastMessage.createdAt).isSame(data.latestMessage.createdAt)) {
-          this.synchronize(
-            this.messages.length - 1,
-            lastMessage,
-            moment(data.latestMessage.createdAt)
-          );
-        }
-      });
-
-    // subscribe to message updates
-    this.updateSocket = this.messageService.getUpdateSocket()
-      .map(res => res.populated)
-      .subscribe(data => this.updateMessage(data));*/
   }
 
   scrollToBottom() {

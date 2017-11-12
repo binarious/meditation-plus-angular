@@ -13,6 +13,10 @@ export const DELETE_DONE = '[Message] Delete Done'
 export const SYNC = '[Message] Sync'
 export const SYNC_DONE = '[Message] Sync Done'
 export const WS_ON_MESSAGE = '[Message] WS On Message'
+export const WS_ON_CONNECT = '[Message] WS On Connect'
+export const AUTOCOMPLETE_USER = '[Message] Autocomplete User'
+export const SET_CUR_MESSAGE = '[Message] Set Current';
+export const UPDATE = '[Message] Update'
 
 export class LoadMessages implements Action {
   readonly type = LOAD;
@@ -26,7 +30,6 @@ export class LoadMessagesDone implements Action {
 
 export class PostMessage implements Action {
   readonly type = POST;
-  constructor(public payload: string) {}
 }
 
 export class PostMessageDone implements Action {
@@ -66,6 +69,26 @@ export class WebsocketOnMessage implements Action {
   constructor(public payload: any) {}
 }
 
+export class WebsocketOnConnect implements Action {
+  readonly type = WS_ON_CONNECT;
+  constructor() {}
+}
+
+export class AutocompleteUser implements Action {
+  readonly type = AUTOCOMPLETE_USER;
+  constructor(public payload: number) {}
+}
+
+export class SetCurrentMessage implements Action {
+  readonly type = SET_CUR_MESSAGE;
+  constructor(public payload: string) {}
+}
+
+export class UpdateMessage implements Action {
+  readonly type = UPDATE;
+  constructor(public payload: Message) {}
+}
+
 export type Actions = LoadMessages
  | LoadMessagesDone
  | PostMessage
@@ -77,4 +100,7 @@ export type Actions = LoadMessages
  | SyncMessages
  | SyncMessagesDone
  | WebsocketOnMessage
+ | AutocompleteUser
+ | SetCurrentMessage
+ | UpdateMessage
 ;

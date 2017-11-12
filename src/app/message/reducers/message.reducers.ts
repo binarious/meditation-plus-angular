@@ -59,7 +59,7 @@ export function messageReducer(
     }
 
     case message.POST_DONE: {
-      return {...state, posting: false}
+      return {...state, posting: false, currentMessage: ''}
     }
 
     case message.SYNC_DONE: {
@@ -76,8 +76,28 @@ export function messageReducer(
     case message.WS_ON_MESSAGE: {
       return {
         ...state,
-        messages: [...state.messages, ...action.payload.messages]
+        messages: [...state.messages, ...action.payload.current]
           .sort(sortMessages)
+      }
+    }
+
+    case message.SET_CUR_MESSAGE: {
+      return {
+        ...state,
+        currentMessage: action.payload
+      }
+    }
+
+    case message.UPDATE: {
+      return {
+        ...state,
+        messages: state.messages.map(val => {
+          if (val._id === action.payload._id) {
+            return action.payload;
+          }
+
+          return val;
+        })
       }
     }
 

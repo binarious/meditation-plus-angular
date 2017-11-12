@@ -35,7 +35,7 @@
 
 <mat-card>
   <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-  <form (submit)="currentMessage && sendMessage()" class="flex">
+  <form (submit)="currentMessage && sendMessage()" class="flex" [formGroup]="form">
     <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
       <mat-icon>tag_faces</mat-icon>
     </a>
@@ -44,7 +44,7 @@
         matInput
         matTextareaAutosize
         name="message"
-        [(ngModel)]="currentMessage"
+        formControlName="message"
         placeholder="Type message..."
         class="fill message-input"
         #message
@@ -53,7 +53,8 @@
         autocomplete="off"
         [disabled]="posting$ | async"
         rows="1"
-        (keydown)="enterMessage($event)"
+        (keydown.enter)="sendMessage($event)"
+        (keydown.tab)="autocomplete($event)"
       ></textarea>
       <mat-hint align="end" *ngIf="message.value.length > 0">{{ message.value.length }} / 1000</mat-hint>
     </mat-form-field>
