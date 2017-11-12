@@ -20,7 +20,6 @@ import { AppState } from 'app/reducers';
 import * as message from 'app/message/actions/message.actions';
 import { MessageState } from 'app/message/reducers/message.reducers';
 import { take } from 'rxjs/operators';
-import { clearTimeout, setTimeout } from 'timers';
 import { NgZone } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
