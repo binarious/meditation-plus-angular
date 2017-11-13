@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Effect } from '@ngrx/effects';
 import { MessageService } from 'app/message/message.service';
 import { UpdateMessage } from 'app/message/actions/message.actions';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class WsOnUpdateMessageEffect {
@@ -13,5 +13,5 @@ export class WsOnUpdateMessageEffect {
 
   @Effect()
   wsOnConnect$ = this.service.getUpdateSocket()
-    .switchMap(data => Observable.of(new UpdateMessage(data.populated)));
+    .switchMap(data => of(new UpdateMessage(data.populated)));
 }

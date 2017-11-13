@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { PostMessage, POST, PostMessageDone } from '../actions/message.actions';
 import { selectCurrentMessage } from 'app/message/reducers/message.reducers';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class PostMessageEffect {
@@ -23,6 +23,6 @@ export class PostMessageEffect {
     .pipe(
       withLatestFrom(this.store$.select(selectCurrentMessage)),
       switchMap(([payload, curMessage]) => this.service.post(curMessage)),
-      switchMap(payload => Observable.of(new PostMessageDone()))
+      switchMap(payload => of(new PostMessageDone()))
     );
 }

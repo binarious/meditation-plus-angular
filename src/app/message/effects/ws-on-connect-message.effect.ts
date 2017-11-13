@@ -12,6 +12,7 @@ import { WebsocketOnConnect, WS_ON_CONNECT, WebsocketOnConnectPayload, SyncMessa
 import { selectMessageList } from 'app/message/reducers/message.reducers';
 import { WebsocketService } from 'app/shared';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class WsOnConnectMessageEffect {
@@ -26,7 +27,7 @@ export class WsOnConnectMessageEffect {
 
   @Effect()
   wsReceiveConnect = this.wsService.onConnected()
-    .switchMap(data => Observable.of(new WebsocketOnConnect(data)));
+    .switchMap(data => of(new WebsocketOnConnect(data)));
 
   @Effect()
   wsOnConnect$ = this.actions$
@@ -42,10 +43,10 @@ export function mapOnConnectToSync(payload: WebsocketOnConnectPayload, messages:
   const last = _.last(messages);
 
   if (!last || moment(last.createdAt).isSame(payload.latestMessage.createdAt)) {
-    return Observable.of({ type: 'NO_ACTION' });
+    return of({ type: 'NO_ACTION' });
   }
 
-  return Observable.of(new SyncMessages({
+  return of(new SyncMessages({
     index: messages.length - 1,
     from: last.createdAt,
     to: moment(payload.latestMessage.createdAt)

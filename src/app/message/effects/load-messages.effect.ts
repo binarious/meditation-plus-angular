@@ -5,7 +5,7 @@ import { switchMap, map, withLatestFrom, tap } from 'rxjs/operators';
 import { Message } from 'app/message/message';
 import * as _ from 'lodash';
 import { LOAD, LoadMessages, LoadMessagesDone } from 'app/message/actions/message.actions';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class LoadMessageEffect {
@@ -24,7 +24,7 @@ export class LoadMessageEffect {
         this.service.getRecent(page).pipe(
           map(data => data.json()),
           tap(this.setLastMessage),
-          switchMap(messages => Observable.of(new LoadMessagesDone({ messages, page })))
+          switchMap(messages => of(new LoadMessagesDone({ messages, page })))
         )
       )
     );

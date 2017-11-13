@@ -3,7 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { MessageService } from 'app/message/message.service';
 import { switchMap, map, withLatestFrom } from 'rxjs/operators';
 import { SyncMessages, SYNC, SyncMessagesDone } from '../actions/message.actions';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class SyncMessageEffect {
@@ -21,7 +21,7 @@ export class SyncMessageEffect {
       switchMap(payload =>
         this.service.synchronize(payload.from, payload.to.toDate()).pipe(
           map(res => res.json()),
-          switchMap(messages => Observable.of(new SyncMessagesDone({ index: payload.index, messages })))
+          switchMap(messages => of(new SyncMessagesDone({ index: payload.index, messages })))
         )
       )
     );

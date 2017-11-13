@@ -7,6 +7,7 @@ import { Action, Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { UserService } from 'app/user';
 import { selectUsernames, selectCurrentMessage } from 'app/message/reducers/message.reducers';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class AutocompleteMessageEffect {
@@ -36,19 +37,19 @@ export function mapAutocompleteToAction(caretPos: number, usernames: string[], c
   const search = textBfCaret.match(/@\w+$/g);
 
   if (!search || search.length === 0) {
-    return Observable.of({ type: 'NO_ACTION' });
+    return of({ type: 'NO_ACTION' });
   }
 
   const matches = usernames
   .filter(name => new RegExp('^' + search[0].substring(1), 'i').test(name));
 
   if (matches.length > 0) {
-    return Observable.of(createAutocompletePayload(
+    return of(createAutocompletePayload(
       caretPos, curMsg, textBfCaret,
       search, matches[0]
     ));
   } else {
-    return Observable.of(this.userService.getUsername(search[0].substring(1))
+    return of(this.userService.getUsername(search[0].substring(1))
       .map(res => res.json())
       .filter(res => res.length > 0)
       .map(username => createAutocompletePayload(
