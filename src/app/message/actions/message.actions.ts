@@ -25,7 +25,7 @@ export class LoadMessages implements Action {
 
 export class LoadMessagesDone implements Action {
   readonly type = LOAD_DONE;
-  constructor(public payload: Message[], public page: number) {}
+  constructor(public payload: {messages: Message[], page: number}) {}
 }
 
 export class PostMessage implements Action {
@@ -64,14 +64,21 @@ export class SyncMessagesDone implements Action {
   constructor(public payload: { index: number, messages: Message[]}) {}
 }
 
+export interface WebsocketOnMessagePayload {
+  previous: Message;
+  current: Message;
+}
 export class WebsocketOnMessage implements Action {
   readonly type = WS_ON_MESSAGE;
-  constructor(public payload: any) {}
+  constructor(public payload: WebsocketOnMessagePayload) {}
 }
 
+export interface WebsocketOnConnectPayload {
+  latestMessage: Message;
+}
 export class WebsocketOnConnect implements Action {
   readonly type = WS_ON_CONNECT;
-  constructor() {}
+  constructor(public payload: WebsocketOnConnectPayload) {}
 }
 
 export class AutocompleteUser implements Action {

@@ -30,7 +30,7 @@ export class MessageListEntryComponent implements OnInit {
   @Output() public menuClosed: EventEmitter<any> = new EventEmitter<any>();
   public localMenuOpen = false;
 
-  constructor(public messageService: MessageService) {}
+  constructor() {}
 
   public ngOnInit() {
     this.trigger.onMenuClose.subscribe(() => {
@@ -66,7 +66,6 @@ export class MessageListEntryComponent implements OnInit {
       return;
     }
 
-    this.message.deleted = true;
     this.messageService.delete(this.message)
       .subscribe(() => undefined);
   }
@@ -82,8 +81,6 @@ export class MessageListEntryComponent implements OnInit {
       return;
     }
 
-    this.message.text = newText;
-    this.message.edited = true;
     this.messageService.update(this.message)
       .subscribe(() => undefined);
   }
