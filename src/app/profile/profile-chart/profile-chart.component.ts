@@ -109,26 +109,21 @@ export class ProfileChartComponent implements OnChanges {
         return;
     }
 
-    const dataTotal = {
-      data: new Array(labels.length).fill(0),
-      label: 'Minutes meditated',
-      fill: chartName !== 'month'
-    };
-
     const dataWalking = {
       data: new Array(labels.length).fill(0),
       label: 'Minutes walking',
+      // no fill for line chart
       fill: chartName !== 'month'
     };
 
     const dataSitting = {
       data: new Array(labels.length).fill(0),
-      label: 'Minutes walking',
+      label: 'Minutes sitting',
+      // no fill for line chart
       fill: chartName !== 'month'
     };
 
     this.data[chartName].map(x => {
-      dataTotal.data[x._id - 1] = x.total;
       dataWalking.data[x._id - 1] = x.walking;
       dataSitting.data[x._id - 1] = x.sitting;
     });
@@ -136,10 +131,8 @@ export class ProfileChartComponent implements OnChanges {
     labels = this.rotateArray(labels, shiftSize);
     dataWalking.data = this.rotateArray(dataWalking.data, shiftSize);
     dataSitting.data = this.rotateArray(dataSitting.data, shiftSize);
-    dataTotal.data = this.rotateArray(dataTotal.data, shiftSize);
 
     this.chartLabels[chartName] = labels;
-    this.chartData[chartName].push(dataTotal);
     this.chartData[chartName].push(dataWalking);
     this.chartData[chartName].push(dataSitting);
   }
