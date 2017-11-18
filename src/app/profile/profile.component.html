@@ -82,7 +82,8 @@
     <mat-chip color="primary" selected="true">{{ profileStats.total }} minutes of meditation</mat-chip>
     <mat-chip color="primary" selected="true">{{ profileStats.walking }} of walking</mat-chip>
     <mat-chip color="primary" selected="true">{{ profileStats.sitting }} of sitting</mat-chip>
-    <mat-chip color="primary" selected="true">average session length: {{ profileStats.avgSessionTime }} minutes</mat-chip>
+    <mat-chip color="primary" selected="true">{{ profileStats.avgSessionTime }} minutes average session length</mat-chip>
+    <mat-chip *ngIf="consecutiveDays" color="primary" selected="true">{{ consecutiveDays.total }} consecutive days</mat-chip>
   </mat-chip-list>
 
   <profile-charts
