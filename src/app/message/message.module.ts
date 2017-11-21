@@ -16,6 +16,9 @@ import { SyncMessageEffect } from 'app/message/effects/sync-message.effect';
 import { WsOnConnectMessageEffect } from 'app/message/effects/ws-on-connect-message.effect';
 import { WSOnMessageEffect } from 'app/message/effects/ws-on-message.effect';
 import { PostMessageEffect } from 'app/message/effects/post-message.effect';
+import { DeleteMessageEffect } from 'app/message/effects/delete-message.effect';
+import { UpdateMessageEffect } from 'app/message/effects/update-message.effect';
+import { WsOnUpdateMessageEffect } from 'app/message/effects/ws-on-update-message.effect';
 
 @NgModule({
   imports: [
@@ -30,10 +33,13 @@ import { PostMessageEffect } from 'app/message/effects/post-message.effect';
     EffectsModule.forFeature([
       AutocompleteMessageEffect,
       LoadMessageEffect,
+      DeleteMessageEffect,
+      UpdateMessageEffect,
       PostMessageEffect,
       SyncMessageEffect,
       WsOnConnectMessageEffect,
-      WSOnMessageEffect
+      WSOnMessageEffect,
+      WsOnUpdateMessageEffect
     ]),
   ],
   declarations: [

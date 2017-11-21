@@ -3,30 +3,24 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild
 } from '@angular/core';
-import { MessageService } from './message.service';
 import { UserService } from '../user/user.service';
 import { Message } from './message';
-import { WebsocketService } from '../shared';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/of';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import {
-  MessageState,
-  selectMessages,
   selectMessageList,
   selectUsernames,
   selectLoading,
   selectLoadedPage,
   selectNoPagesLeft,
   selectPosting,
-  selectCurrentMessage
+  selectCurrentMessage,
+  selectInitiallyLoaded
 } from 'app/message/reducers/message.reducers';
 import { take } from 'rxjs/operators';
 import { NgZone } from '@angular/core';
@@ -34,11 +28,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {
   SetCurrentMessage,
   LoadMessages,
-  WebsocketOnConnect,
-  WebsocketOnMessage,
   UpdateMessage,
   PostMessage,
-  AutocompleteUser
+  AutocompleteUser,
+  DeleteMessage
 } from 'app/message/actions/message.actions';
 
 @Component({
@@ -56,6 +49,7 @@ export class MessageComponent implements OnInit {
   messages$: Observable<Message[]>;
   usernames$: Observable<string[]>;
   loading$: Observable<boolean>;
+  initiallyLoaded$: Observable<boolean>;
   page$: Observable<number>;
   noPagesLeft$: Observable<boolean>;
   posting$: Observable<boolean>;
@@ -82,9 +76,15 @@ export class MessageComponent implements OnInit {
     this.messages$ = store.select(selectMessageList);
     this.usernames$ = store.select(selectUsernames);
     this.loading$ = store.select(selectLoading);
+    this.initiallyLoaded$ = store.select(selectInitiallyLoaded);
     this.page$ = store.select(selectLoadedPage);
     this.noPagesLeft$ = store.select(selectNoPagesLeft);
     this.posting$ = store.select(selectPosting);
+
+    this.posting$.subscribe(val => val
+      ? this.message.disable()
+      : this.message.enable()
+    );
 
     store.dispatch(new LoadMessages(0));
     store.select(selectCurrentMessage).subscribe(
@@ -106,11 +106,17 @@ export class MessageComponent implements OnInit {
     this.loadingFinished.emit();
   }
 
+  delete(message: Message) {
+    this.store.dispatch(new DeleteMessage(message));
+  }
+
+  update(message: Message) {
+    this.store.dispatch(new UpdateMessage(message));
+  }
+
   loadNextPage() {
-    this.page$.pipe(
-      take(1)
-    )
-    .subscribe(page => this.store.dispatch(new LoadMessages(page + 1)));
+    this.page$.pipe(take(1))
+      .subscribe(page => this.store.dispatch(new LoadMessages(page + 1)));
   }
 
   get isAdmin(): boolean {
@@ -161,7 +167,7 @@ export class MessageComponent implements OnInit {
     }, 10);
   }
 
-  trackById(index, item: Message) {
+  trackById(_index, item: Message) {
     return item._id;
   }
 }

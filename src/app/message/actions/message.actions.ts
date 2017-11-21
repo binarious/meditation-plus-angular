@@ -14,6 +14,7 @@ export const SYNC = '[Message] Sync';
 export const SYNC_DONE = '[Message] Sync Done';
 export const WS_ON_MESSAGE = '[Message] WS On Message';
 export const WS_ON_CONNECT = '[Message] WS On Connect';
+export const WS_ON_UPDATE = '[Message] WS On Update';
 export const AUTOCOMPLETE_USER = '[Message] Autocomplete User';
 export const SET_CUR_MESSAGE = '[Message] Set Current';
 export const UPDATE = '[Message] Update';
@@ -96,6 +97,11 @@ export class UpdateMessage implements Action {
   constructor(public payload: Message) {}
 }
 
+export class WebsocketOnUpdateMessage implements Action {
+  readonly type = WS_ON_UPDATE;
+  constructor(public payload: Message) {}
+}
+
 export type Actions = LoadMessages
  | LoadMessagesDone
  | PostMessage
@@ -107,6 +113,8 @@ export type Actions = LoadMessages
  | SyncMessages
  | SyncMessagesDone
  | WebsocketOnMessage
+ | WebsocketOnConnect
+ | WebsocketOnUpdateMessage
  | AutocompleteUser
  | SetCurrentMessage
  | UpdateMessage

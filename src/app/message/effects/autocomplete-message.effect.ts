@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { AutocompleteUser, AUTOCOMPLETE_USER, SetCurrentMessage } from 'app/message/actions/message.actions';
-import { map, withLatestFrom, filter, switchMap } from 'rxjs/operators';
+import { map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Action, Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
-import { UserService } from 'app/user';
 import { selectUsernames, selectCurrentMessage } from 'app/message/reducers/message.reducers';
 import { of } from 'rxjs/observable/of';
 
@@ -13,8 +12,7 @@ import { of } from 'rxjs/observable/of';
 export class AutocompleteMessageEffect {
   constructor(
     private actions$: Actions,
-    private store$: Store<AppState>,
-    private userService: UserService
+    private store$: Store<AppState>
   ) {
   }
 

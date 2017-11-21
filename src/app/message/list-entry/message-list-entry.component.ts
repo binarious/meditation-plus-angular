@@ -8,9 +8,9 @@ import {
   OnInit
 } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
-import { MessageService } from '../message.service';
 import { Message } from '../message';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'message-list-entry',
@@ -28,6 +28,8 @@ export class MessageListEntryComponent implements OnInit {
   @ViewChild(MatMenuTrigger) public trigger: MatMenuTrigger;
   @Output() public menuOpened: EventEmitter<any> = new EventEmitter<any>();
   @Output() public menuClosed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public onDelete: EventEmitter<Message> = new EventEmitter<Message>();
+  @Output() public onUpdate: EventEmitter<Message> = new EventEmitter<Message>();
   public localMenuOpen = false;
 
   constructor() {}
@@ -66,8 +68,7 @@ export class MessageListEntryComponent implements OnInit {
       return;
     }
 
-    this.messageService.delete(this.message)
-      .subscribe(() => undefined);
+    this.onDelete.emit(this.message);
   }
 
   public closeMenu() {
@@ -81,8 +82,9 @@ export class MessageListEntryComponent implements OnInit {
       return;
     }
 
-    this.messageService.update(this.message)
-      .subscribe(() => undefined);
+    const newMessage = _.cloneDeep(this.message);
+    newMessage.text = newText;
+    this.onUpdate.emit(newMessage);
   }
 
   public editDone() {

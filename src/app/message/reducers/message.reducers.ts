@@ -12,6 +12,7 @@ export interface MessageState {
   loadedPage: number;
   usernames: string[];
   loading: boolean;
+  initiallyLoaded: boolean;
   posting: boolean;
 }
 
@@ -22,6 +23,7 @@ export const initialMessageState: MessageState = {
   loadedPage: 0,
   usernames: [],
   loading: false,
+  initiallyLoaded: false,
   posting: false
 };
 
@@ -37,9 +39,9 @@ export function messageReducer(
       };
     }
     case message.LOAD_DONE: {
-      const messages = state.loadedPage === 0
-        ? action.payload.messages
-        : [...action.payload.messages, ..._.cloneDeep(state.messages)];
+      const messages = state.initiallyLoaded
+        ? [...action.payload.messages, ..._.cloneDeep(state.messages)]
+        : action.payload.messages;
 
       const usernames = new Set();
       messages.forEach(msg => {
@@ -53,7 +55,8 @@ export function messageReducer(
         loadedPage: action.payload.page,
         noPagesLeft: action.payload.page > 0 && action.payload.messages.length === 0,
         usernames: Array.from(usernames).sort(),
-        loading: false
+        loading: false,
+        initiallyLoaded: true
       };
     }
 
@@ -66,9 +69,10 @@ export function messageReducer(
     }
 
     case message.SYNC_DONE: {
+      const newState = _.cloneDeep(state);
       return {
-        ..._.cloneDeep(state),
-        messages: state.messages.splice(
+        ...newState,
+        messages: newState.messages.splice(
           action.payload.index,
           0,
           ...action.payload.messages
@@ -91,6 +95,7 @@ export function messageReducer(
       };
     }
 
+    case message.WS_ON_UPDATE:
     case message.UPDATE: {
       return {
         ..._.cloneDeep(state),
@@ -122,3 +127,4 @@ export const selectLoadedPage = createSelector(selectMessages, (state: MessageSt
 export const selectUsernames = createSelector(selectMessages, (state: MessageState) => state.usernames);
 export const selectLoading = createSelector(selectMessages, (state: MessageState) => state.loading);
 export const selectPosting = createSelector(selectMessages, (state: MessageState) => state.posting);
+export const selectInitiallyLoaded = createSelector(selectMessages, (state: MessageState) => state.initiallyLoaded);

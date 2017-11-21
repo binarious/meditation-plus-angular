@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { MessageService } from 'app/message/message.service';
-import { switchMap, map, withLatestFrom, tap } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { Message } from 'app/message/message';
 import * as _ from 'lodash';
 import { LOAD, LoadMessages, LoadMessagesDone } from 'app/message/actions/message.actions';

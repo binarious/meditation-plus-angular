@@ -1,11 +1,11 @@
 <div #messageList class="flexbox-item-grow fill-area fill-area-content messages list">
-  <div *ngIf="(loading$ | async) && (page$ | async) == 0" class="loader">
+  <div *ngIf="!(initiallyLoaded$ | async) && (loading$ | async) && (page$ | async) == 0" class="loader">
     <mat-spinner></mat-spinner>
   </div>
 
   <mat-list>
     <button
-      *ngIf="!(noPagesLeft$ | async)"
+      *ngIf="(initiallyLoaded$ | async) && !(noPagesLeft$ | async)"
       mat-raised-button
       (click)="loadNextPage()"
       [disabled]="loading$ | async"
@@ -25,6 +25,8 @@
       <message-list-entry
         (menuOpened)="menuOpen = true"
         (menuClosed)="menuOpen = false"
+        (onDelete)="delete($event)"
+        (onUpdate)="update($event)"
         [menuOpen]="menuOpen"
         [message]="message"
         [admin]="isAdmin"
@@ -51,7 +53,6 @@
         #messageAutoSize="matTextareaAutosize"
         maxlength="1000"
         autocomplete="off"
-        [disabled]="posting$ | async"
         rows="1"
         (keydown.enter)="sendMessage($event)"
         (keydown.tab)="autocomplete($event)"

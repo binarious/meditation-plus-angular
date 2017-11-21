@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { MessageService } from 'app/message/message.service';
-import { switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { SyncMessages, SYNC, SyncMessagesDone } from '../actions/message.actions';
 import { of } from 'rxjs/observable/of';
 

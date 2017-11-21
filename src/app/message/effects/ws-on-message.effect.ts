@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { MessageService } from 'app/message/message.service';
 import { Store, Action } from '@ngrx/store';
 import { AppState } from 'app/reducers';
-import { UserService } from 'app/user';
 import { WS_ON_MESSAGE, WebsocketOnMessage, SyncMessages, WebsocketOnMessagePayload } from 'app/message/actions/message.actions';
-import { map, withLatestFrom, filter, switchMap } from 'rxjs/operators';
+import { map, withLatestFrom, switchMap } from 'rxjs/operators';
 import * as moment from 'moment';
 import { selectMessageList } from 'app/message/reducers/message.reducers';
 import { Message } from 'app/message/message';
@@ -17,9 +15,7 @@ import { of } from 'rxjs/observable/of';
 export class WSOnMessageEffect {
   constructor(
     private actions$: Actions,
-    private service: MessageService,
     private store$: Store<AppState>,
-    private userService: UserService,
     private wsService: WebsocketService
   ) {
   }
