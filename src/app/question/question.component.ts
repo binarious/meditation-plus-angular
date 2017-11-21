@@ -37,22 +37,38 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   // searching for suggestions
   currentSearch = '';
-  form: FormGroup;
+  formQuestion: FormGroup;
+  formSearch: FormGroup;
   search: FormControl = new FormControl('');
+  question: FormControl = new FormControl('');
+
+  // params for answered tab
+  searchParams = {
+    sortBy: 'createdAt',
+    sortOrder: 'descending',
+    linkOnly: false,
+    search: ''
+  };
 
   constructor(
     public questionService: QuestionService,
     public userService: UserService,
     public fb: FormBuilder
   ) {
-    this.form = fb.group({
+    this.formQuestion = fb.group({
+      'question': this.question
+    });
+    this.formSearch = fb.group({
       'search': this.search
     });
+
+    this.question.valueChanges
+      .debounceTime(400)
+      .subscribe(val => this.currentSearch = val);
+
     this.search.valueChanges
       .debounceTime(400)
-      .subscribe(val => {
-        this.currentSearch = val;
-      });
+      .subscribe(val => this.reloadAnsweredQuestions());
   }
 
   selectChange(target) {
@@ -96,11 +112,16 @@ export class QuestionComponent implements OnInit, OnDestroy {
     }
   }
 
+  reloadAnsweredQuestions(): void {
+    this.answeredQuestions = [];
+    this.loadAnsweredQuestions(this.answeredQuestionsPage);
+  }
+
   loadAnsweredQuestions(page = 0) {
     this.loadingAnsweredPage = true;
     this.loadedAnsweredTab = true;
 
-    this.questionService.getQuestions(true, page)
+    this.questionService.getQuestions(true, page, this.searchParams)
       .map(res => res.json())
       .subscribe(data => {
         this.loadingAnsweredPage = false;

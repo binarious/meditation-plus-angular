@@ -7,7 +7,7 @@
       <mat-card>
         <mat-card-title>Questions</mat-card-title>
         <mat-card-subtitle>Here you can ask questions for the live broadcast.</mat-card-subtitle>
-        <form [formGroup]="form" (submit)="sendQuestion($event)" *ngIf="showForm" class="question-form">
+        <form [formGroup]="formQuestion" (submit)="sendQuestion($event)" *ngIf="showForm" class="question-form">
           <ul>
             <li>Please note that your question might already be answered here: <a href="http://video.sirimangalo.org/" target="_BLANK">Video Wiki</a> or <a href="http://www.sirimangalo.org/frequently-asked-meditation-questions/" target="_BLANK">FAQ</a>.</li>
             <li>Please make sure you've read the booklet <a href="http://htm.sirimangalo.org" target="_BLANK">How To Meditate</a> before asking a question.</li>
@@ -32,7 +32,7 @@
                   maxlength="1000"
                   [(ngModel)]="currentQuestion"
                   placeholder="Write your question here..."
-                  formControlName="search"
+                  formControlName="question"
                 ></textarea>
                 <mat-hint align="end" *ngIf="question.value.length > 0">{{ question.value.length }} / 1000</mat-hint>
               </mat-form-field>
@@ -84,6 +84,48 @@
     </mat-tab>
 
     <mat-tab label="Answered">
+      <mat-card>
+        <div>
+          <form [formGroup]="formSearch" class="flex">
+            <mat-form-field class="fill">
+              <input [(ngModel)]="searchParams.search" matInput placeholder="Filter questions" formControlName="search">
+            </mat-form-field>
+          </form>
+        </div>
+
+        <div class="search-params">
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="searchParams.sortBy"
+              (change)="reloadAnsweredQuestions()"
+              name="sortBy"
+              placeholder="Sort By"
+            >
+              <mat-option value="createdAt">date created</mat-option>
+              <mat-option value="answeredAt">date answered</mat-option>
+              <mat-option value="numOfLikes">likes</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="searchParams.sortOrder"
+              (change)="reloadAnsweredQuestions()"
+              name="sortOrder"
+              placeholder="Sort Order"
+            >
+              <mat-option value="descending">descending</mat-option>
+              <mat-option value="ascending">ascending</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox (change)="reloadAnsweredQuestions()" [(ngModel)]="searchParams.linkOnly" name="linkOnly">
+            Show only questions with link to broadcast
+          </mat-checkbox>
+        </div>
+
+      </mat-card>
+
       <mat-list>
         <div *ngFor="let question of answeredQuestions" class="question-row">
           <question-list-entry
