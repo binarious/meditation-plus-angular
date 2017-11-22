@@ -90,9 +90,6 @@ export class MessageComponent implements OnInit {
     store.select(selectCurrentMessage).subscribe(
       val => this.message.setValue(val, { emitEvent: false })
     );
-    this.message.valueChanges.subscribe(
-      val => store.dispatch(new SetCurrentMessage(val))
-    );
   }
 
   ngOnInit() {
@@ -130,11 +127,13 @@ export class MessageComponent implements OnInit {
 
   sendMessage(evt: KeyboardEvent) {
     evt.preventDefault();
+    this.store.dispatch(new SetCurrentMessage(this.message.value));
     this.store.dispatch(new PostMessage());
   }
 
   autocomplete(evt: KeyboardEvent) {
     evt.preventDefault();
+    this.store.dispatch(new SetCurrentMessage(this.message.value));
     this.store.dispatch(new AutocompleteUser(
       (evt.target as HTMLTextAreaElement).selectionEnd
         ? (evt.target as HTMLTextAreaElement).selectionEnd

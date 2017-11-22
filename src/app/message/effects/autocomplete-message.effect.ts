@@ -7,12 +7,14 @@ import { Action, Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { selectUsernames, selectCurrentMessage } from 'app/message/reducers/message.reducers';
 import { of } from 'rxjs/observable/of';
+import { UserService } from 'app/user';
 
 @Injectable()
 export class AutocompleteMessageEffect {
   constructor(
     private actions$: Actions,
-    private store$: Store<AppState>
+    private store$: Store<AppState>,
+    private userService: UserService
   ) {
   }
 
@@ -25,11 +27,18 @@ export class AutocompleteMessageEffect {
         this.store$.select(selectUsernames),
         this.store$.select(selectCurrentMessage)
       ),
-      switchMap(([caretPos, usernames, curMsg]) => mapAutocompleteToAction(caretPos, usernames, curMsg))
+      switchMap(([caretPos, usernames, curMsg]) =>
+        mapAutocompleteToAction(caretPos, usernames, curMsg, this.userService)
+      )
     );
 }
 
-export function mapAutocompleteToAction(caretPos: number, usernames: string[], curMsg: string): Observable<Action> {
+export function mapAutocompleteToAction(
+  caretPos: number,
+  usernames: string[],
+  curMsg: string,
+  userService: UserService
+): Observable<Action> {
 
   const textBfCaret = curMsg.substring(0, caretPos);
   const search = textBfCaret.match(/@\w+$/g);
@@ -47,13 +56,13 @@ export function mapAutocompleteToAction(caretPos: number, usernames: string[], c
       search, matches[0]
     ));
   } else {
-    return of(this.userService.getUsername(search[0].substring(1))
+    return userService.getUsername(search[0].substring(1))
       .map(res => res.json())
       .filter(res => res.length > 0)
       .map(username => createAutocompletePayload(
         caretPos, curMsg, textBfCaret,
         search, username
-      )));
+      ));
   }
 }
 

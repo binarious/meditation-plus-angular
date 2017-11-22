@@ -22,7 +22,7 @@ export class WSOnMessageEffect {
 
   @Effect()
   wsReceiverMessage$ =  this.wsService.onMessage()
-    .switchMap(data => of(new WebsocketOnMessage(data)));
+    .map(data => new WebsocketOnMessage(data));
 
   @Effect()
   wsOnMessage$ = this.actions$
