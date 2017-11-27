@@ -44,7 +44,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   // params for answered tab
   searchParams = {
-    sortBy: 'createdAt',
+    sortBy: 'answeredAt',
     sortOrder: 'descending',
     linkOnly: false,
     search: ''
