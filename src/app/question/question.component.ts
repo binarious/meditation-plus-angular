@@ -68,7 +68,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
     this.search.valueChanges
       .debounceTime(400)
-      .subscribe(val => this.reloadAnsweredQuestions());
+      .subscribe(val => this.loadAnsweredQuestions());
   }
 
   selectChange(target) {
@@ -110,11 +110,6 @@ export class QuestionComponent implements OnInit, OnDestroy {
       question.answeredAt = new Date();
       this.answeredQuestions.unshift(question);
     }
-  }
-
-  reloadAnsweredQuestions(): void {
-    this.answeredQuestions = [];
-    this.loadAnsweredQuestions(this.answeredQuestionsPage);
   }
 
   loadAnsweredQuestions(page = 0) {

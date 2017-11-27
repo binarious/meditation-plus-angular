@@ -88,7 +88,7 @@
         <div>
           <form [formGroup]="formSearch" class="flex">
             <mat-form-field class="fill">
-              <input [(ngModel)]="searchParams.search" matInput placeholder="Filter questions" formControlName="search">
+              <input [(ngModel)]="searchParams.search" matInput placeholder="Search all questions" formControlName="search">
             </mat-form-field>
           </form>
         </div>
@@ -97,7 +97,7 @@
           <mat-form-field>
             <mat-select
               [(ngModel)]="searchParams.sortBy"
-              (change)="reloadAnsweredQuestions()"
+              (change)="loadAnsweredQuestions()"
               name="sortBy"
               placeholder="Sort By"
             >
@@ -110,7 +110,7 @@
           <mat-form-field>
             <mat-select
               [(ngModel)]="searchParams.sortOrder"
-              (change)="reloadAnsweredQuestions()"
+              (change)="loadAnsweredQuestions()"
               name="sortOrder"
               placeholder="Sort Order"
             >
@@ -119,8 +119,11 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-checkbox (change)="reloadAnsweredQuestions()" [(ngModel)]="searchParams.linkOnly" name="linkOnly">
-            Show only questions with link to broadcast
+          <mat-checkbox
+            (change)="loadAnsweredQuestions()"
+            [(ngModel)]="searchParams.linkOnly"
+            name="linkOnly">
+            Show only questions with broadcast link
           </mat-checkbox>
         </div>
 
