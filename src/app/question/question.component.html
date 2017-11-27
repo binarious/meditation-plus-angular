@@ -15,27 +15,20 @@
             <li>Please do not ask questions that are speculative or unrelated to Buddhist practice in general.</li>
             <li>Please do not ask questions about the personal experiences or attainments of others.</li>
           </ul>
-          <div>
-            <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
-            <div class="flex row">
-              <a (click)="showEmojiSelect=!showEmojiSelect" class="emoji-btn">
-                <mat-icon>tag_faces</mat-icon>
-              </a>
-              <mat-form-field class="fill">
-                <textarea
-                  matInput
-                  matTextareaAutosize
-                  #question
-                  minRows="3"
-                  name="inp-question"
-                  maxlength="1000"
-                  [(ngModel)]="currentQuestion"
-                  placeholder="Write your question here..."
-                  formControlName="question"
-                ></textarea>
-                <mat-hint align="end" *ngIf="question.value.length > 0">{{ question.value.length }} / 1000</mat-hint>
-              </mat-form-field>
-            </div>
+          <div class="flex row">
+            <mat-form-field class="fill">
+              <textarea
+                matInput
+                #question
+                rows="5"
+                name="inp-question"
+                maxlength="1000"
+                [(ngModel)]="currentQuestion"
+                placeholder="Write your question here..."
+                formControlName="question"
+              ></textarea>
+              <mat-hint align="end" *ngIf="question.value.length > 0">{{ question.value.length }} / 1000</mat-hint>
+            </mat-form-field>
           </div>
           <question-suggestions [currentSearch]="currentSearch"></question-suggestions>
           <div>
