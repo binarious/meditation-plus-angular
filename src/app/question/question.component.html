@@ -15,7 +15,6 @@
             <li>Please do not ask questions that are speculative or unrelated to Buddhist practice in general.</li>
             <li>Please do not ask questions about the personal experiences or attainments of others.</li>
           </ul>
-          <mat-divider></mat-divider>
           <div>
             <emoji-select *ngIf="showEmojiSelect" (selected)="emojiSelect($event)"></emoji-select>
             <div class="flex row">
@@ -61,13 +60,6 @@
             (click)="showForm = true">
             Submit new question
           </button>
-        </div>
-
-        <div *ngIf="sendQuestion">
-          <mat-divider></mat-divider>
-          <div class="info-msg">
-            Thank you for your question.
-          </div>
         </div>
       </mat-card>
 
