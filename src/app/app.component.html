@@ -50,6 +50,12 @@
         </mat-nav-list>
 
       </mat-sidenav>
+
+      <div [routerLink]="['/schedule/call']" *ngIf="appointmentIncoming && !hideToolbar" class="appointment-incoming">
+        <mat-icon>alarm</mat-icon>
+        <span>You have an appointment scheduled for now</span>
+      </div>
+
       <mat-toolbar class="static-toolbar" color="primary" *ngIf="!hideToolbar">
         <div class="mat-toolbar-single-row">
           <button mat-icon-button (click)="start.open()" *ngIf="isLoggedIn()">
