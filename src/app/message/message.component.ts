@@ -135,6 +135,9 @@ export class MessageComponent implements OnInit {
 
   sendMessage(evt: KeyboardEvent) {
     evt.preventDefault();
+    if (!this.message.value.trim()) {
+      return;
+    }
     this.store.dispatch(new SetCurrentMessage(this.message.value));
     this.store.dispatch(new PostMessage());
   }
