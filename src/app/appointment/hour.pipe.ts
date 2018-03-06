@@ -27,9 +27,13 @@ export class FormatHourPipe implements PipeTransform {
   transform(value: any, timezoneFrom?: string, timezoneTo?: string): string {
     if (typeof value === 'string') {
       value = parseInt(value, 10);
+
+      if (isNaN(value)) {
+        return '';
+      }
     }
 
-    if ((isNaN(value) || value < 0) && !(value instanceof Date) && !moment.isMoment(value)) {
+    if (typeof value !== 'number' && !(value instanceof Date) && !moment.isMoment(value)) {
       return '';
     }
 
