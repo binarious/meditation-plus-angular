@@ -5,7 +5,7 @@
       <mat-form-field class="fill">
         <mat-select
           name="day"
-          [(ngModel)]="appointment.weekDay"
+          [(ngModel)]="appointment['weekDay']"
           placeholder="Please select day"
           style="margin-bottom: 15px;"
           required>
@@ -24,7 +24,7 @@
         <input
           #hourInput
           matInput
-          [(ngModel)]="appointment.hour"
+          [(ngModel)]="appointment['hour']"
           name="hour"
           required
           placeholder="Hour (0 to 2359)"
