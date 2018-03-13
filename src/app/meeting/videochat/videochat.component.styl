@@ -1,0 +1,63 @@
+:host
+  overflow-x: hidden
+  text-align: center
+  position: relative
+  background: #000
+  height: 100%
+  // center vertically
+  display: flex
+  align-items: center
+  justify-content: center
+
+.loading-animation
+  position: absolute
+  top: 100px
+  left: 0
+  right: 0
+  margin-left: auto
+  margin-right: auto
+
+.loading-animation > p
+  color: #009688
+  font-weight: bold
+
+.media-status
+  position: absolute
+  padding: 10px
+  top: 15px
+  left: 15px
+  background: rgba(0,0,0,.4)
+
+.media-status > mat-icon
+  color: #fff
+
+.media-status > .media-disabled
+  color: #E57373
+
+.video-remote
+  max-width: 100%
+  height: 100%
+
+.video-local
+  position: absolute
+  right: 15px
+  top: 15px
+  width: 20%
+  max-width: 160px
+
+.control-buttons
+  position: absolute
+  bottom: 10px
+  width: 100%
+
+.control-buttons > button
+  margin: 5px
+
+.control-buttons > .btn-chat
+  background: green
+
+.control-buttons > .btn-end
+  background: red
+
+.hidden
+  display: none !important

@@ -1,0 +1,63 @@
+<div *ngIf="loading" class="loader">
+  <mat-spinner></mat-spinner>
+</div>
+
+<!-- no-meeting content -->
+<mat-card *ngIf="!loading && !meeting">
+  <div *ngIf="!closed" class="no-meeting">
+    <mat-icon>access_time</mat-icon>
+    <p>No appointment scheduled for you right now</p>
+  </div>
+
+  <div *ngIf="closed" class="no-meeting">
+    <p>The appointment was closed.</p>
+  </div>
+
+  <meeting-history></meeting-history>
+</mat-card>
+
+<div class="meeting-interface" *ngIf="!loading && meeting && !closed">
+  <!-- landing card -->
+  <div class="fill" *ngIf="!videochat">
+    <p *ngIf="ended">Your appointment was closed.</p>
+    <mat-card *ngIf="!ended" class="meeting-info">
+      <div *ngIf="videochatError" class="error">
+        An error occured:
+        <span>{{ videochatError }}</span>
+      </div>
+      <mat-card-title>Appointment with {{ meeting.participants[0].name }}</mat-card-title>
+      <mat-card-content>
+        <p>Please join the videochat by clicking on this button</p>
+        <p *ngIf="videochatActive" class="videochat-active">The videochat has been initialized</p>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="videochat = true"
+        >
+          <mat-icon>videocam</mat-icon>
+          Join
+        </button>
+        <p>or alternatively use Google Hangouts</p>
+        <div id="hangout-button"></div>
+        <div *ngIf="isAdmin">
+          <p>Please close the appointment once it's over</p>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="closeMeeting()"
+          >
+            Close
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <meeting-videochat
+    *ngIf="videochat && !error && !ended"
+    [meeting]="meeting"
+    (error)="showError($event)"
+    (ended)="exitVideoChat()"
+    class="flexbox-parent"
+  ></meeting-videochat>
+  <meeting-textchat [meeting]="meeting" class="flexbox-parent"></meeting-textchat>
+</div>

@@ -6,9 +6,12 @@ import { ProfileModule } from '../profile';
 import { EmojiModule } from '../emoji';
 import { MomentModule } from 'angular2-moment';
 import { VideoChatComponent } from './videochat/videochat.component';
-import { AppointmentCallComponent } from './appointment-call.component';
+import { MeetingComponent } from './meeting.component';
 import { MessageModule } from '../message';
+import { UserTextListModule } from '../user-text-list';
 import { AppointmentModule } from '../appointment';
+import { TextchatComponent } from './textchat/textchat.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   imports: [
@@ -19,15 +22,21 @@ import { AppointmentModule } from '../appointment';
     ProfileModule,
     EmojiModule,
     MessageModule,
-    AppointmentModule
+    AppointmentModule,
+    // TODO: use this or message not both
+    UserTextListModule
   ],
   declarations: [
-    AppointmentCallComponent,
-    VideoChatComponent
+    MeetingComponent,
+    VideoChatComponent,
+    HistoryComponent,
+    TextchatComponent
   ],
   exports: [
-    AppointmentCallComponent,
-    VideoChatComponent
-  ]
+    MeetingComponent,
+    VideoChatComponent,
+    HistoryComponent,
+    TextchatComponent
+  ],
 })
-export class AppointmentCallModule { }
+export class MeetingModule { }
