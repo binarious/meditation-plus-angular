@@ -20,14 +20,21 @@ export let ApiConfig = {
 ```
 
 ### Install dependencies and run
+```bash
+$ yarn
+$ ng serve
 ```
-yarn
-ng serve
+
+### Building
+```bash
+$ yarn build # add "--prod" for production build
 ```
+
+The output directory by default is `dist/`. To build for cordova add the command line argument `--app cordova`.
 
 ## Testing Development Tips
 To isolate a spec file per run, change the function name `it` to `fit` or `describe` to `fdescribe`.
 To speed up compilation, turn off sourcemaps:
 ```bash
-ng test --sourcemap=false
+$ ng test --sourcemap=false
 ```

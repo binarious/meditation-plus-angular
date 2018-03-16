@@ -7,11 +7,12 @@ import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { AppState } from '../app.service';
-import * as StableInterval from 'stable-interval';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/retry';
+
+declare var cordova: any;
 
 /**
  * Component for the meditation tab inside home.
@@ -32,10 +33,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
   // user profile
   profile;
 
-  // url for static audio file
-  bell;
-  bellInterval;
-
   // meditation data
   activeMeditations: Object[];
   finishedMeditations: Object[];
@@ -46,6 +43,9 @@ export class MeditationComponent implements OnInit, OnDestroy {
   lastUpdated;
   sending = false;
   lastMeditationSession;
+
+  walkingTimer;
+  sittingTimer;
 
   // form data
   walking = '';
@@ -173,11 +173,10 @@ export class MeditationComponent implements OnInit, OnDestroy {
 
       this.checkOwnSession();
 
-      // resume timer after page refresh
-      // won't work on mobile devices
+      // resume timer after page refresh on browsers
       if (this.ownSession && (this.ownSession.walkingLeft || this.ownSession.sittingLeft)
-         && !this.bell && !this.bellInterval) {
-        this.fallbackTimer(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
+        && !this.appState.IS_CORDOVA && !(this.walkingTimer || this.sittingTimer)) {
+        this.startTimer(this.ownSession.walkingLeft, this.ownSession.sittingLeft);
       }
     },
     err => {
@@ -236,23 +235,6 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.appState.set('isMeditating', true);
   }
 
-  getBellUrl(walking: number, sitting: number): string {
-    if (!this.profile) {
-      return;
-    }
-
-    const bellName = this.profile.sound.replace(/\/assets\/audio\/|.mp3/g, '');
-    let bellUrl = 'https://share.sirimangalo.org/static/sounds/' + bellName + '/';
-
-    if (!walking || !sitting) {
-      bellUrl += (walking ? walking : sitting);
-    } else {
-      bellUrl += walking + '_' + sitting;
-    }
-
-    return bellUrl;
-  }
-
   /**
    * Method for liking meditation sessions of other users.
    */
@@ -279,87 +261,63 @@ export class MeditationComponent implements OnInit, OnDestroy {
 
     // send session to server
     this.sendMeditation(walking, sitting);
+    this.startTimer(walking, sitting);
+  }
 
-    // setup timer & bell,
-    // prevent 'gesture-requirement-for-media-playback' on mobile browsers
-    this.bell = new Audio();
-    this.bell.src = '/assets/audio/halfsec.mp3';
-    this.bell.play();
+  startTimer(walking: number, sitting: number): void {
+    if (!this.profile || walking + sitting <= 0) {
+      return;
+    }
 
-    // check for Network API support
-    const connection = window.navigator['connection']
-      || window.navigator['mozConnection']
-      || null;
+    if (this.appState.IS_CORDOVA) {
+      const notifications = [];
+      const sound = 'file:/' + this.profile.sound;
 
-    // use the more stable HTML5 <audio> solution for playing a bell
-    // if the user has activated this feature or we know that he isn't
-    // using a cellular connection.
-    if (this.profile && this.profile.stableBell ||
-        connection && connection.type && connection.type !== 'cellular') {
-      // wait for 'halfsec.mp3'
-      setTimeout(() => this.stableTimer(walking, sitting), 700);
+      if (walking > 0) {
+        notifications.push({
+          id: 1,
+          title: 'Walking Done!',
+          sound: sound,
+          at: moment().add(walking, 'minutes').toDate(),
+          icon: 'file://assets/img/logo.png',
+          smallIcon: 'res://ic_stat_walking'
+        });
+      }
+
+      if (sitting > 0) {
+        notifications.push({
+          id: 2,
+          title: 'Sitting Done!',
+          sound: sound,
+          at: moment().add(walking + sitting, 'minutes').toDate(),
+          icon: 'file://assets/img/logo.png',
+          smallIcon: 'res://ic_stat_sitting'
+        });
+      }
+
+      cordova.plugins.notification.local.schedule(notifications);
     } else {
-      this.fallbackTimer(walking, sitting);
+      if (walking > 0) {
+        this.walkingTimer = setTimeout(
+          () => this.playBell(), walking * 60000
+        );
+      }
+
+      if (sitting > 0) {
+        this.sittingTimer = setTimeout(
+          () => this.playBell(), (walking + sitting) * 60000
+        );
+      }
     }
   }
 
-  fallbackTimer(walking = 0, sitting = 0): void {
-    if (!this.profile || !this.profile.sound || walking + sitting <= 0) {
+  playBell(): void {
+    if (!this.profile) {
       return;
     }
 
-    if (!this.bell) {
-      this.bell = new Audio();
-    }
-
-    this.bell.src = this.profile.sound;
-    this.bell.onerror = () => console.error('cannot play bell');
-
-    const walkingDone = walking > 0 ? moment().add(walking, 'minutes') : null;
-    const sittingDone = sitting > 0 ? moment().add(walking + sitting, 'minutes') : null;
-
-    this.bellInterval = new StableInterval();
-    this.bellInterval.set(() => {
-      if (moment().isAfter(sittingDone, 'minute') || !this.userWalking && !this.userSitting) {
-        this.bellInterval.clear();
-      }
-
-      if (walkingDone && moment().isSame(walkingDone, 'minute')) {
-        this.bell.currentTime = 0;
-        this.bell.play();
-      }
-
-      if (walkingDone && moment().isSame(sittingDone, 'minute')) {
-        this.bell.currentTime = 0;
-        this.bell.play();
-      }
-    }, 60000);
-  }
-
-  stableTimer(walking = 0, sitting = 0): void {
-    if (!this.profile || !this.profile.sound || walking + sitting <= 0) {
-      return;
-    }
-
-    if (!this.bell) {
-      this.bell = new Audio();
-    }
-
-    this.bell.onerror = err => {
-      console.error(err);
-
-      if (new RegExp('\.ogg$').test(this.bell.src)) {
-        this.bell.src = this.getBellUrl(walking, sitting) + '.m4a';
-        this.bell.currentTime = 0;
-        this.bell.play();
-      } else {
-        this.fallbackTimer(walking, sitting);
-      }
-    };
-
-    this.bell.src = this.getBellUrl(walking, sitting) + '.ogg';
-    this.bell.currentTime = 0;
-    this.bell.play();
+    const bell = new Audio(this.profile.sound);
+    bell.play();
   }
 
   /**
@@ -384,12 +342,16 @@ export class MeditationComponent implements OnInit, OnDestroy {
 
     this.appState.set('isMeditating', false);
 
-    if (this.bell) {
-      this.bell.pause();
+    if (this.walkingTimer) {
+      clearTimeout(this.walkingTimer);
     }
 
-    if (this.bellInterval) {
-      this.bellInterval.clear();
+    if (this.sittingTimer) {
+      clearTimeout(this.sittingTimer);
+    }
+
+    if (this.appState.IS_CORDOVA) {
+      cordova.plugins.notification.local.cancel([1, 2]);
     }
   }
 
@@ -447,8 +409,12 @@ export class MeditationComponent implements OnInit, OnDestroy {
     this.meditationSubscription.unsubscribe();
     this.meditationSocket.unsubscribe();
 
-    if (this.bellInterval) {
-      this.bellInterval.clear();
+    if (this.walkingTimer) {
+      clearTimeout(this.walkingTimer);
+    }
+
+    if (this.sittingTimer) {
+      clearTimeout(this.sittingTimer);
     }
   }
 }
